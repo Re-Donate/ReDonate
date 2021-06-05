@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${detalhes.nomeInstituicao}"> nome </title>
+</head>
+<body>
+    <h2 th:text="${detalhes.nomeInstituicao}"> nome </h2>
+    <h3 th:text="${detalhes.causaInstituicao}"> causa </h3>
+    <h3 th:text="${detalhes.enderecoInstituicao}"> endereco </h3>
+    <h4 th:text="${detalhes.cidadeInstituicao}"> cidade </h4>
+    <p th:if="${detalhes.celularInstituicao eq null}" th:text="${detalhes.telefoneInstituicao}">
+        telefone
+    </p>
+    <p th:if="${detalhes.telefoneInstituicao eq null}" th:text="${detalhes.celularInstituicao}">
+        celular
+    </p>
+
+    <form method="POST">
+         O que deseja doar? <br>
+         A instituição precisa de:
+        <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(';')}">
+            <label th:text="${necessidade}"> </label>
+            <input name="causaDoacao" type="radio" th:value="${necessidade}"><br>
+        </div>
+         Quanto deseja doar? <input name="valorDoacao" type="number"><br>
+        <input type="submit">
+    </form>
+</body>
+</html>
