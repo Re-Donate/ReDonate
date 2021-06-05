@@ -5,7 +5,6 @@ import com.tcc.redonate.repository.DoadorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Service;
 public class DoadorService {
     private final DoadorRepository doadorRepository;
 
-    public Iterable<Doador> list(Pageable pageable){
-        log.info("Listando todos os doadores");
-        return doadorRepository.findAll(pageable);
+    public Long findByUserId(Long idUsuario){
+        log.info("Buscando dados de Doador a partir de usuário logado");
+        return doadorRepository.findByIdUsuario(idUsuario).getId();
     }
 }

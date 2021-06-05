@@ -1,7 +1,8 @@
 package com.tcc.redonate.repository;
 
 import com.tcc.redonate.model.Doador;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DoadorRepository extends PagingAndSortingRepository<Doador, Long> {
+public interface DoadorRepository extends JpaRepository<Doador, Long> {
+    public Doador findByIdUsuario(Long idUsuario);
 }
