@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 
 @Service
 @Slf4j
@@ -16,13 +14,11 @@ import java.util.List;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
-    public List<Usuario> list(){
-        log.info("Listando todos os usuarios");
-        return usuarioRepository.findAll();
-    }
-
-    public void create(Usuario usuario){
-        log.info("Criando novo usuario");
-        usuarioRepository.save(usuario);
+    public Usuario login(Usuario usuario){
+        log.info("Buscando dados do Usuario");
+        Usuario userTestLogin = usuarioRepository.findByEmailUsuario(usuario.getEmailUsuario());
+        if(userTestLogin != null && userTestLogin.getSenhaUsuario().equals(usuario.getSenhaUsuario()))
+            return userTestLogin;
+        return null;
     }
 }

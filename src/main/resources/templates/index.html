@@ -2,10 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Re:Donate</title>
 </head>
 <body>
-<h1> Salve </h1>
-<a href="teste"> Clicaqui </a>
+<div th:if="${session.idLogin eq null}">
+    <form action="/logar" method="POST">
+        <input name="emailUsuario" type="text">
+        <input name="senhaUsuario" type="password">
+        <input type="submit">
+    </form>
+    <h4 th:if="${falhaLogin != null and falhaLogin == 1}"> Falha ao efetuar loggin, tente novamente </h4>
+</div>
 </body>
 </html>

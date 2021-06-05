@@ -3,35 +3,35 @@ package com.tcc.redonate.endpoint.controller;
 import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping(value = "/Users")
-@Slf4j
+@RequestMapping("/")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String listarUsuarios(Model model){
-        List<Usuario> userList = usuarioService.list();
-
-        if(userList != null){
-            model.addAttribute("usuarios", userList);
-        }
-        return "listarUsuarios";
+    public String index(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "index";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String criarUsuario(Usuario usuario){
-        usuarioService.create(usuario);
-        return "redirect:/Users";
+    @RequestMapping(value = "/logar", method = RequestMethod.POST)
+    public String logarUsuario(Usuario usuario, HttpServletRequest request, Model model) {
+        Usuario testLogin = usuarioService.login(usuario);
+        if (testLogin != null) {
+            request.getSession().setAttribute("idLogin", testLogin.getId());
+            return "redirect:/instituicoes";
+        } else {
+            model.addAttribute("falhaLogin", 1);
+            return "index";
+        }
     }
 }
