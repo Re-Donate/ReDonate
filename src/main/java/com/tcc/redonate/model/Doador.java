@@ -19,6 +19,21 @@ public class Doador implements AbstractEntity{
     private Long id;
 
     @Column(nullable = false)
+    private String nomeDoador;
+
+    @Column(nullable = false)
+    private String enderecoDoador;
+
+    @Column(nullable = false)
+    private String cidadeDoador;
+
+    @Column(nullable = false)
+    private String telefoneDoador;
+
+    @Column(nullable = false)
+    private String celularDoador;
+
+    @Column(nullable = false)
     private String cpfDoador;
 
     @Column(nullable = false)

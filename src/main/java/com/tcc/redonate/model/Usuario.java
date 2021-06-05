@@ -19,22 +19,7 @@ public class Usuario implements AbstractEntity{
     @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(nullable = false)
-    private String nomeUsuario;
-
-    @Column(nullable = false)
-    private String enderecoUsuario;
-
-    @Column(nullable = false)
-    private String cidadeUsuario;
-
-    @Column(nullable = false)
-    private String telefoneUsuario;
-
-    @Column(nullable = false)
-    private String celularUsuario;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String emailUsuario;
 
     @Column(nullable = false)

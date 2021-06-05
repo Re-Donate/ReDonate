@@ -19,6 +19,21 @@ public class Instituicao implements AbstractEntity{
     private Long id;
 
     @Column(nullable = false)
+    private String nomeInstituicao;
+
+    @Column(nullable = false)
+    private String enderecoInstituicao;
+
+    @Column(nullable = false)
+    private String cidadeInstituicao;
+
+    @Column(nullable = true)
+    private String telefoneInstituicao;
+
+    @Column(nullable = true)
+    private String celularInstituicao;
+
+    @Column(nullable = true)
     private String cnpjInstituicao;
 
     @Column(nullable = false)
@@ -27,7 +42,7 @@ public class Instituicao implements AbstractEntity{
     @Column(nullable = false)
     private String necessidadesInstituicao;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String cpfInstituicao;
 
     @Column(nullable = false)
