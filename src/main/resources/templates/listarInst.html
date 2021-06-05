@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Instituições</title>
+</head>
+<body>
+    <p> O usuário logado é o <span th:text="${session.idLogin}"> id </span> </p>
+    <a href="/"> Deslogar </a><br><br>
+    <h2> Instituições </h2>
+    <div th:unless="${#lists.isEmpty(instituicoes)}">
+        <dl th:each="inst : ${instituicoes}">
+            <dt>
+                <span th:text="${inst.nomeInstituicao}"> nome </span><br>
+                <span th:text="${inst.causaInstituicao}"> causa </span>
+            </dt>
+            <a th:href="@{'/instituicao/' + ${inst.id}}"> Doe para nós </a>
+        </dl>
+    </div>
+</body>
+</html>
