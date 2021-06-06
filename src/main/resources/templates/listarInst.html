@@ -3,19 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Instituições</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
-    <p> O usuário logado é o <span th:text="${session.idLogin}"> id </span> </p>
-    <a href="/"> Deslogar </a><br><br>
-    <h2> Instituições </h2>
-    <div th:unless="${#lists.isEmpty(instituicoes)}">
-        <dl th:each="inst : ${instituicoes}">
-            <dt>
-                <span th:text="${inst.nomeInstituicao}"> nome </span><br>
-                <span th:text="${inst.causaInstituicao}"> causa </span>
-            </dt>
-            <a th:href="@{'/instituicao/' + ${inst.id}}"> Doe para nós </a>
-        </dl>
+
+    <header>
+        <div id="content" class="mx-auto w-75 pt-3">
+            <div id="logged">
+                <p> Olá,<span th:text="${session.idLogin}"> id </span> </p>
+            </div>
+            <div id="logout">
+                <a href="/"> Deslogar </a><br><br>
+            </div>
+        </div>
+        <div id="title">
+            <h2> Instituições </h2>
+        </div>
+    </header>
+    <div id="instituicaoAll">
+        <div th:unless="${#lists.isEmpty(instituicoes)}" class="card" style="width: 18rem;" id="instituicaoList">
+            <dl th:each="inst : ${instituicoes}" class="instituicoes">
+                <img class="card-img-top" src="images/smile-regular.svg" alt="Card image cap">
+                <div class="card-body">
+                <h5 th:text="${inst.nomeInstituicao}" class="card-title">Erro!</h5>
+                <dt>
+                    <span th:text="${inst.causaInstituicao}"> causa </span>
+                </dt>
+                <a th:href="@{'/instituicao/' + ${inst.id}}" class="btn btn-primary">Doar!</a>
+                </div>
+            </dl>
+        </div>
     </div>
+
 </body>
 </html>

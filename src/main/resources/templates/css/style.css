@@ -14,10 +14,87 @@ html,body{
     height: 100%;
 }
 
+
 ol, ul{
     list-style: none;
     padding: 0 !important;
 }
 
+/* Página de Login */
+div#login{
+    background-color: #2C5288;
+    width: 35%;
+    vertical-align: middle;
+    color: cornsilk;
+}
 
+div#login h3, div#login h4{
+    font-weight: bold;
+    text-align: left;
+}
 
+h4#errorMessage{
+    text-align: center !important;
+}
+
+div#container{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+#enviar{
+    background-color: #1D3557;
+    border-color: white;
+    color: cornsilk;
+    font-weight: bold;
+}
+
+/* Página de listar instituições */
+
+header{
+    background-color: #1D3557;
+    width: 100%;
+    color: cornsilk;
+}
+
+div#content{
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+div#logout{
+    text-align: right;
+}
+
+a{
+    color:cornsilk !important;
+}
+
+#title{
+    text-align: center;
+    background-color: #2C5299;
+}
+
+#instituicaoList{
+    text-align: center;
+}
+
+#instituicaoAll{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.instituicoes{
+    padding: 5%;
+    margin-bottom: 0;
+}
+
+.card-img-top{
+    width: 75% !important;
+}
