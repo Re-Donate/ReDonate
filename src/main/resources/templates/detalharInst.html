@@ -3,28 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${detalhes.nomeInstituicao}"> nome </title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
-<body>
-    <h2 th:text="${detalhes.nomeInstituicao}"> nome </h2>
-    <h3 th:text="${detalhes.causaInstituicao}"> causa </h3>
-    <h3 th:text="${detalhes.enderecoInstituicao}"> endereco </h3>
-    <h4 th:text="${detalhes.cidadeInstituicao}"> cidade </h4>
-    <p th:if="${detalhes.celularInstituicao eq null}" th:text="${detalhes.telefoneInstituicao}">
-        telefone
-    </p>
-    <p th:if="${detalhes.telefoneInstituicao eq null}" th:text="${detalhes.celularInstituicao}">
-        celular
-    </p>
+<body> 
+    <div id="detalharInst">
 
-    <form method="POST">
-         O que deseja doar? <br>
-         A instituição precisa de:
-        <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(';')}">
-            <label th:text="${necessidade}"> </label>
-            <input name="causaDoacao" type="radio" th:value="${necessidade}"><br>
+        <div class="card w-50" style="width: 18rem;">
+            <div class="card-header bg-info text-white">
+                <h2 th:text="${detalhes.nomeInstituicao}"> Nome </h2>
+            </div>
+            <div class="card-body">
+                <ul class="">
+                    <li class="card-text">
+                        <h4 th:text="${detalhes.causaInstituicao}"> Asilo de animais </h4>
+                    </li>
+                    <li class="card-text">
+                        <h5 th:text="${detalhes.enderecoInstituicao + ',' + detalhes.cidadeInstituicao}"> Endereço, cidade </h5>
+                    </li>
+                    <li class="card-text">
+                        <h6 th:text="${detalhes.celularInstituicao + detalhes.telefoneInstituicao}">Telefone</h6>
+                    </li>
+                    <li class="card-text">
+                        <form method="POST">
+                            <p>O que deseja doar? A instituição precisa de:</p>
+                            <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(';')}">
+                                <input name="causaDoacao" type="radio" th:value="${necessidade}">
+                                <label th:text="${necessidade}"> Doação </label>
+                                <br/><br/>
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3 w-75 mx-auto">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="inputGroup-sizing-sm">Quanto(s) deseja doar?</span>
+                                </div>
+                                <input type="number" class="form-control" name="valorDoacao" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <br>
+
+                            <button type="button" class="btn btn-info text-white w-25">Enviar</button>
+
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-         Quanto deseja doar? <input name="valorDoacao" type="number"><br>
-        <input type="submit">
-    </form>
+        
+    </div>
 </body>
 </html>
