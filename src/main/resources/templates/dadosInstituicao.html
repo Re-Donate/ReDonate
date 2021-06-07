@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${dadosInst.nomeInstituicao}">Seus dados</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+    <link href="http://localhost:8080/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div id="content" class="mx-auto w-75 pt-3">
+            <div id="logged">
+                <p> Olá, <span th:text="${dadosInst.nomeInstituicao}"> id </span> </p>
+            </div>
+            <div id="logout">
+                <a href="/"> Deslogar </a><br><br>
+            </div>
+        </div>
+        <div id="title">
+            <h2> Seus dados </h2>
+        </div>
+    </header>
+
+    <form method="POST">
+
+        <input type="hidden" name="id" th:value="${dadosInst.id}">
+        <input type="text" name="nomeInstituicao" th:value="${dadosInst.nomeInstituicao}" placeholder="Nome da instituicao">
+        <input type="text" name="enderecoInstituicao" th:value="${dadosInst.enderecoInstituicao}" placeholder="Endereco da instituicao">
+        <input type="text" name="cidadeInstituicao" th:value="${dadosInst.cidadeInstituicao}" placeholder="Cidade da instituicao">
+        <input type="text" name="telefoneInstituicao" th:value="${dadosInst.telefoneInstituicao}" placeholder="Telefone da instituicao">
+        ou
+        <input type="text" name="celularInstituicao" th:value="${dadosInst.celularInstituicao}" placeholder="Celular da instituicao">
+        <input type="text" name="cnpjInstituicao" th:value="${dadosInst.cnpjInstituicao}" placeholder="CNPJ da instituicao">
+        ou
+        <input type="text" name="cpfInstituicao" th:value="${dadosInst.cpfInstituicao}" placeholder="CPF do representante da instituicao">
+        <input type="text" name="causaInstituicao" th:value="${dadosInst.causaInstituicao}" placeholder="Causa da instituicao">
+        <p> Separe cada necessidade por ';' </p>
+        <p> Exemplo: "roupas;alimentos nao pereciveis;eletrodomesticos" </p>
+        <textarea type="text" name="necessidadesInstituicao" th:text="${dadosInst.necessidadesInstituicao}" placeholder="Necessidades da instituicao">
+
+        </textarea>
+
+        <input type="submit">
+    </form>
+</body>
+</html>
