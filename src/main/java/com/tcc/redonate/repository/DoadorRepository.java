@@ -4,5 +4,5 @@ import com.tcc.redonate.model.Doador;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DoadorRepository extends JpaRepository<Doador, Long> {
-    public Doador findByIdUsuario(Long idUsuario);
+    Doador findByIdUsuario(Long idUsuario);
 }
