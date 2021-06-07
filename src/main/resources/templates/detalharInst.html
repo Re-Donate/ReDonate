@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${detalhes.nomeInstituicao}"> nome </title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+    <link href="http://localhost:8080/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
-<body> 
+<body>
+    <a href="/instituicoes" style="color: black !important;"> Voltar </a>
     <div id="detalharInst">
-
         <div class="card w-50" style="width: 18rem;">
             <div class="card-header bg-info text-white">
                 <h2 th:text="${detalhes.nomeInstituicao}"> Nome </h2>
@@ -30,7 +30,7 @@
                         <form method="POST">
                             <p>O que deseja doar? A instituição precisa de:</p>
                             <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(';')}">
-                                <input name="causaDoacao" type="radio" th:value="${necessidade}">
+                                <input required name="causaDoacao" type="radio" th:value="${necessidade}">
                                 <label th:text="${necessidade}"> Doação </label>
                                 <br/><br/>
                             </div>
@@ -39,11 +39,10 @@
                                 <div class="input-group-prepend">
                                   <span class="input-group-text" id="inputGroup-sizing-sm">Quanto(s) deseja doar?</span>
                                 </div>
-                                <input type="number" class="form-control" name="valorDoacao" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                <input required type="number" class="form-control" name="valorDoacao" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                             </div>
                             <br>
-
-                            <button type="button" class="btn btn-info text-white w-25">Enviar</button>
+                            <button type="submit" class="btn btn-info text-white w-25">Enviar</button>
 
                         </form>
                     </li>
