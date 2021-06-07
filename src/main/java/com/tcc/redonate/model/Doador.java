@@ -27,10 +27,10 @@ public class Doador implements AbstractEntity{
     @Column(nullable = false)
     private String cidadeDoador;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String telefoneDoador;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String celularDoador;
 
     @Column(nullable = false)

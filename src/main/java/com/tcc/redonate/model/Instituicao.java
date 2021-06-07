@@ -36,14 +36,14 @@ public class Instituicao implements AbstractEntity{
     @Column(nullable = true)
     private String cnpjInstituicao;
 
+    @Column(nullable = true)
+    private String cpfInstituicao;
+
     @Column(nullable = false)
     private String causaInstituicao;
 
     @Column(nullable = false)
     private String necessidadesInstituicao;
-
-    @Column(nullable = true)
-    private String cpfInstituicao;
 
     @Column(nullable = false)
     private Long idUsuario;
