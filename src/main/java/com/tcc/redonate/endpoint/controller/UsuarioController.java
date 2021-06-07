@@ -1,5 +1,6 @@
 package com.tcc.redonate.endpoint.controller;
 
+import com.tcc.redonate.endpoint.service.DoadorService;
 import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UsuarioController {
     private final UsuarioService usuarioService;
+    private final DoadorService doadorService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(HttpServletRequest request){
@@ -23,12 +25,31 @@ public class UsuarioController {
         return "index";
     }
 
+    @RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
+    public String cadastrarForm(){ return "cadastrarUser"; }
+
+    @RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
+    public String cadastrarUser(Usuario usuario, HttpServletRequest request){
+        Usuario newUser = usuarioService.create(usuario);
+        request.getSession().setAttribute("lastCreatedUserId", newUser.getId());
+
+        Boolean isDoador = request.getParameter("tipoUsuario").equals("Doador");
+
+        if(isDoador)
+            return "redirect:/doadores/cadastrarDoador";
+        else
+            return "redirect:/instituicoes/cadastrarInstituicao";
+    }
+
     @RequestMapping(value = "/logar", method = RequestMethod.POST)
     public String logarUsuario(Usuario usuario, HttpServletRequest request, Model model) {
         Usuario testLogin = usuarioService.login(usuario);
         if (testLogin != null) {
             request.getSession().setAttribute("idLogin", testLogin.getId());
-            return "redirect:/instituicoes";
+            if(doadorService.isDoador(testLogin.getId()))
+                return "redirect:/instituicoes";
+            else
+                return "redirect:/instituicoes/dados";
         } else {
             model.addAttribute("falhaLogin", 1);
             return "index";

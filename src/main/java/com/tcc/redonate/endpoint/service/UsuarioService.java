@@ -21,4 +21,10 @@ public class UsuarioService {
             return userTestLogin;
         return null;
     }
+
+    public Usuario create(Usuario usuario){
+        log.info("Criando novo usuario");
+        Usuario newUser = usuarioRepository.save(usuario);
+        return newUser;
+    }
 }
