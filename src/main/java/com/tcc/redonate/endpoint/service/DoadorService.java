@@ -13,8 +13,20 @@ import org.springframework.stereotype.Service;
 public class DoadorService {
     private final DoadorRepository doadorRepository;
 
-    public Long findByUserId(Long idUsuario){
+    public Doador findByUserId(Long idUsuario){
         log.info("Buscando dados de Doador a partir de usuário logado");
-        return doadorRepository.findByIdUsuario(idUsuario).getId();
+        return doadorRepository.findByIdUsuario(idUsuario);
+    }
+
+    public boolean isDoador(Long idUsuario){
+        log.info("Checando se o usuário que logou é um doador");
+        Doador doador = doadorRepository.findByIdUsuario(idUsuario);
+
+        return doador != null;
+    }
+
+    public void create(Doador doador){
+        log.info("Criando novo doador");
+        doadorRepository.save(doador);
     }
 }
