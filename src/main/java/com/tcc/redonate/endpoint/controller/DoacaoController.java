@@ -38,7 +38,7 @@ public class DoacaoController {
         doacao.setIdInstituicao(inst);
 
         Long idUsuario = Long.parseLong(""+request.getSession().getAttribute("idLogin"));
-        Long idDoador = doadorService.findByUserId(idUsuario);
+        Long idDoador = doadorService.findByUserId(idUsuario).getId();
         doacao.setIdDoador(idDoador);
         doacaoService.create(doacao);
         return "redirect:/instituicoes";
