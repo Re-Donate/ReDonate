@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,13 +17,12 @@ import javax.swing.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/instituicoes")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class InstituicaoController {
     private final InstituicaoService instituicaoService;
     private final DoadorService doadorService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/instituicoes", method = RequestMethod.GET)
     public String listarInstituicoes(Model model, HttpServletRequest request){
         List<Instituicao> instList = instituicaoService.list();
         Long idUser = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
@@ -37,7 +37,8 @@ public class InstituicaoController {
         return "listarInst";
     }
 
-    @RequestMapping(value = "/dados", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.GET)
     public String dadosInstituicao(HttpServletRequest request, Model model){
         Long idUserLogado = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
         Instituicao dadosInstituicao = instituicaoService.findByUserId(idUserLogado);
@@ -47,7 +48,16 @@ public class InstituicaoController {
         return "dadosInstituicao";
     }
 
-    @RequestMapping(value = "/dados", method = RequestMethod.POST)
+    @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.GET)
+    public String detalharInstituicao(@PathVariable("inst") int inst, Model model){
+        Instituicao instDetail = instituicaoService.detail(Long.valueOf(inst));
+        if(instDetail != null){
+            model.addAttribute("detalhes", instDetail);
+        }
+        return "detalharInst";
+    }
+
+    @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.POST)
     public String atualizarDadosInstituicao(Instituicao instituicao, HttpServletRequest request){
         Long idUsuario = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
         instituicao.setIdUsuario(idUsuario);
@@ -64,10 +74,10 @@ public class InstituicaoController {
         return "redirect:/instituicoes/dados";
     }
 
-    @RequestMapping(value = "/cadastrarInstituicao", method = RequestMethod.GET)
+    @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.GET)
     public String cadastrarInstituicaoForm(){ return "cadastrarInstituicao"; }
 
-    @RequestMapping(value = "/cadastrarInstituicao", method = RequestMethod.POST)
+    @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.POST)
     public String cadastrarInstituicao(Instituicao instituicao, HttpServletRequest request){
         Long newUserId = Long.valueOf(""+request.getSession().getAttribute("lastCreatedUserId"));
         instituicao.setIdUsuario(newUserId);
