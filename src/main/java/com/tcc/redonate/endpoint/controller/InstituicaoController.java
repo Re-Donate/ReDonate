@@ -2,8 +2,10 @@ package com.tcc.redonate.endpoint.controller;
 
 import com.tcc.redonate.endpoint.service.DoadorService;
 import com.tcc.redonate.endpoint.service.InstituicaoService;
+import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
+import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +23,13 @@ import java.util.List;
 public class InstituicaoController {
     private final InstituicaoService instituicaoService;
     private final DoadorService doadorService;
+    private final UsuarioService usuarioService;
 
     @RequestMapping(value = "/instituicoes", method = RequestMethod.GET)
     public String listarInstituicoes(Model model, HttpServletRequest request){
         List<Instituicao> instList = instituicaoService.list();
-        Long idUser = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
-        Doador doadorLogado = doadorService.findByUserId(idUser);
+
+        Doador doadorLogado = doadorService.findByUsuarioLogado(request);
 
         if(instList != null){
             model.addAttribute("instituicoes", instList);
@@ -40,10 +43,12 @@ public class InstituicaoController {
 
     @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.GET)
     public String dadosInstituicao(HttpServletRequest request, Model model){
-        Long idUserLogado = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
-        Instituicao dadosInstituicao = instituicaoService.findByUserId(idUserLogado);
+
+        Instituicao dadosInstituicao = instituicaoService.findByUsuarioLogado(request);
+
         if(dadosInstituicao != null)
             model.addAttribute("dadosInst", dadosInstituicao);
+
 
         return "dadosInstituicao";
     }
@@ -79,8 +84,10 @@ public class InstituicaoController {
 
     @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.POST)
     public String cadastrarInstituicao(Instituicao instituicao, HttpServletRequest request){
-        Long newUserId = Long.valueOf(""+request.getSession().getAttribute("lastCreatedUserId"));
-        instituicao.setIdUsuario(newUserId);
+        Usuario User = (Usuario) request.getSession().getAttribute("lastCreatedUser");
+        Usuario newUser = usuarioService.create(User);
+
+        instituicao.setIdUsuario(newUser.getId());
         instituicaoService.create(instituicao);
         return "redirect:/";
     }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,7 +20,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final DoadorService doadorService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String index(HttpServletRequest request){
         request.getSession().invalidate();
         return "index";
@@ -30,8 +31,7 @@ public class UsuarioController {
 
     @RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
     public String cadastrarUser(Usuario usuario, HttpServletRequest request){
-        Usuario newUser = usuarioService.create(usuario);
-        request.getSession().setAttribute("lastCreatedUserId", newUser.getId());
+        request.getSession().setAttribute("lastCreatedUser", usuario);
 
         Boolean isDoador = request.getParameter("tipoUsuario").equals("Doador");
 

@@ -1,5 +1,6 @@
 package com.tcc.redonate.endpoint.service;
 
+import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.repository.InstituicaoRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -30,8 +32,9 @@ public class InstituicaoService {
         return instituicaoRepository.getById(id);
     }
 
-    public Instituicao findByUserId(Long idUsuario){
+    public Instituicao findByUsuarioLogado(HttpServletRequest request){
         log.info("Buscando dados de Instituicao a partir do usuario logado");
+        Long idUsuario = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
         return instituicaoRepository.findByIdUsuario(idUsuario);
     }
 

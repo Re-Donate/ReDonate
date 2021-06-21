@@ -7,14 +7,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DoadorService {
     private final DoadorRepository doadorRepository;
 
-    public Doador findByUserId(Long idUsuario){
+    public Doador findById(Long id){
+        log.info("Buscando doador a partir do ID");
+        return doadorRepository.getById(id);
+    }
+
+    public Doador findByUsuarioLogado(HttpServletRequest request){
         log.info("Buscando dados de Doador a partir de usuário logado");
+        Long idUsuario = Long.parseLong(""+request.getSession().getAttribute("idLogin"));
         return doadorRepository.findByIdUsuario(idUsuario);
     }
 
