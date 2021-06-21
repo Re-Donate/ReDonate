@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${dadosInst.nomeInstituicao}">Seus dados</title>
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
-    <link href="http://localhost:8080/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
@@ -16,6 +16,10 @@
             </div>
             <div id="logout">
                 <a href="/"> Deslogar </a><br><br>
+            </div>
+            <br>
+            <div>
+                <p> Para acessar as informações sobre as doações recebidas, clique <a href="/doacoes/dados"> aqui </a> </p>
             </div>
         </div>
         <div id="title">
@@ -29,20 +33,64 @@
         <input type="text" name="nomeInstituicao" th:value="${dadosInst.nomeInstituicao}" placeholder="Nome da instituicao">
         <input type="text" name="enderecoInstituicao" th:value="${dadosInst.enderecoInstituicao}" placeholder="Endereco da instituicao">
         <input type="text" name="cidadeInstituicao" th:value="${dadosInst.cidadeInstituicao}" placeholder="Cidade da instituicao">
-        <input type="text" name="telefoneInstituicao" th:value="${dadosInst.telefoneInstituicao}" placeholder="Telefone da instituicao">
+        <input type="text" name="telefoneInstituicao" th:value="${dadosInst.telefoneInstituicao}" placeholder="Telefone da instituicao" data-inputmask="'mask': '(99) 9999-9999'">
         ou
-        <input type="text" name="celularInstituicao" th:value="${dadosInst.celularInstituicao}" placeholder="Celular da instituicao">
-        <input type="text" name="cnpjInstituicao" th:value="${dadosInst.cnpjInstituicao}" placeholder="CNPJ da instituicao">
+        <input type="text" name="celularInstituicao" th:value="${dadosInst.celularInstituicao}" placeholder="Celular da instituicao" data-inputmask="'mask': '(99) 99999-9999'">
+        <input type="text" name="cnpjInstituicao" th:value="${dadosInst.cnpjInstituicao}" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
         ou
-        <input type="text" name="cpfInstituicao" th:value="${dadosInst.cpfInstituicao}" placeholder="CPF do representante da instituicao">
+        <input type="text" name="cpfInstituicao" th:value="${dadosInst.cpfInstituicao}" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999-999-999-99'">
         <input type="text" name="causaInstituicao" th:value="${dadosInst.causaInstituicao}" placeholder="Causa da instituicao">
-        <p> Separe cada necessidade por ';' </p>
-        <p> Exemplo: "roupas;alimentos nao pereciveis;eletrodomesticos" </p>
-        <textarea type="text" name="necessidadesInstituicao" th:text="${dadosInst.necessidadesInstituicao}" placeholder="Necessidades da instituicao">
+        <p> Selecione as necessidades da sua instituição </p>
+        <div th:with="necessidade = ${dadosInst.necessidadesInstituicao.split(',')}">
+            <p th:if="${#arrays.contains(necessidade, 'Alimentos')}">
+                <input checked type="checkbox" name="necessidadesInstituicao" value="Alimentos"> Alimentos
+            </p>
+            <p th:if="${#arrays.contains(necessidade, 'Remédios')}">
+                <input checked type="checkbox" name="necessidadesInstituicao" value="Remédios"> Remédios ou outros produtos farmacêuticos
+            </p>
+            <p th:if="${#arrays.contains(necessidade, 'Educação')}">
+                <input checked type="checkbox" name="necessidadesInstituicao" value="Educação"> Educação
+            </p>
+            <p th:if="${#arrays.contains(necessidade, 'Vestimentas')}">
+                <input checked type="checkbox" name="necessidadesInstituicao" value="Vestimentas"> Vestimentas
+            </p>
+            <p th:if="${#arrays.contains(necessidade, 'Produtos para Pets')}">
+                <input checked type="checkbox" name="necessidadesInstituicao" value="Produtos para Pets"> Produtos para Pets
+            </p>
+            <p th:if="${#arrays.contains(necessidade, 'Outros fins')}">
+                <input checked type="checkbox" name="necessidadesInstituicao" value="Outros fins"> A instituição investe o dinheiro da doação no que for necessário
+            </p>
 
-        </textarea>
+            <p th:unless="${#arrays.contains(necessidade, 'Alimentos')}">
+                <input type="checkbox" name="necessidadesInstituicao" value="Alimentos"> Alimentos
+            </p>
+            <p th:unless="${#arrays.contains(necessidade, 'Remédios')}">
+                <input type="checkbox" name="necessidadesInstituicao" value="Remédios"> Remédios ou outros produtos farmacêuticos
+            </p>
+            <p th:unless="${#arrays.contains(necessidade, 'Educação')}">
+                <input type="checkbox" name="necessidadesInstituicao" value="Educação"> Educação
+            </p>
+            <p th:unless="${#arrays.contains(necessidade, 'Vestimentas')}">
+                <input type="checkbox" name="necessidadesInstituicao" value="Vestimentas"> Vestimentas
+            </p>
+            <p th:unless="${#arrays.contains(necessidade, 'Produtos para Pets')}">
+                <input type="checkbox" name="necessidadesInstituicao" value="Produtos para Pets"> Produtos para Pets
+            </p>
+            <p th:unless="${#arrays.contains(necessidade, 'Outros fins')}">
+                <input type="checkbox" name="necessidadesInstituicao" value="Outros fins"> Investir o dinheiro da doação no que for necessário
+            </p>
+        </div>
 
         <input type="submit">
     </form>
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
+
+    <script>
+        $(":input").inputmask();
+    </script>
 </body>
 </html>

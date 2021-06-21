@@ -3,29 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de usuario</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
 </head>
 <body>
 
     <h2> Insira seus dados para finalizar o cadastro </h2>
     <form method="POST">
 
-      <input type="text" name="nomeInstituicao" placeholder="Nome da instituicao">
-      <input type="text" name="enderecoInstituicao" placeholder="Endereco da instituicao">
-      <input type="text" name="cidadeInstituicao" placeholder="Cidade da instituicao">
-      <input type="text" name="telefoneInstituicao" placeholder="Telefone da instituicao">
-      ou
-      <input type="text" name="celularInstituicao" placeholder="Celular da instituicao">
-      <input type="text" name="cnpjInstituicao" placeholder="CNPJ da instituicao">
-      ou
-      <input type="text" name="cpfInstituicao" placeholder="CPF do representante da instituicao">
-      <input type="text" name="causaInstituicao" placeholder="Causa da instituicao">
-      <p> Separe cada necessidade por ';' </p>
-      <p> Exemplo: "roupas;alimentos nao pereciveis;eletrodomesticos" </p>
-      <textarea type="text" name="necessidadesInstituicao" placeholder="Necessidades da instituicao">
+        <input type="text" name="nomeInstituicao" placeholder="Nome da instituicao">
+        <input type="text" name="enderecoInstituicao" placeholder="Endereco da instituicao">
+        <input type="text" name="cidadeInstituicao" placeholder="Cidade da instituicao">
+        <input type="text" name="telefoneInstituicao" placeholder="Telefone da instituicao" data-inputmask="'mask': '(99) 9999-9999'">
+        ou
+        <input type="text" name="celularInstituicao" placeholder="Celular da instituicao" data-inputmask="'mask': '(99) 99999-9999'">
+        <input type="text" name="cnpjInstituicao" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
+        ou
+        <input type="text" name="cpfInstituicao" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999-999-999-99'">
+        <input type="text" name="causaInstituicao" placeholder="Causa da instituicao">
+        <p> Selecione suas necessidades </p>
+        <input type="checkbox" name="necessidadesInstituicao" value="Alimentos"> Alimentos
+        <input type="checkbox" name="necessidadesInstituicao" value="Remédios"> Remédios ou outros produtos farmacêuticos
+        <input type="checkbox" name="necessidadesInstituicao" value="Educação"> Educação
+        <input type="checkbox" name="necessidadesInstituicao" value="Vestimentas"> Vestimentas
+        <input type="checkbox" name="necessidadesInstituicao" value="Produtos para Pets"> Produtos para Pets
+        <input type="checkbox" name="necessidadesInstituicao" value="Outros fins"> Investir o dinheiro da doação no que for necessário
 
-      </textarea>
-
-      <input type="submit">
+        <input type="submit">
     </form>
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
+
+    <script>
+        $(":input").inputmask();
+    </script>
 </body>
 </html>
