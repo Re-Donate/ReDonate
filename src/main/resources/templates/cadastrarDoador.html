@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro de usuario</title>
-</head>
-<body>
-    <h2> Insira seus dados para finalizar o cadastro </h2>
-    <form method="POST">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cadastro de usuario</title>
 
-        <input type="text" name="nomeDoador" placeholder="Seu nome">
-        <input type="text" name="enderecoDoador" placeholder="Seu endereço">
-        <input type="text" name="cidadeDoador" placeholder="Sua cidade">
-        <input type="text" name="telefoneDoador" placeholder="Seu telefone">
-        ou
-        <input type="text" name="celularDoador" placeholder="Seu celular">
-        <input type="text" name="cpfDoador" placeholder="Seu cpf">
-        <input type="number" name="idadeDoador" placeholder="Sua idade">
-        <label> Seu sexo: </label>
-        <input type="radio" name="sexoDoador" value="Masculino"> Masculino
-        <input type="radio" name="sexoDoador" value="Feminino"> Feminino
-        <input type="radio" name="sexoDoador" value="Outro"> Outro
-        <input type="submit">
-    </form>
-</body>
+        <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
+    </head>
+    <body>
+        <h2> Insira seus dados para finalizar o cadastro </h2>
+        <form method="POST">
+
+            <input type="text" name="nomeDoador" placeholder="Seu nome">
+            <input type="text" name="enderecoDoador" placeholder="Seu endereço">
+            <input type="text" name="cidadeDoador" placeholder="Sua cidade">
+            <input type="text" name="telefoneDoador" placeholder="Seu telefone" data-inputmask="'mask': '(99) 9999-9999'">
+            ou
+            <input type="text" name="celularDoador" placeholder="Seu celular" data-inputmask="'mask': '(99) 99999-9999'">
+            <input type="text" name="cpfDoador" placeholder="Seu cpf" data-inputmask="'mask': '999-999-999-99'">
+            <input type="number" name="idadeDoador" placeholder="Sua idade">
+            <label> Seu sexo: </label>
+            <input type="radio" name="sexoDoador" value="Masculino"> Masculino
+            <input type="radio" name="sexoDoador" value="Feminino"> Feminino
+            <input type="radio" name="sexoDoador" value="Outro"> Outro
+            <input type="submit">
+        </form>
+
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
+
+        <script>
+            $(":input").inputmask();
+        </script>
+    </body>
 </html>

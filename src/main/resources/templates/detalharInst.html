@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title th:text="${detalhes.nomeInstituicao}"> nome </title>
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
-    <link href="http://localhost:8080/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
@@ -29,7 +29,7 @@
                     <li class="card-text">
                         <form method="POST">
                             <p>O que deseja doar? A instituição precisa de:</p>
-                            <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(';')}">
+                            <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(',')}">
                                 <input required name="causaDoacao" type="radio" th:value="${necessidade}">
                                 <label th:text="${necessidade}"> Doação </label>
                                 <br/><br/>
