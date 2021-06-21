@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Doacao implements AbstractEntity{
+public class Doacao implements AbstractEntity, Comparable<Doacao>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -36,4 +36,9 @@ public class Doacao implements AbstractEntity{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date createdAt;
+
+    @Override
+    public int compareTo(Doacao d){
+        return this.getCausaDoacao().compareTo(d.getCausaDoacao());
+    }
 }
