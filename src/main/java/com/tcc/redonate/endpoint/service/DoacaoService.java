@@ -19,4 +19,9 @@ public class DoacaoService {
         log.info("Criando nova docao");
         doacaoRepository.save(doacao);
     }
+
+    public List<Doacao> findByIdInstituicao(Long idInstituicao){
+        log.info("Buscando doações enviadas à instituição");
+        return doacaoRepository.findByIdInstituicao(idInstituicao);
+    }
 }
