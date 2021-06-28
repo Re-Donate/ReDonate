@@ -3,6 +3,7 @@ package com.tcc.redonate.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -19,29 +20,12 @@ public class Doador implements AbstractEntity{
     private Long id;
 
     @Column(nullable = false)
-    private String nomeDoador;
-
-    @Column(nullable = false)
-    private String enderecoDoador;
-
-    @Column(nullable = false)
-    private String cidadeDoador;
-
-    @Column(nullable = true)
-    private String telefoneDoador;
-
-    @Column(nullable = true)
-    private String celularDoador;
-
-    @Column(nullable = false)
-    private String cpfDoador;
-
-    @Column(nullable = false)
-    private String idadeDoador;
+    private String nascimentoDoador;
 
     @Column(nullable = false)
     private String sexoDoador;
 
-    @Column(nullable = false)
-    private Long idUsuario;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
+    private Usuario usuarioDoador;
 }
