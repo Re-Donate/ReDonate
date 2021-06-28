@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${dadosInst.nomeInstituicao}">Seus dados</title>
+    <title th:text="${dadosInst.usuarioInstituicao.nomeUsuario}">Seus dados</title>
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,7 +12,7 @@
     <header>
         <div id="content" class="mx-auto w-75 pt-3">
             <div id="logged">
-                <p> Olá, <span th:text="${dadosInst.nomeInstituicao}"> id </span> </p>
+                <p> Olá, <span th:text="${dadosInst.usuarioInstituicao.nomeUsuario}"> id </span> </p>
             </div>
             <div id="logout">
                 <a href="/"> Deslogar </a><br><br>
@@ -30,15 +30,16 @@
     <form method="POST">
 
         <input type="hidden" name="id" th:value="${dadosInst.id}">
-        <input type="text" name="nomeInstituicao" th:value="${dadosInst.nomeInstituicao}" placeholder="Nome da instituicao">
-        <input type="text" name="enderecoInstituicao" th:value="${dadosInst.enderecoInstituicao}" placeholder="Endereco da instituicao">
-        <input type="text" name="cidadeInstituicao" th:value="${dadosInst.cidadeInstituicao}" placeholder="Cidade da instituicao">
-        <input type="text" name="telefoneInstituicao" th:value="${dadosInst.telefoneInstituicao}" placeholder="Telefone da instituicao" data-inputmask="'mask': '(99) 9999-9999'">
+        <input type="text" name="nomeUsuario" th:value="${dadosInst.usuarioInstituicao.nomeUsuario}" placeholder="Nome da instituicao">
+        <input type="text" name="enderecoUsuario" th:value="${dadosInst.usuarioInstituicao.enderecoUsuario}" placeholder="Endereco da instituicao">
+        <input type="text" name="cidadeUsuario" th:value="${dadosInst.usuarioInstituicao.cidadeUsuario}" placeholder="Cidade da instituicao">
+        <input type="text" name="estadoUsuario" th:value="${dadosInst.usuarioInstituicao.estadoUsuario}" placeholder="Estado da instituicao">
+        <input type="text" name="telefoneUsuario" th:value="${dadosInst.usuarioInstituicao.telefoneUsuario}" placeholder="Telefone da instituicao" data-inputmask="'mask': '(99) 9999-9999'">
         ou
-        <input type="text" name="celularInstituicao" th:value="${dadosInst.celularInstituicao}" placeholder="Celular da instituicao" data-inputmask="'mask': '(99) 99999-9999'">
+        <input type="text" name="celularUsuario" th:value="${dadosInst.usuarioInstituicao.celularUsuario}" placeholder="Celular da instituicao" data-inputmask="'mask': '(99) 99999-9999'">
         <input type="text" name="cnpjInstituicao" th:value="${dadosInst.cnpjInstituicao}" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
         ou
-        <input type="text" name="cpfInstituicao" th:value="${dadosInst.cpfInstituicao}" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999-999-999-99'">
+        <input type="text" name="cpfUsuario" th:value="${dadosInst.usuarioInstituicao.cpfUsuario}" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999-999-999-99'">
         <input type="text" name="causaInstituicao" th:value="${dadosInst.causaInstituicao}" placeholder="Causa da instituicao">
         <p> Selecione as necessidades da sua instituição </p>
         <div th:with="necessidade = ${dadosInst.necessidadesInstituicao.split(',')}">

@@ -13,7 +13,7 @@
     <header>
         <div id="content" class="mx-auto w-75 pt-3">
             <div id="logged">
-                <p> Olá, <span th:text="${dadosDoador.nomeDoador}"> id </span> </p>
+                <p> Olá, <span th:text="${dadosDoador.usuarioDoador.nomeUsuario}"> id </span> </p>
             </div>
             <div id="logout">
                 <a href="/"> Deslogar </a><br><br>
@@ -28,7 +28,7 @@
             <dl th:each="inst : ${instituicoes}" class="instituicoes">
                 <img class="card-img-top" src="http://localhost:8080/images/smile-regular.svg" alt="Card image cap">
                 <div class="card-body">
-                <h5 th:text="${inst.nomeInstituicao}" class="card-title">Erro!</h5>
+                <h5 th:text="${inst.usuarioInstituicao.nomeUsuario}" class="card-title">Erro!</h5>
                 <dt>
                     <span th:text="${inst.causaInstituicao}"> causa </span>
                 </dt>

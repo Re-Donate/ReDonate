@@ -10,14 +10,16 @@
         <h2> Insira seus dados para finalizar o cadastro </h2>
         <form method="POST">
 
-            <input type="text" name="nomeDoador" placeholder="Seu nome">
-            <input type="text" name="enderecoDoador" placeholder="Seu endereço">
-            <input type="text" name="cidadeDoador" placeholder="Sua cidade">
-            <input type="text" name="telefoneDoador" placeholder="Seu telefone" data-inputmask="'mask': '(99) 9999-9999'">
+            <input type="text" name="nomeUsuario" placeholder="Seu nome">
+            <input type="text" name="enderecoUsuario" placeholder="Seu endereço">
+            <input type="text" name="cidadeUsuario" placeholder="Sua cidade">
+            <input type="text" name="estadoUsuario" placeholder="Seu Estado">
+            <input type="text" name="telefoneUsuario" placeholder="Seu telefone" data-inputmask="'mask': '(99) 9999-9999'">
             ou
-            <input type="text" name="celularDoador" placeholder="Seu celular" data-inputmask="'mask': '(99) 99999-9999'">
-            <input type="text" name="cpfDoador" placeholder="Seu cpf" data-inputmask="'mask': '999-999-999-99'">
-            <input type="number" name="idadeDoador" placeholder="Sua idade">
+            <input type="text" name="celularUsuario" placeholder="Seu celular" data-inputmask="'mask': '(99) 99999-9999'">
+            <input type="text" name="cpfUsuario" placeholder="Seu cpf" data-inputmask="'mask': '999.999.999-99'">
+            Data de nascimento:
+            <input id="nascimento" type="date" name="nascimentoDoador" value="1900-01-01" min="1900-01-01" max="2018-12-31">
             <label> Seu sexo: </label>
             <input type="radio" name="sexoDoador" value="Masculino"> Masculino
             <input type="radio" name="sexoDoador" value="Feminino"> Feminino
@@ -32,6 +34,24 @@
 
         <script>
             $(":input").inputmask();
+
+            let today = new Date();
+            console.log("today: " + today);
+            let dd = today.getDay();
+            let mm = today.getMonth();
+            let yyyy = today.getFullYear();
+            if(dd<10){
+                dd='0'+dd
+            }
+            if(mm<10){
+                mm='0'+mm
+            }
+
+            today = yyyy+'-'+dd+'-'+mm;
+            console.log("today: " + today);
+            let nascimento = document.getElementById("nascimento");
+            nascimento.setAttribute("max", today);
+            nascimento.setAttribute("value", today);
         </script>
     </body>
 </html>

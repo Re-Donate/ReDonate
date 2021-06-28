@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${detalhes.nomeInstituicao}"> nome </title>
+    <title th:text="${detalhes.usuarioInstituicao.nomeUsuario}"> nome </title>
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -13,7 +13,7 @@
     <div id="detalharInst">
         <div class="card w-50" style="width: 18rem;">
             <div class="card-header bg-info text-white">
-                <h2 th:text="${detalhes.nomeInstituicao}"> Nome </h2>
+                <h2 th:text="${detalhes.usuarioInstituicao.nomeUsuario}"> Nome </h2>
             </div>
             <div class="card-body">
                 <ul class="">
@@ -21,10 +21,10 @@
                         <h4 th:text="${detalhes.causaInstituicao}"> Asilo de animais </h4>
                     </li>
                     <li class="card-text">
-                        <h5 th:text="${detalhes.enderecoInstituicao + ',' + detalhes.cidadeInstituicao}"> Endereço, cidade </h5>
+                        <h5 th:text="${detalhes.usuarioInstituicao.enderecoUsuario + ' - ' + detalhes.usuarioInstituicao.cidadeUsuario + ', ' + detalhes.usuarioInstituicao.estadoUsuario}"> Endereço, cidade </h5>
                     </li>
                     <li class="card-text">
-                        <h6 th:text="${detalhes.celularInstituicao + detalhes.telefoneInstituicao}">Telefone</h6>
+                        <h6 th:text="${detalhes.usuarioInstituicao.celularUsuario + detalhes.usuarioInstituicao.telefoneUsuario}">Telefone</h6>
                     </li>
                     <li class="card-text">
                         <form method="POST">

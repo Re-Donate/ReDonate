@@ -12,7 +12,7 @@
   <header>
     <div id="content" class="mx-auto w-75 pt-3">
       <div id="logged">
-        <p> Olá, <span th:text="${dadosInst.nomeInstituicao}"> id </span> </p>
+        <p> Olá, <span th:text="${dadosInst.usuarioInstituicao.nomeUsuario}"> id </span> </p>
       </div>
       <div id="logout">
         <a href="/"> Deslogar </a><br><br>
@@ -29,7 +29,7 @@
 
   <div th:unless="${#lists.isEmpty(doacoes)}">
     <div th:each="i : ${#numbers.sequence(0, (#lists.size(doacoes) - 1))}">
-        <h2 th:text="'Doação feita por: ' + ${doadores.get(i).nomeDoador}"> nome do Doador </h2>
+        <h2 th:text="'Doação feita por: ' + ${doadores.get(i).usuarioDoador.nomeUsuario}"> nome do Doador </h2>
         <p th:text="'Doação realizada em: ' + ${doacoes.get(i).createdAt.toLocaleString()}" > data da Doação </p>
         <h3 th:text="'Doação para o fim de: ' + ${doacoes.get(i).causaDoacao}"> motivo da Doação </h3>
         <h4 th:text="'Doação com o valor de: R$ ' + ${doacoes.get(i).valorDoacao}"> valor da Doação </h4>
