@@ -53,20 +53,16 @@ public class InstituicaoController {
         return "dadosInstituicao";
     }
 
-    @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.GET)
-    public String detalharInstituicao(@PathVariable("inst") int inst, Model model){
-        Instituicao instDetail = instituicaoService.detail(Long.valueOf(inst));
-        if(instDetail != null){
-            model.addAttribute("detalhes", instDetail);
-        }
-        return "detalharInst";
-    }
-
     @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.POST)
-    public String atualizarDadosInstituicao(Instituicao instituicao, HttpServletRequest request){
-        Long idUsuario = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
-        instituicao.setIdUsuario(idUsuario);
-        instituicaoService.update(instituicao);
+    public String atualizarDadosInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request){
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
+
+        usuarioService.atualizarUsuario(usuarioLogado, usuario);
+
+        instituicao.setUsuarioInstituicao(usuarioLogado);
+        usuarioLogado.setInstituicao(instituicao);
+
+        usuarioService.update(usuarioLogado);
 
         System.setProperty("java.awt.headless", "false");
         //messageType: 0 -> Error
@@ -79,16 +75,28 @@ public class InstituicaoController {
         return "redirect:/instituicoes/dados";
     }
 
+    @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.GET)
+    public String detalharInstituicao(@PathVariable("inst") int inst, Model model){
+        Instituicao instDetail = instituicaoService.detail(Long.valueOf(inst));
+        if(instDetail != null){
+            model.addAttribute("detalhes", instDetail);
+        }
+        return "detalharInst";
+    }
+
     @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.GET)
     public String cadastrarInstituicaoForm(){ return "cadastrarInstituicao"; }
 
     @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.POST)
-    public String cadastrarInstituicao(Instituicao instituicao, HttpServletRequest request){
+    public String cadastrarInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request){
         Usuario User = (Usuario) request.getSession().getAttribute("lastCreatedUser");
-        Usuario newUser = usuarioService.create(User);
+        usuario.setEmailUsuario(User.getEmailUsuario());
+        usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        instituicao.setIdUsuario(newUser.getId());
-        instituicaoService.create(instituicao);
+        usuario.setInstituicao(instituicao);
+        instituicao.setUsuarioInstituicao(usuario);
+
+        usuarioService.create(usuario);
         return "redirect:/";
     }
 }

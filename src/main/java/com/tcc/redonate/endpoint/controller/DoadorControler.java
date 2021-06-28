@@ -23,12 +23,15 @@ public class DoadorControler {
     public String cadastrarDoadorForm(){ return "cadastrarDoador"; }
 
     @RequestMapping(value = "/cadastrarDoador", method = RequestMethod.POST)
-    public String cadastrarDoador(Doador doador, HttpServletRequest request){
+    public String cadastrarDoador(Usuario usuario, Doador doador, HttpServletRequest request){
         Usuario User = (Usuario) request.getSession().getAttribute("lastCreatedUser");
-        Usuario newUser = usuarioService.create(User);
+        usuario.setEmailUsuario(User.getEmailUsuario());
+        usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        doador.setIdUsuario(newUser.getId());
-        doadorService.create(doador);
+        usuario.setDoador(doador);
+        doador.setUsuarioDoador(usuario);
+
+        usuarioService.create(usuario);
         return "redirect:/";
     }
 

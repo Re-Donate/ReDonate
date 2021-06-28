@@ -2,7 +2,9 @@ package com.tcc.redonate.endpoint.service;
 
 import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
+import com.tcc.redonate.model.Usuario;
 import com.tcc.redonate.repository.InstituicaoRepository;
+import com.tcc.redonate.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class InstituicaoService {
     private final InstituicaoRepository instituicaoRepository;
+    private final UsuarioRepository usuarioRepository;
 
     public void update(Instituicao instituicao){
         log.info("Atualizando dados da instituicao");
@@ -35,7 +38,8 @@ public class InstituicaoService {
     public Instituicao findByUsuarioLogado(HttpServletRequest request){
         log.info("Buscando dados de Instituicao a partir do usuario logado");
         Long idUsuario = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
-        return instituicaoRepository.findByIdUsuario(idUsuario);
+        Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
+        return usuarioLogado.getInstituicao();
     }
 
     public void create(Instituicao instituicao){
