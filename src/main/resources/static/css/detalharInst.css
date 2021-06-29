@@ -1,7 +1,15 @@
-html,body{
-    height: 100%;
+html, body{
     margin: 0;
-    font-family: 'Roboto', sans-serif !important;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+
+div#content{
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
 }
 
 #detalharInst{
@@ -11,97 +19,56 @@ html,body{
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
-    height: 100%;
+    height: 90%;
 }
 
+.card-header{
+    background-color: #2C5288 !important;
+}
 
-ol, ul{
+ul.infos{
     list-style: none;
-    padding: 0 !important;
 }
 
-/* Página de Login */
-div#login{
-    background-color: #2C5288;
-    width: 35%;
-    vertical-align: middle;
-    color: cornsilk;
+.btn{
+    background-color: #457B9D !important;
 }
 
-div#login h3, div#login h4{
-    font-weight: bold;
-    text-align: left;
-}
+/*Header*/
 
-h4#errorMessage{
-    text-align: center !important;
-}
-
-div#container{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
-}
-
-#enviar{
-    background-color: #1D3557;
-    border-color: white;
-    color: cornsilk;
-    font-weight: bold;
-}
-
-/* Página de listar instituições */
-
-header{
-    background-color: #1D3557;
+#header{
+    position: fixed;
     width: 100%;
-    color: cornsilk;
+    height: 10%;
+    top: 0;
+    background-color: #1D3557;
+    color:cornsilk;
 }
 
-div#content{
-    width: 50%;
+h2{
+    text-align: center;
+}
+
+a:hover{
+    font-weight: bold;
+}
+
+div#title{
+    background-color: #2C5288;
+}
+
+div#contentHeader{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-div#logout{
-    text-align: right;
-}
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+} 
 
 a{
-    color:cornsilk !important;
-}
-
-#title{
-    text-align: center;
-    background-color: #2C5299;
-}
-
-#instituicaoList{
-    text-align: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-#instituicaoAll{
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
-.instituicoes{
-    padding: 5%;
-    margin-bottom: 0;
-}
-
-.card-img-top{
-    width: 75% !important;
-}
-
-
+    color: cornsilk !important;
+    text-decoration: none !important;
+}  
 
 /*Footer*/
 
@@ -149,7 +116,7 @@ footer .container #bolder{
 
 footer .container h2:before{
     content: '';
-    display: flex;
+    position: absolute;
     bottom: -5px;
     left: 0;
     width: 100%;
@@ -270,6 +237,7 @@ footer p{
 }
 
 #footer{
+    position: fixed;
     bottom: 0;
     height: 29%;
     background-color: #1D3557;

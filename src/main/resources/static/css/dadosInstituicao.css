@@ -1,110 +1,111 @@
+/*Geral*/
 html,body{
-    height: 100%;
     margin: 0;
     font-family: 'Roboto', sans-serif !important;
 }
 
-#detalharInst{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
+/*Header*/
+
+div#header{
+    width: 100%;
+    height: 10%;
+    top: 0;
+    background-color: #1D3557;
+    color:cornsilk;
 }
 
-
-ol, ul{
-    list-style: none;
-    padding: 0 !important;
-}
-
-/* Página de Login */
-div#login{
-    background-color: #2C5288;
-    width: 35%;
-    vertical-align: middle;
+div#header a {
+    text-decoration: none;
     color: cornsilk;
 }
 
-div#login h3, div#login h4{
+a:hover{
+    font-weight: bold;
+}
+
+div#title{
+    background-color: #2C5288;
+}
+
+#dados{
+    height: 100%;
+    width: 35%;
+    color: cornsilk;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    text-align: left;
+    background-color: #2C5288;
+    margin-right: 0;
+    padding: 1%;
+    border-radius: 5%;
+}
+
+div#dados h3, div#dados h4{
     font-weight: bold;
     text-align: left;
 }
 
-h4#errorMessage{
-    text-align: center !important;
+#formulario{
+    justify-content: center;
+    display: flex;
 }
 
+input{
+    width: 100%;
+}
+
+div#campos{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contato{
+    width: 47%;
+}
+
+.identificacao{
+    width: 47%;
+}
+
+#necessidades input{
+    width: auto;
+}
+
+.btn{
+    background-color: cornsilk !important;
+    color: #2C5288 !important;
+    font-size: 1.2rem !important;
+}
+
+div#submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div#content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100%;
+    width: 80%;
+    align-items: center;
+}
+
+/* Conteudo */
 div#container{
     align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
     text-align: center;
     height: 100%;
 }
 
-#enviar{
-    background-color: #1D3557;
-    border-color: white;
-    color: cornsilk;
-    font-weight: bold;
+/* Footer */
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
 }
-
-/* Página de listar instituições */
-
-header{
-    background-color: #1D3557;
-    width: 100%;
-    color: cornsilk;
-}
-
-div#content{
-    width: 50%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-div#logout{
-    text-align: right;
-}
-
-a{
-    color:cornsilk !important;
-}
-
-#title{
-    text-align: center;
-    background-color: #2C5299;
-}
-
-#instituicaoList{
-    text-align: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-#instituicaoAll{
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
-.instituicoes{
-    padding: 5%;
-    margin-bottom: 0;
-}
-
-.card-img-top{
-    width: 75% !important;
-}
-
-
-
-/*Footer*/
-
 
 footer{
     position: relative;
@@ -149,7 +150,7 @@ footer .container #bolder{
 
 footer .container h2:before{
     content: '';
-    display: flex;
+    position: absolute;
     bottom: -5px;
     left: 0;
     width: 100%;
@@ -271,7 +272,7 @@ footer p{
 
 #footer{
     bottom: 0;
-    height: 29%;
+    height: 31%;
     background-color: #1D3557;
     color:cornsilk;
     width: 100%;

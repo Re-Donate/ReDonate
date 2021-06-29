@@ -1,106 +1,97 @@
-html,body{
-    height: 100%;
+div.contato{
+    display: grid;
+    grid-template-columns: 3fr 1fr 3fr;
+}
+
+html, body{
     margin: 0;
-    font-family: 'Roboto', sans-serif !important;
-}
-
-#detalharInst{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
     height: 100%;
-}
-
-
-ol, ul{
-    list-style: none;
-    padding: 0 !important;
-}
-
-/* Página de Login */
-div#login{
-    background-color: #2C5288;
-    width: 35%;
-    vertical-align: middle;
-    color: cornsilk;
-}
-
-div#login h3, div#login h4{
-    font-weight: bold;
-    text-align: left;
-}
-
-h4#errorMessage{
-    text-align: center !important;
-}
-
-div#container{
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
-}
-
-#enviar{
-    background-color: #1D3557;
-    border-color: white;
-    color: cornsilk;
-    font-weight: bold;
-}
-
-/* Página de listar instituições */
-
-header{
-    background-color: #1D3557;
-    width: 100%;
-    color: cornsilk;
 }
 
 div#content{
-    width: 50%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
 }
 
-div#logout{
-    text-align: right;
+div#conteudo{
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    margin-top: 2%;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 2%;
 }
+
+span#ou{
+    text-align: center;
+}
+
+button{
+    background-color: #2C5288 !important;
+}
+
+div#submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+textarea{
+    width: 100%;
+}
+
+label{
+    font-weight: bold;
+}
+
+select#inputGroupSelect01{
+    width:85%;
+}
+
+.border{
+    border: 1px solid #2C5288 !important;
+}
+
+/*Header*/
+
+#header{
+    width: 100%;
+    height: 10%;
+    top: 0;
+    background-color: #1D3557;
+    color:cornsilk;
+}
+
+h2{
+    text-align: center;
+}
+
+a:hover{
+    font-weight: bold;
+}
+
+div#title{
+    background-color: #2C5288;
+}
+
+div#contentHeader{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+} 
 
 a{
-    color:cornsilk !important;
-}
-
-#title{
-    text-align: center;
-    background-color: #2C5299;
-}
-
-#instituicaoList{
-    text-align: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-#instituicaoAll{
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
-.instituicoes{
-    padding: 5%;
-    margin-bottom: 0;
-}
-
-.card-img-top{
-    width: 75% !important;
-}
-
+    color: cornsilk !important;
+    text-decoration: none !important;
+}  
 
 
 /*Footer*/
