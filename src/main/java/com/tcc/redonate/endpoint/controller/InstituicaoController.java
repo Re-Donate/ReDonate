@@ -76,11 +76,13 @@ public class InstituicaoController {
     }
 
     @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.GET)
-    public String detalharInstituicao(@PathVariable("inst") int inst, Model model){
+    public String detalharInstituicao(@PathVariable("inst") int inst, Model model, HttpServletRequest request){
         Instituicao instDetail = instituicaoService.detail(Long.valueOf(inst));
-        if(instDetail != null){
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
+        if(instDetail != null)
             model.addAttribute("detalhes", instDetail);
-        }
+        if(instDetail != null)
+            model.addAttribute("dadosDoador", usuarioLogado);
         return "detalharInst";
     }
 

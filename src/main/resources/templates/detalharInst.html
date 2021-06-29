@@ -3,53 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${detalhes.usuarioInstituicao.nomeUsuario}"> nome </title>
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/detalharInst.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
-    <a href="/instituicoes" style="color: black !important;"> Voltar </a>
-    <div id="detalharInst">
-        <div class="card w-50" style="width: 18rem;">
-            <div class="card-header bg-info text-white">
-                <h2 th:text="${detalhes.usuarioInstituicao.nomeUsuario}"> Nome </h2>
-            </div>
-            <div class="card-body">
-                <ul class="">
-                    <li class="card-text">
-                        <h4 th:text="${detalhes.causaInstituicao}"> Asilo de animais </h4>
-                    </li>
-                    <li class="card-text">
-                        <h5 th:text="${detalhes.usuarioInstituicao.enderecoUsuario + ' - ' + detalhes.usuarioInstituicao.cidadeUsuario + ', ' + detalhes.usuarioInstituicao.estadoUsuario}"> Endereço, cidade </h5>
-                    </li>
-                    <li class="card-text">
-                        <h6 th:text="${detalhes.usuarioInstituicao.celularUsuario + detalhes.usuarioInstituicao.telefoneUsuario}">Telefone</h6>
-                    </li>
-                    <li class="card-text">
-                        <form method="POST">
-                            <p>O que deseja doar? A instituição precisa de:</p>
-                            <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(',')}">
-                                <input required name="causaDoacao" type="radio" th:value="${necessidade}">
-                                <label th:text="${necessidade}"> Doação </label>
-                                <br/><br/>
-                            </div>
-
-                            <div class="input-group input-group-sm mb-3 w-75 mx-auto">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text" id="inputGroup-sizing-sm">Quanto(s) deseja doar?</span>
+    <div id="content">
+        <div id="header">
+            <header>
+                <div id="contentHeader" class="mx-auto w-75 pt-3">
+                    <div id="logged">
+                        <p> Olá, <span th:text="${dadosDoador.nomeUsuario}"> nome </span> </p>
+                    </div>
+                    <div id="instituicoes">
+                        <a href="/instituicoes"> Voltar à lista </a>
+                    </div>
+                    <div id="logout">
+                        <a href="/"> Deslogar </a><br><br>
+                    </div>
+                </div>
+                <div id="title">
+                    <h2 th:text="'Detalhes sobre ' + ${detalhes.usuarioInstituicao.nomeUsuario}"> nome Instituição </h2>
+                </div>
+            </header>
+        </div>
+        <div id="detalharInst">
+            <div class="card w-50" style="width: 18rem;">
+                <div class="card-header text-white">
+                    <h2 th:text="${detalhes.usuarioInstituicao.nomeUsuario}"> Nome </h2>
+                </div>
+                <div class="card-body">
+                    <ul class="infos">
+                        <li class="card-text">
+                            <h4 th:text="${detalhes.causaInstituicao}"> causa </h4>
+                        </li>
+                        <li class="card-text">
+                            <h5 th:text="${detalhes.usuarioInstituicao.enderecoUsuario + ' - ' + detalhes.usuarioInstituicao.estadoUsuario + ', ' + detalhes.usuarioInstituicao.cidadeUsuario}"> Endereço - Estado, Cidade </h5>
+                        </li>
+                        <li class="card-text">
+                            <h6 th:text="'Celular: ' + ${detalhes.usuarioInstituicao.celularUsuario + ' | Telefone: ' + detalhes.usuarioInstituicao.telefoneUsuario}">Telefone</h6>
+                        </li>
+                        <li class="card-text">
+                            <form method="POST">
+                                <p>O que deseja doar? A instituição precisa de:</p>
+                                <div th:each="necessidade: ${detalhes.necessidadesInstituicao.split(',')}">
+                                    <input required name="causaDoacao" type="radio" th:value="${necessidade}">
+                                    <label th:text="${necessidade}"> Doação </label>
+                                    <br/><br/>
                                 </div>
-                                <input required type="number" class="form-control" name="valorDoacao" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                            </div>
-                            <br>
-                            <button type="submit" class="btn btn-info text-white w-25">Enviar</button>
 
-                        </form>
-                    </li>
-                </ul>
+                                <div class="input-group input-group-sm mb-3 w-75 mx-auto">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="inputGroup-sizing-sm">Quanto deseja doar para esta causa?</span>
+                                    </div>
+                                    <input required type="number" class="form-control" name="valorDoacao" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                </div>
+                                <br>
+                                <button type="submit" class="btn text-white w-25">Enviar</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        
+        <div class="body-footer" id="footer">
+            <footer>
+                <div class="container">
+                    <div class="sec about-us" align="center">
+                        <h2>Sobre <span id="bolder">Nós</span></h2>
+                        <p>
+                            Somos uma comunidade que tem o propósito de contribuir para um mundo em que empresas escolhem melhor as pessoas e pessoas escolhem melhor as empresas.
+                        </p>
+                        <ul class="sci" align="center">
+                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="sec talk-to-us" align="center">
+                        <h2>Fale <span id="bolder">Conosco</span></h2>
+                        <ul class="info">
+                            <li>
+                                <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+            <div class="copyright">
+                <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
