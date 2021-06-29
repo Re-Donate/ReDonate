@@ -1,6 +1,5 @@
 package com.tcc.redonate.endpoint.controller;
 
-import com.tcc.redonate.endpoint.service.DoadorService;
 import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Usuario;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/doadores")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DoadorControler {
-    private final DoadorService doadorService;
     private final UsuarioService usuarioService;
 
     @RequestMapping(value = "/cadastrarDoador", method = RequestMethod.GET)
@@ -28,10 +26,7 @@ public class DoadorControler {
         usuario.setEmailUsuario(User.getEmailUsuario());
         usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        usuario.setDoador(doador);
-        doador.setUsuarioDoador(usuario);
-
-        usuarioService.create(usuario);
+        usuarioService.saveDoador(usuario, doador);
         return "redirect:/";
     }
 

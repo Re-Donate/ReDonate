@@ -1,6 +1,5 @@
 package com.tcc.redonate.endpoint.service;
 
-import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.model.Usuario;
 import com.tcc.redonate.repository.InstituicaoRepository;
@@ -20,17 +19,12 @@ public class InstituicaoService {
     private final InstituicaoRepository instituicaoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public void update(Instituicao instituicao){
-        log.info("Atualizando dados da instituicao");
-        instituicaoRepository.save(instituicao);
-    }
-
     public List<Instituicao> list(){
         log.info("Listando todas as Instituicoes");
         return instituicaoRepository.findAll();
     }
 
-    public Instituicao detail(Long id){
+    public Instituicao findOne(Long id){
         log.info("Buscando dados de uma instituicao");
         return instituicaoRepository.getById(id);
     }
@@ -40,10 +34,5 @@ public class InstituicaoService {
         Long idUsuario = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
         Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
         return usuarioLogado.getInstituicao();
-    }
-
-    public void create(Instituicao instituicao){
-        log.info("Criando nova instituição");
-        instituicaoRepository.save(instituicao);
     }
 }

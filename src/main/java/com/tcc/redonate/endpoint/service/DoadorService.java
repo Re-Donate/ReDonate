@@ -18,8 +18,8 @@ public class DoadorService {
     private final DoadorRepository doadorRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public Doador findById(Long id){
-        log.info("Buscando doador a partir do ID");
+    public Doador findOne(Long id){
+        log.info("Buscando dados de uma instituicao");
         return doadorRepository.getById(id);
     }
 
@@ -35,10 +35,5 @@ public class DoadorService {
         Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
 
         return usuarioLogado.getDoador() != null;
-    }
-
-    public void create(Doador doador){
-        log.info("Criando novo doador");
-        doadorRepository.save(doador);
     }
 }

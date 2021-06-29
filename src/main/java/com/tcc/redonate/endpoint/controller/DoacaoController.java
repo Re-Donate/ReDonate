@@ -29,12 +29,10 @@ public class DoacaoController {
 
     @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.POST)
     public String criarDoacao(@PathVariable("inst") Long inst, Doacao doacao, HttpServletRequest request){
-        doacao.setIdInstituicao(inst);
+        Instituicao instituicao = instituicaoService.findOne(inst);
+        Doador doador = doadorService.findByUsuarioLogado(request);
 
-        Long idDoador = doadorService.findByUsuarioLogado(request).getId();
-        doacao.setIdDoador(idDoador);
-
-        doacaoService.create(doacao);
+        doacaoService.create(doacao, doador, instituicao);
         return "redirect:/instituicoes";
     }
 
@@ -43,7 +41,7 @@ public class DoacaoController {
         Instituicao dadosInstituicao = instituicaoService.findByUsuarioLogado(request);
 
         if(dadosInstituicao != null) {
-            List<Doacao> doacoes = doacaoService.findByIdInstituicao(dadosInstituicao.getId());
+            List<Doacao> doacoes = dadosInstituicao.getDoacoes();
             if(!doacoes.isEmpty()){
                 Collections.sort(doacoes);
 
@@ -74,7 +72,7 @@ public class DoacaoController {
                         valorTotal += soma;
                     }
 
-                    doadores.add(doadorService.findById(doacaoAtual.getIdDoador()));
+                    doadores.add(doacaoAtual.getDoador());
                 }
 
                 model.addAttribute("doadores", doadores);

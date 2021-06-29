@@ -1,5 +1,6 @@
 package com.tcc.redonate.endpoint.service;
 
+import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.model.Usuario;
 import com.tcc.redonate.repository.UsuarioRepository;
@@ -27,11 +28,6 @@ public class UsuarioService {
         dadosAntigos.setCpfUsuario(novosDados.getCpfUsuario());
     }
 
-    public void update(Usuario usuario){
-        log.info("Atualizando dados do usuário");
-        usuarioRepository.save(usuario);
-    }
-
     public Usuario getUsuarioLogado(HttpServletRequest request){
         log.info("Buscando dados do Usuario Logado");
         Long idUsuario = Long.parseLong(""+request.getSession().getAttribute("idLogin"));
@@ -47,9 +43,21 @@ public class UsuarioService {
         return null;
     }
 
-    public Usuario create(Usuario usuario){
-        log.info("Criando novo usuario");
+    public boolean saveDoador(Usuario usuario, Doador doador){
+        log.info("Salvando dados do Doador");
+        usuario.setDoador(doador);
+        doador.setUsuarioDoador(usuario);
+
         Usuario newUser = usuarioRepository.save(usuario);
-        return newUser;
+        return newUser != null;
+    }
+
+    public boolean saveInstituicao(Usuario usuario, Instituicao instituicao){
+        log.info("Salvando dados da Instituição");
+        usuario.setInstituicao(instituicao);
+        instituicao.setUsuarioInstituicao(usuario);
+
+        Usuario newUser = usuarioRepository.save(usuario);
+        return newUser != null;
     }
 }

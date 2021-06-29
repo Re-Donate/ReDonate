@@ -1,13 +1,13 @@
 package com.tcc.redonate.endpoint.service;
 
 import com.tcc.redonate.model.Doacao;
+import com.tcc.redonate.model.Doador;
+import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.repository.DoacaoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -15,13 +15,14 @@ import java.util.List;
 public class DoacaoService {
     private final DoacaoRepository doacaoRepository;
 
-    public void create(Doacao doacao){
+    public void create(Doacao doacao, Doador doador, Instituicao instituicao){
         log.info("Criando nova docao");
-        doacaoRepository.save(doacao);
-    }
+        instituicao.getDoacoes().add(doacao);
+        doador.getDoacoes().add(doacao);
 
-    public List<Doacao> findByIdInstituicao(Long idInstituicao){
-        log.info("Buscando doações enviadas à instituição");
-        return doacaoRepository.findByIdInstituicao(idInstituicao);
+        doacao.setDoador(doador);
+        doacao.setInstituicao(instituicao);
+
+        doacaoRepository.save(doacao);
     }
 }

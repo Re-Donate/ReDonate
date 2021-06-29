@@ -3,6 +3,7 @@ package com.tcc.redonate.endpoint.controller;
 import com.tcc.redonate.endpoint.service.DoadorService;
 import com.tcc.redonate.endpoint.service.InstituicaoService;
 import com.tcc.redonate.endpoint.service.UsuarioService;
+import com.tcc.redonate.model.Doacao;
 import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.model.Usuario;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.*;
 import java.util.List;
 
 @Controller
@@ -56,28 +56,19 @@ public class InstituicaoController {
     @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.POST)
     public String atualizarDadosInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request){
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
+        List<Doacao> doacoes = instituicaoService.findOne(instituicao.getId()).getDoacoes();
+
+        instituicao.setDoacoes(doacoes);
 
         usuarioService.atualizarUsuario(usuarioLogado, usuario);
-
-        instituicao.setUsuarioInstituicao(usuarioLogado);
-        usuarioLogado.setInstituicao(instituicao);
-
-        usuarioService.update(usuarioLogado);
-
-        System.setProperty("java.awt.headless", "false");
-        //messageType: 0 -> Error
-        //messageType: 1 -> Information
-        //messageType: 2 -> Warning
-        //messageType: 3 -> Question
-        //messageType: -1 -> Plain
-        JOptionPane.showMessageDialog(null, "Dados alterados com sucesso", "Alteração de dados", 1);
+        usuarioService.saveInstituicao(usuarioLogado, instituicao);
 
         return "redirect:/instituicoes/dados";
     }
 
     @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.GET)
     public String detalharInstituicao(@PathVariable("inst") int inst, Model model, HttpServletRequest request){
-        Instituicao instDetail = instituicaoService.detail(Long.valueOf(inst));
+        Instituicao instDetail = instituicaoService.findOne(Long.valueOf(inst));
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
         if(instDetail != null)
             model.addAttribute("detalhes", instDetail);
@@ -95,10 +86,7 @@ public class InstituicaoController {
         usuario.setEmailUsuario(User.getEmailUsuario());
         usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        usuario.setInstituicao(instituicao);
-        instituicao.setUsuarioInstituicao(usuario);
-
-        usuarioService.create(usuario);
+        usuarioService.saveInstituicao(usuario, instituicao);
         return "redirect:/";
     }
 }
