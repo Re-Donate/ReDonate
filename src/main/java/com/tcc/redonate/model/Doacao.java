@@ -26,16 +26,18 @@ public class Doacao implements AbstractEntity, Comparable<Doacao>{
     @Column(nullable = false)
     private String causaDoacao;
 
-    @Column(nullable = false)
-    private Long idDoador;
-
-    @Column(nullable = false)
-    private Long idInstituicao;
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_doador", referencedColumnName = "id")
+    private Doador doador;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_instituicao", referencedColumnName = "id")
+    private Instituicao instituicao;
 
     @Override
     public int compareTo(Doacao d){

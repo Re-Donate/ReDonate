@@ -3,7 +3,7 @@ package com.tcc.redonate.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,4 +28,7 @@ public class Doador implements AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuarioDoador;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "doador", orphanRemoval = true)
+    private List<Doacao> doacoes;
 }
