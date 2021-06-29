@@ -5,6 +5,7 @@
     <title>Lista de Instituições</title>
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
@@ -13,7 +14,7 @@
     <header>
         <div id="content" class="mx-auto w-75 pt-3">
             <div id="logged">
-                <p> Olá, <span th:text="${dadosDoador.usuarioDoador.nomeUsuario}"> id </span> </p>
+                <p> Olá, <span th:text="${dadosDoador.usuarioDoador.nomeUsuario}"> nome </span> </p>
             </div>
             <div id="logout">
                 <a href="/"> Deslogar </a><br><br>
@@ -24,17 +25,56 @@
         </div>
     </header>
     <div id="instituicaoAll">
-        <div th:unless="${#lists.isEmpty(instituicoes)}" class="card" style="width: 18rem;" id="instituicaoList">
+        <div th:unless="${#lists.isEmpty(instituicoes)}" class="card" id="instituicaoList">
             <dl th:each="inst : ${instituicoes}" class="instituicoes">
                 <img class="card-img-top" src="http://localhost:8080/images/smile-regular.svg" alt="Card image cap">
                 <div class="card-body">
-                <h5 th:text="${inst.usuarioInstituicao.nomeUsuario}" class="card-title">Erro!</h5>
-                <dt>
-                    <span th:text="${inst.causaInstituicao}"> causa </span>
-                </dt>
-                <a th:href="@{'/instituicao/' + ${inst.id}}" class="btn btn-primary">Doar!</a>
+                    <h5 th:text="${inst.usuarioInstituicao.nomeUsuario}" class="card-title">Erro!</h5>
+                    <dt>
+                        <span th:text="${inst.causaInstituicao}"> causa </span>
+                    </dt>
+                    <a th:href="@{'/instituicao/' + ${inst.id}}" class="btn btn-primary">Doar!</a>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div th:with="quantidade = ${#lists.size(instituicoes)}" th:style="${quantidade} >= 5 ? 'position: relative' : 'position: fixed'" class="body-footer" id="footer">
+        <footer>
+            <div class="container">
+                <div class="sec about-us" align="center">
+                    <h2>Sobre <span id="bolder">Nós</span></h2>
+                    <p>
+                        Somos uma comunidade que tem o propósito de contribuir para um mundo em que empresas escolhem melhor as pessoas e pessoas escolhem melhor as empresas.
+                    </p>
+                    <ul class="sci" align="center">
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="sec talk-to-us" align="center">
+                    <h2>Fale <span id="bolder">Conosco</span></h2>
+                    <ul class="info">
+                        <li>
+                            <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                            <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
+                        </li>
+                        <li>
+                            <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                            <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
+                        </li>
+                        <li>
+                            <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                            <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <div class="copyright">
+            <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
         </div>
     </div>
 

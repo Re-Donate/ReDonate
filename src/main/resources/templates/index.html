@@ -3,42 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <title>Re:Donate</title>
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/index.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
-<div id="container">
+    <div id="container">
 
-    <div id="lado"></div>
-
-    <div th:if="${session.idLogin eq null}" id="login" class="rounded">
-        <form action="/logar" method="POST">
-
-            <div id="campos" class="mx-auto w-75 mt-2">
-
-                <h3>Email:</h3>
-                <div class="input-group mb-1 mx-auto">
-                    <input type="email" class="form-control" aria-label="Email" name="emailUsuario">
-                </div>
-
-                <br/><br/>
-
-                <h3>Senha:</h3>
-                <div class="input-group mb-1 mx-auto">
-                    <input type="password" class="form-control" aria-label="Senha" name="senhaUsuario">
-                </div>
-                <button type="submit" class="btn btn-sm mt-2 mb-3" id="enviar">Enviar</button>
-                <br/>
+        <div id="header">
+            <div id="options" class="mx-auto">
+                <a href="#" id="title">ReDonate</a>
+                <a href="#" id="sobre">Sobre</a>
             </div>
+        </div>
 
-            <p> Ainda não possui uma conta? <a href="/cadastrar"> Cadastre-se </a> </p>
-            
-        </form>
-        <h4 th:if="${falhaLogin != null and falhaLogin == 1}" id="errorMessage"> Falha ao efetuar login, tente novamente!</h4>
+        <div id="lado"></div>
+
+        <div th:if="${session.idLogin eq null}" id="login" class="rounded">
+            <form action="/logar" method="POST">
+
+                <div id="campos" class="mx-auto w-75 mt-2">
+
+                    <h3>Email:</h3>
+                    <div class="input-group mb-1 mx-auto">
+                        <input type="email" class="form-control" aria-label="Email" name="emailUsuario">
+                    </div>
+
+                    <br/><br/>
+
+                    <h3>Senha:</h3>
+                    <div class="input-group mb-1 mx-auto">
+                        <input type="password" class="form-control" aria-label="Senha" name="senhaUsuario">
+                    </div>
+
+                    <button type="submit" class="btn btn-sm mt-2 mb-3" id="enviar">Enviar</button>
+                    <br/>
+                </div>
+
+                <p> Ainda não possui uma conta? <a href="/cadastrar"> Cadastre-se </a> </p>
+
+            </form>
+            <h4 th:if="${falhaLogin != null and falhaLogin == 1}" id="errorMessage"> Falha ao efetuar login, tente novamente!</h4>
+        </div>
+
+        <div class="body-footer" id="footer">
+            <footer>
+                <div class="container">
+                    <div class="sec about-us" align="center">
+                        <h2>Sobre <span id="bolder">Nós</span></h2>
+                        <p>
+                            Somos uma comunidade que tem o propósito de contribuir para um mundo em que empresas
+                            escolhem melhor as pessoas e pessoas escolhem melhor as empresas.
+                        </p>
+                        <ul class="sci" align="center">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="sec talk-to-us" align="center">
+                        <h2>Fale <span id="bolder">Conosco</span></h2>
+                        <ul class="info">
+                            <li>
+                                <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+            <div class="copyright">
+                <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
+            </div>
+        </div>
+
     </div>
-
-</div>
 </body>
 </html>

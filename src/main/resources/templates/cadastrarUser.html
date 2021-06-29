@@ -3,23 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Efetuar Cadastro</title>
-
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/cadastrarUser.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
-  <form method="POST">
+    <div id="content">
+        <div id="header">
+            <header>
+                <div id="contentHeader" class="mx-auto w-75 pt-3">
+                    <div id="logout">
+                        <a href="/"> Voltar </a>
+                    </div>
+                    <div id="logged">
+                        <p> Insira seus dados para efetuar o cadastro </p><br>
+                    </div>
+                </div>
+                <div id="title">
+                    <h2> Cadastro </h2>
+                </div>
+            </header>
+        </div>
+        <div id="conteudo" class="align-middle">
+            <form method="POST" class="border rounded border-info">
 
-    <label> Email: </label>
-    <input type="text" name="emailUsuario" placeholder="Insira seu email">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Endereço de email</label>
+                    <input type="email" class="form-control" name="emailUsuario" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seu email">
+                    <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Senha</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="senhaUsuario" placeholder="Senha">
+                </div>
+                <br>
+                <div class="form-group form-check" id="tipoDoador">
+                    <label> Deseja se cadastrar como: </label>
+                    <input type="radio" name="tipoUsuario" value="Doador" checked> Doador
+                    <input type="radio" name="tipoUsuario" value="Instituicao"> Instituição
+                </div>
+                <br>
+                <div id="submit">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
 
-    <label> Senha: </label>
-    <input type="password" name="senhaUsuario" placeholder="Insira sua senha">
-
-    <label> Deseja se cadastrar como: </label>
-    <input type="radio" name="tipoUsuario" value="Doador" checked> Doador
-    <input type="radio" name="tipoUsuario" value="Instituicao"> Instituição
-
-    <input type="submit">
-  </form>
+            </form>
+        </div>
+        <div class="body-footer" id="footer">
+            <footer>
+                <div class="container">
+                    <div class="sec about-us" align="center">
+                        <h2>Sobre <span id="bolder">Nós</span></h2>
+                        <p>
+                            Somos uma comunidade que tem o propósito de contribuir para um mundo em que empresas escolhem melhor as pessoas e pessoas escolhem melhor as empresas.
+                        </p>
+                        <ul class="sci" align="center">
+                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="sec talk-to-us" align="center">
+                        <h2>Fale <span id="bolder">Conosco</span></h2>
+                        <ul class="info">
+                            <li>
+                                <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+            <div class="copyright">
+                <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

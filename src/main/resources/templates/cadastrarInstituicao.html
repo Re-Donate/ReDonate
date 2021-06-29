@@ -3,36 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de usuario</title>
-
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/cadastrarInstituicao.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="content">
+        <div id="header">
+            <header>
+                <div id="contentHeader" class="mx-auto w-75 pt-3">
+                    <div id="logout">
+                        <a href="/cadastrar"> Voltar </a>
+                    </div>
+                    <div id="logged">
+                        <p> Insira seus dados para finalizar o cadastro </p><br>
+                    </div>
+                </div>
+                <div id="title">
+                    <h2> Cadastro! </h2>
+                </div>
+            </header>
+        </div>
+        <div id="conteudo">
+            <form method="POST" class="border border-info p-3">
 
-    <h2> Insira seus dados para finalizar o cadastro </h2>
-    <form method="POST">
-
-        <input type="text" name="nomeUsuario" placeholder="Nome da instituicao">
-        <input type="text" name="enderecoUsuario" placeholder="Endereco da instituicao">
-        <input type="text" name="cidadeUsuario" placeholder="Cidade da instituicao">
-        <input type="text" name="estadoUsuario" placeholder="Estado da instituicao">
-        <input type="text" name="telefoneUsuario" placeholder="Telefone da instituicao" data-inputmask="'mask': '(99) 9999-9999'">
-        ou
-        <input type="text" name="celularUsuario" placeholder="Celular da instituicao" data-inputmask="'mask': '(99) 99999-9999'">
-        <input type="text" name="cnpjInstituicao" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
-        ou
-        <input type="text" name="cpfUsuario" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999.999.999-99'">
-        <input type="text" name="causaInstituicao" placeholder="Causa da instituicao">
-        <p> Selecione suas necessidades </p>
-        <input type="checkbox" name="necessidadesInstituicao" value="Alimentos"> Alimentos
-        <input type="checkbox" name="necessidadesInstituicao" value="Remédios"> Remédios ou outros produtos farmacêuticos
-        <input type="checkbox" name="necessidadesInstituicao" value="Educação"> Educação
-        <input type="checkbox" name="necessidadesInstituicao" value="Vestimentas"> Vestimentas
-        <input type="checkbox" name="necessidadesInstituicao" value="Produtos para Pets"> Produtos para Pets
-        <input type="checkbox" name="necessidadesInstituicao" value="Outros fins"> Investir o dinheiro da doação no que for necessário
-
-        <input type="submit">
-    </form>
-
+                <div class="form-group">
+                    <label for="emailInput">Nome da sua instituição</label>
+                    <input type="text" class="form-control" name="nomeUsuario" id="emailInput" aria-describedby="nameHelp" placeholder="Nome da sua instituição">
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="enderecoInput">Endereço da instituição</label>
+                    <input type="text" class="form-control" name="enderecoUsuario" id="enderecoInput" aria-describedby="emailHelp" placeholder="Endereço da instituição">
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="cidadeInput">Cidade da Instituição</label>
+                    <input type="text" class="form-control" name="cidadeUsuario" id="cidadeInput" aria-describedby="cidadeHelp" placeholder="Cidade da instituição">
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="estadoInput">Estado da Instituição</label>
+                    <input type="text" class="form-control" name="estadoUsuario" id="estadoInput" aria-describedby="estadoHelp" placeholder="Estado da instituição">
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="contatoInput">Contato</label>
+                    <div class="contato" id="contatoInput">
+                        <input type="text" class="form-control" name="telefoneUsuario" aria-describedby="telefoneHelp" placeholder="Telefone da instituicao" data-inputmask="'mask': '(99) 9999-9999'">
+                        <span id="ou">ou</span>
+                        <input type="text" class="form-control" name="celularUsuario" aria-describedby="celularHelp" placeholder="Celular da instituicao" data-inputmask="'mask': '(99) 99999-9999'">
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="identificacaoInput">Identificação</label>
+                    <div class="contato" id="identificacaoInput">
+                        <input type="text" class="form-control" name="cnpjInstituicao" aria-describedby="cnpjHelp" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
+                        <span id="ou">ou</span>
+                        <input type="text" class="form-control" name="cpfUsuario" aria-describedby="cpfHelp" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999.999.999-99'">
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="causaInput">Causa</label>
+                    <input type="text" class="form-control" name="causaInstituicao" id="causaInput" aria-describedby="causaHelp" placeholder="Causa da instituicao">
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="necessidadeInput">Selecione as necessidades da sua instituição</label>
+                    <div id="necessidadeInput">
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Alimentos"> Alimentos <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Remédios"> Remédios ou outros produtos farmacêuticos <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Educação"> Educação <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Vestimentas"> Vestimentas <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Produtos para Pets"> Produtos para Pets <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Outros fins"> Investir o dinheiro da doação no que for necessário <br>
+                    </div>
+                </div>
+                <br />
+                <div id="submit">
+                    <button type="submit" class="btn text-white w-25">Enviar</button>
+                </div>
+            </form>
+        </div>
+        <div class="body-footer" id="footer">
+            <footer>
+                <div class="container">
+                    <div class="sec about-us" align="center">
+                        <h2>Sobre <span id="bolder">Nós</span></h2>
+                        <p>
+                            Somos uma comunidade que tem o propósito de contribuir para um mundo em que empresas escolhem melhor as
+                            pessoas e pessoas escolhem melhor as empresas.
+                        </p>
+                        <ul class="sci" align="center">
+                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="sec talk-to-us" align="center">
+                        <h2>Fale <span id="bolder">Conosco</span></h2>
+                        <ul class="info">
+                            <li>
+                                <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+            <div class="copyright">
+                <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </div>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
