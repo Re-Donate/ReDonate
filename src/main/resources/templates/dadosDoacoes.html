@@ -3,48 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <title>Doações Recebidas</title>
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/dadosDoacoes.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <div id="content" class="mx-auto w-75 pt-3">
-      <div id="logged">
-        <p> Olá, <span th:text="${dadosInst.usuarioInstituicao.nomeUsuario}"> id </span> </p>
-      </div>
-      <div id="logout">
-        <a href="/"> Deslogar </a><br><br>
-      </div>
-      <br>
-      <div>
-         <p> Para acessar e alterar os dados da sua instituição, clique <a href="/instituicoes/dados"> aqui </a> </p>
-      </div>
-    </div>
-    <div id="title">
-      <h2> Doações Recebidas </h2>
-    </div>
-  </header>
+    <div id="container">
+        <div id="header">
+            <header>
+                <div id="content" class="mx-auto w-75 pt-3">
+                    <div id="logged">
+                        <p> Olá, <span th:text="${dadosInst.usuarioInstituicao.nomeUsuario}"> id </span> </p>
+                    </div>
+                    <div>
+                        <p> <a href="/instituicoes/dados"> Doações Recebidas </a> </p>
+                    </div>
+                    <div id="logout">
+                        <a href="/"> Deslogar </a><br><br>
+                    </div>
+                </div>
+                <div id="title">
+                    <h2 id="titleName"> Seus dados </h2>
+                </div>
+            </header>
+        </div>
+        <div class="container">
+            <div th:unless="${#lists.isEmpty(doacoes)}" id="conteudo" class="row">
+                <div id="left" class="border border-info col">
+                    <div th:each="i : ${#numbers.sequence(0, (#lists.size(doacoes) - 1))}">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title" th:text="'Doação feita por: ' + ${doadores.get(i).usuarioDoador.nomeUsuario}"> nome do Doador </h2>
+                                <p class="card-subtitle" th:text="'Doação realizada em: ' + ${doacoes.get(i).createdAt.toLocaleString()}" > data da Doação </p>
+                                <h3 class="card-text" th:text="'Doação para o fim de: ' + ${doacoes.get(i).causaDoacao}"> motivo da Doação </h3>
+                                <h4 class="card-text" th:text="'Doação com o valor de: R$ ' + ${doacoes.get(i).valorDoacao}"> valor da Doação </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="right" class="border border-info col">
+                    <div id="conteudoDireita">
+                        <div th:each="i : ${#numbers.sequence(0, (#lists.size(causas) - 1))}">
+                            <h2 th:text="'Você recebeu, ao total, R$ ' + ${valores.get(i)} + ' para o fim de: ' + ${causas.get(i)}"> causa da Doação </h2>
+                        </div>
+                        <br/>
+                        <h1 th:text="'Ao total, você recebeu: R$ ' + ${total}"> Total recebido </h1>
+                    </div>
+                </div>
+            </div>
 
-  <div th:unless="${#lists.isEmpty(doacoes)}">
-    <div th:each="i : ${#numbers.sequence(0, (#lists.size(doacoes) - 1))}">
-        <h2 th:text="'Doação feita por: ' + ${doadores.get(i).usuarioDoador.nomeUsuario}"> nome do Doador </h2>
-        <p th:text="'Doação realizada em: ' + ${doacoes.get(i).createdAt.toLocaleString()}" > data da Doação </p>
-        <h3 th:text="'Doação para o fim de: ' + ${doacoes.get(i).causaDoacao}"> motivo da Doação </h3>
-        <h4 th:text="'Doação com o valor de: R$ ' + ${doacoes.get(i).valorDoacao}"> valor da Doação </h4>
+          <div th:if="${#lists.isEmpty(doacoes)}">
+              <h2> Você ainda não recebeu nenhuma doação </h2>
+          </div>
+        </div>
+        <div th:with="quantidade = ${#lists.size(doacoes)}" th:style="${quantidade} >= 3 ? 'position: relative' : 'position: fixed'" class="body-footer" id="footer">
+            <footer>
+                <div class="container">
+                    <div class="sec about-us" align="center">
+                        <h2>Sobre <span id="bolder">Nós</span></h2>
+                        <p>
+                            Somos uma comunidade que tem como principal característica o companheirismo. Sempre que nós vemos alguém passando por necessidades nós percebemos que temos que agir. Um por todos e todos por um!
+                        </p>
+                        <ul class="sci" align="center">
+                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="sec talk-to-us" align="center">
+                        <h2>Fale <span id="bolder">Conosco</span></h2>
+                        <ul class="info">
+                            <li>
+                                <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
+                            </li>
+                            <li>
+                                <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
+            <div class="copyright">
+                <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
+            </div>
+        </div>
     </div>
-
-    <div th:each="i : ${#numbers.sequence(0, (#lists.size(causas) - 1))}">
-        <h2 th:text="'Você recebeu, ao total, R$ ' + ${valores.get(i)} + ' para o fim de: ' + ${causas.get(i)}"> causa da Doação </h2>
-    </div>
-
-    <h1 th:text="'Ao total, você recebeu: ' + ${total}"> Total recebido </h1>
-  </div>
-
-  <div th:if="${#lists.isEmpty(doacoes)}">
-      <h2> Você ainda não recebeu nenhuma doação </h2>
-  </div>
 </body>
 </html>
