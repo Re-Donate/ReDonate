@@ -9,7 +9,7 @@ INSERT INTO doador (nascimento_doador, sexo_doador, id_usuario) VALUES (DATE '20
 INSERT INTO instituicao (cnpj_instituicao, causa_instituicao, necessidades_instituicao, id_usuario) VALUES ("", "Cuidado e Adoção de animais de rua", "Produtos para Pets,Remédios,Outros fins", 2),
                                                                                                            ("10.277.432/9108-45", "Auxílio de pessoas carentes", "Outros fins,Vestimentas,Alimentos,Outros fins", 3),
                                                                                                            ("11.284.938/7275-90", "Inclusão educacional", "Outros fins,Educação", 4),
-                                                                                                           ("11454867398789", "Serviços médicos", "Outros fins,Alimentos", 5);
+                                                                                                           ("11.454.867/3987-89", "Serviços médicos", "Outros fins,Alimentos", 5);
 
 INSERT INTO doacao (valor_doacao, causa_doacao, id_doador, id_instituicao) VALUES (25, "Outros fins", 1, 4),
                                                                                   (30, "Alimentos", 1, 4);
