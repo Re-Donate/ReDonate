@@ -5,6 +5,10 @@ html,body{
 }
  /*Conteúdo*/
 
+#conteudo{
+    margin-bottom: 2%;
+}
+
 div#left{
     width: 50%;
     display: grid;
