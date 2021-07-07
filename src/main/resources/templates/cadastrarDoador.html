@@ -27,22 +27,22 @@
                 </header>
             </div>
             <div id="conteudo">
-                <form method="POST" class="border border-info p-3">
+                <form id="cadastroForm" method="POST" class="border border-info p-3">
                     <div class="form-group">
                         <label for="nomeInput">Nome</label>
-                        <input type="text" class="form-control" name="nomeUsuario" id="nomeInput" aria-describedby="nomeHelp" placeholder="Seu nome">
+                        <input type="text" class="form-control" name="nomeUsuario" id="nomeInput" aria-describedby="nomeHelp" minlength="5" placeholder="Seu nome" required>
                     </div>
                     <div class="form-group">
                         <label for="enderecoInput">Endereço</label>
-                        <input type="text" class="form-control" name="enderecoUsuario" id="enderecoInput" placeholder="Seu endereço">
+                        <input type="text" class="form-control" name="enderecoUsuario" id="enderecoInput"  minlength="8" placeholder="Seu endereço" required>
                     </div>
                     <div class="form-group">
                         <label for="cidadeInput">Cidade</label>
-                        <input type="text" class="form-control" name="cidadeUsuario" id="cidadeInput" placeholder="Sua cidade">
+                        <input type="text" class="form-control" name="cidadeUsuario" id="cidadeInput" minlength="4" placeholder="Sua cidade" required>
                     </div>
                     <div class="form-group">
                         <label for="estadoInput">Estado</label>
-                        <input type="text" class="form-control" name="estadoUsuario" id="estadoInput" placeholder="Seu Estado">
+                        <input type="text" class="form-control" name="estadoUsuario" id="estadoInput" minlength="4" placeholder="Seu Estado" required>
                     </div>
                     <div class="form-group">
                         <label for="contatoInput">Contato</label>
@@ -54,29 +54,29 @@
                     </div>
                     <div class="form-group">
                         <label for="cpfInput">CPF</label>
-                        <input type="text" class="form-control" name="cpfUsuario" id="cpfInput" placeholder="Seu cpf" data-inputmask="'mask': '999.999.999-99'">
+                        <input type="text" class="form-control" name="cpfUsuario" id="cpfInput" placeholder="Seu cpf" data-inputmask="'mask': '999.999.999-99'" required>
                     </div>
                     <div class="form-group">
                         <label for="nascimento">Data de Nascimento</label>
-                        <input id="nascimento" class="form-control" type="date" name="nascimentoDoador" value="1900-01-01" min="1900-01-01" max="2018-12-31">
+                        <input id="nascimento" class="form-control" type="date" name="nascimentoDoador" value="1900-01-01" min="1900-01-01" max="2018-12-31" required>
                     </div>
                     <div class="form-group">
-                        <label for="sexo">Sexo</label>
-                        <div id="sexo">
+                        <label for="sexoInput">Sexo</label>
+                        <div id="sexoInput">
                             <div>
-                                <input type="radio" class="form-check-input" name="sexoDoador" value="Masculino"> Masculino
+                                <input type="radio" class="form-check-input" name="sexoDoador" value="Masculino" required> Masculino
                             </div>
                             <div>
-                                <input type="radio" class="form-check-input" name="sexoDoador" value="Feminino"> Feminino
+                                <input type="radio" class="form-check-input" name="sexoDoador" value="Feminino" required> Feminino
                             </div>
                             <div>
-                                <input type="radio" class="form-check-input" name="sexoDoador" value="Outro"> Outro
+                                <input type="radio" class="form-check-input" name="sexoDoador" value="Outro" required> Outro
                             </div>
                         </div>
                     </div>
                     <br />
                     <div id="submit">
-                        <button type="submit" class="btn text-white w-25">Enviar</button>
+                        <button type="submit" class="btn text-white w-25" id="cadastrar" disabled>Enviar</button>
                     </div>
                 </form>
             </div>
@@ -126,7 +126,23 @@
         <script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
 
         <script>
-            $(":input").inputmask();
+            $(document).ready(function() {
+                $(":input").inputmask();
+
+                $("#cadastroForm :input").on("input", () => {
+                    const nomePreenchido = $("#nomeInput").val() != "";
+                    const enderecoPreenchido = $("#enderecoInput").val() != "";
+                    const cidadePreenchido = $("#cidadeInput").val() != "";
+                    const estadoPreenchido = $("#estadoInput").val() != "";
+                    const cpf = $("#cpfInput");
+                    const sexoPreenchido = $("#sexoInput :radio:checked").length > 0;
+
+                    if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && (cpf.val().indexOf("_") == -1 && cpf.val().length > 0) && sexoPreenchido)
+                        $("#cadastrar").prop("disabled", false);
+                    else
+                        $("#cadastrar").prop("disabled", true);
+                });
+            });
 
             let today = new Date();
             let dd = today.getDate();

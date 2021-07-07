@@ -27,26 +27,26 @@
             </header>
         </div>
         <div id="conteudo">
-            <form method="POST" class="border border-info p-3">
+            <form id="cadastroForm" method="POST" class="border border-info p-3">
 
                 <div class="form-group">
-                    <label for="emailInput">Nome da sua instituição</label>
-                    <input type="text" class="form-control" name="nomeUsuario" id="emailInput" aria-describedby="nameHelp" placeholder="Nome da sua instituição">
+                    <label for="nomeInput">Nome da sua instituição</label>
+                    <input type="text" class="form-control" name="nomeUsuario" id="nomeInput" aria-describedby="nameHelp" minlength="5" placeholder="Nome da sua instituição" required>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label for="enderecoInput">Endereço da instituição</label>
-                    <input type="text" class="form-control" name="enderecoUsuario" id="enderecoInput" aria-describedby="emailHelp" placeholder="Endereço da instituição">
+                    <input type="text" class="form-control" name="enderecoUsuario" id="enderecoInput" aria-describedby="emailHelp" minlength="8" placeholder="Endereço da instituição" required>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label for="cidadeInput">Cidade da Instituição</label>
-                    <input type="text" class="form-control" name="cidadeUsuario" id="cidadeInput" aria-describedby="cidadeHelp" placeholder="Cidade da instituição">
+                    <input type="text" class="form-control" name="cidadeUsuario" id="cidadeInput" aria-describedby="cidadeHelp" minlength="4" placeholder="Cidade da instituição" required>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label for="estadoInput">Estado da Instituição</label>
-                    <input type="text" class="form-control" name="estadoUsuario" id="estadoInput" aria-describedby="estadoHelp" placeholder="Estado da instituição">
+                    <input type="text" class="form-control" name="estadoUsuario" id="estadoInput" aria-describedby="estadoHelp" minlength="4" placeholder="Estado da instituição" required>
                 </div>
                 <br/>
                 <div class="form-group">
@@ -61,31 +61,31 @@
                 <div class="form-group">
                     <label for="identificacaoInput">Identificação</label>
                     <div class="contato" id="identificacaoInput">
-                        <input type="text" class="form-control" name="cnpjInstituicao" aria-describedby="cnpjHelp" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
+                        <input type="text" class="form-control" name="cnpjInstituicao" id="cnpj" aria-describedby="cnpjHelp" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
                         <span id="ou">ou</span>
-                        <input type="text" class="form-control" name="cpfUsuario" aria-describedby="cpfHelp" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999.999.999-99'">
+                        <input type="text" class="form-control" name="cpfUsuario" id="cpf" aria-describedby="cpfHelp" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999.999.999-99'">
                     </div>
                 </div>
                 <br />
                 <div class="form-group">
                     <label for="causaInput">Causa</label>
-                    <input type="text" class="form-control" name="causaInstituicao" id="causaInput" aria-describedby="causaHelp" placeholder="Causa da instituicao">
+                    <input type="text" class="form-control" name="causaInstituicao" id="causaInput" aria-describedby="causaHelp" placeholder="Causa da instituicao" required>
                 </div>
                 <br />
                 <div class="form-group">
                     <label for="necessidadeInput">Selecione as necessidades da sua instituição</label>
                     <div id="necessidadeInput">
-                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Alimentos"> Alimentos <br>
-                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Remédios"> Remédios ou outros produtos farmacêuticos <br>
-                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Educação"> Educação <br>
-                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Vestimentas"> Vestimentas <br>
-                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Produtos para Pets"> Produtos para Pets <br>
-                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Outros fins"> Investir o dinheiro da doação no que for necessário <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Alimentos" > Alimentos <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Remédios" > Remédios ou outros produtos farmacêuticos <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Educação" > Educação <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Vestimentas" > Vestimentas <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Produtos para Pets" > Produtos para Pets <br>
+                        <input type="checkbox" name="necessidadesInstituicao" aria-describedby="necessidadeHelp" value="Outros fins" > Investir o dinheiro da doação no que for necessário <br>
                     </div>
                 </div>
                 <br />
                 <div id="submit">
-                    <button type="submit" class="btn text-white w-25">Enviar</button>
+                    <button type="submit" class="btn text-white w-25" id="cadastrar" disabled>Enviar</button>
                 </div>
             </form>
         </div>
@@ -135,7 +135,25 @@
     <script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
 
     <script>
-        $(":input").inputmask();
+        $(document).ready(function() {
+            $(":input").inputmask();
+
+            $("#cadastroForm :input").on("input", () => {
+                const nomePreenchido = $("#nomeInput").val() != "";
+                const enderecoPreenchido = $("#enderecoInput").val() != "";
+                const cidadePreenchido = $("#cidadeInput").val() != "";
+                const estadoPreenchido = $("#estadoInput").val() != "";
+                const cnpj = $("#cnpj");
+                const cpf = $("#cpf");
+                const causaPreenchido = $("#causaInput").val() != "";
+                const necessidadePreenchida = $("#necessidadeInput :checkbox:checked").length > 0;
+
+                if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && ((cpf.val().indexOf("_") == -1 && cpf.val().length > 0) || (cnpj.val().indexOf("_") == -1 && cnpj.val().length > 0)) && causaPreenchido && necessidadePreenchida)
+                    $("#cadastrar").prop("disabled", false);
+                else
+                    $("#cadastrar").prop("disabled", true);
+            });
+        });
     </script>
 </body>
 </html>

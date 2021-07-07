@@ -13,17 +13,18 @@ div#content{
 }
 
 div#conteudo{
-    justify-content: center;
-    align-items: center;
     width: 30%;
-    margin-top: 13%;
-    margin-bottom: auto;
+    margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
 }
 
-form{
-    border-color: #2C5288;
+form#cadastroForm{
+    padding: 5%;
+}
+
+div#tipoDoador{
+    padding-left: 0;
 }
 
 #titulo{
@@ -35,12 +36,6 @@ div#submit{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-div#tipoDoador{
-    justify-content: center;
-    align-items: center;
-    display: flex;
 }
 
 /*Header*/

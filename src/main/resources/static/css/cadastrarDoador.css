@@ -28,7 +28,7 @@ div#submit{
     justify-content: center;
 }
 
-div#sexo{
+div#sexoInput{
     display: grid;
     grid-template-columns: 2fr 2fr 2fr;
 }
