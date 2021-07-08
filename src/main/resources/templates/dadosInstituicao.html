@@ -90,7 +90,7 @@
                             <input checked type="checkbox" name="necessidadesInstituicao" value="Produtos para Pets"> Produtos para Pets
                         </p>
                         <p th:if="${#arrays.contains(necessidade, 'Outros fins')}">
-                            <input checked type="checkbox" name="necessidadesInstituicao" value="Outros fins"> A instituição investe o dinheiro da doação no que for necessário
+                            <input checked type="checkbox" name="necessidadesInstituicao" value="Outros fins"> Outros fins
                         </p>
 
                         <p th:unless="${#arrays.contains(necessidade, 'Alimentos')}">
@@ -109,7 +109,7 @@
                             <input type="checkbox" name="necessidadesInstituicao" value="Produtos para Pets"> Produtos para Pets
                         </p>
                         <p th:unless="${#arrays.contains(necessidade, 'Outros fins')}">
-                            <input type="checkbox" name="necessidadesInstituicao" value="Outros fins"> Investir o dinheiro da doação no que for necessário
+                            <input type="checkbox" name="necessidadesInstituicao" value="Outros fins"> Outros fins
                         </p>
                     </div>
                     <br/>
