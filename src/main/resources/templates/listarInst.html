@@ -78,5 +78,19 @@
         </div>
     </div>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let sucesso = /*[[${success}]]*/ 'resultado da doação';
+        if(sucesso != null){
+            if(sucesso)
+                window.alert("Doação efetuada com sucesso!");
+            else
+                window.alert("Erro ao efetuar doação!");
+        }
+
+        /*]]>*/
+    </script>
+
 </body>
 </html>

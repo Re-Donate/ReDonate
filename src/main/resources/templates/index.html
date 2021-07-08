@@ -45,7 +45,7 @@
                 <p> Ainda não possui uma conta? <a href="/cadastrar"> Cadastre-se </a> </p>
 
             </form>
-            <h4 th:if="${falhaLogin != null and falhaLogin == 1}" id="errorMessage"> Falha ao efetuar login, tente novamente!</h4>
+            <h4 th:if="${falhaLogin != null and falhaLogin}" id="errorMessage"> Falha ao efetuar login, tente novamente!</h4>
         </div>
 
         <div class="body-footer" id="footer">
@@ -89,5 +89,26 @@
         </div>
 
     </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        const sucesso = /*[[${success}]]*/ 'resultado da doação';
+        const denial = /*[[${accessDenial}]]*/ 'falha de acesso';
+
+        if (sucesso != null) {
+            if (sucesso)
+                window.alert("Cadastro efetuado com sucesso!");
+            else
+                window.alert("Erro ao efetuar cadastro!");
+        };
+
+        if(denial != null){
+            if(denial)
+                window.alert("Efetue login para acessar este conteúdo");
+        }
+
+        /*]]>*/
+    </script>
 </body>
 </html>
