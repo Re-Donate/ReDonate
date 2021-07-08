@@ -102,6 +102,7 @@
         $(document).ready(function() {
             $(":input").inputmask();
 
+            // Validar estado do formulário a cada input
             $("#cadastroForm :input").on("input", () => {
                 const emailValidation = $("#emailInput").val() != "";
                 const senhaComparation = $("#senhaInput").val() == $("#confirmInput").val();
@@ -116,6 +117,7 @@
 
             });
 
+            //Validar o estado das senhas e alterar o retorno visual a cada input nos campos de senha
             $("#senhaFields :input").on("input", () => {
                 const senhaVal = $("#senhaInput").val();
                 const confirmVal = $("#confirmInput").val();

@@ -129,6 +129,7 @@
             $(document).ready(function() {
                 $(":input").inputmask();
 
+                // Validar estado do formulário a cada input
                 $("#cadastroForm :input").on("input", () => {
                     const nomePreenchido = $("#nomeInput").val() != "";
                     const enderecoPreenchido = $("#enderecoInput").val() != "";
@@ -144,6 +145,7 @@
                 });
             });
 
+            // Inicializar o campo de data de nascimento
             let today = new Date();
             let dd = today.getDate();
             let mm = today.getMonth() + 1;

@@ -138,6 +138,7 @@
         $(document).ready(function() {
             $(":input").inputmask();
 
+            // Validar estado do formulário a cada input
             $("#cadastroForm :input").on("input", () => {
                 const nomePreenchido = $("#nomeInput").val() != "";
                 const enderecoPreenchido = $("#enderecoInput").val() != "";
