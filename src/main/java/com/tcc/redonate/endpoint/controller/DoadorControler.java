@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,13 +23,17 @@ public class DoadorControler {
     public String cadastrarDoadorForm(){ return "cadastrarDoador"; }
 
     @RequestMapping(value = "/cadastrarDoador", method = RequestMethod.POST)
-    public String cadastrarDoador(Usuario usuario, Doador doador, HttpServletRequest request){
+    public RedirectView cadastrarDoador(Usuario usuario, Doador doador, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        RedirectView redirectView = new RedirectView("/", false);
+
         Usuario User = (Usuario) request.getSession().getAttribute("lastCreatedUser");
         usuario.setEmailUsuario(User.getEmailUsuario());
         usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        usuarioService.saveDoador(usuario, doador);
-        return "redirect:/";
+        boolean success = usuarioService.saveUsuarioDoador(usuario, doador);
+        redirectAttributes.addFlashAttribute("success", success);
+
+        return redirectView;
     }
 
 }

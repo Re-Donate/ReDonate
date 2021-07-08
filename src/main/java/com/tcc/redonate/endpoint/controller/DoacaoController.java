@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -28,16 +30,19 @@ public class DoacaoController {
     private final InstituicaoService instituicaoService;
 
     @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.POST)
-    public String criarDoacao(@PathVariable("inst") Long inst, Doacao doacao, HttpServletRequest request){
+    public RedirectView criarDoacao(@PathVariable("inst") Long inst, Doacao doacao, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Instituicao instituicao = instituicaoService.findOne(inst);
         Doador doador = doadorService.findByUsuarioLogado(request);
 
-        doacaoService.create(doacao, doador, instituicao);
-        return "redirect:/instituicoes";
+        RedirectView redirectView = new RedirectView("/instituicoes", false);
+        boolean success = doacaoService.create(doacao, doador, instituicao);
+        redirectAttributes.addFlashAttribute("success", success);
+
+        return redirectView;
     }
 
     @RequestMapping(value = "/doacoes/dados", method = RequestMethod.GET)
-    public String carregarDadosDoacoes(HttpServletRequest request, Model model){
+    public String carregarDadosDoacoes(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
         Instituicao dadosInstituicao = instituicaoService.findByUsuarioLogado(request);
 
         if(dadosInstituicao != null) {
@@ -86,6 +91,7 @@ public class DoacaoController {
 
             return "dadosDoacoes";
         }else{
+            redirectAttributes.addFlashAttribute("accessDenial", true);
             return "redirect:/";
         }
     }

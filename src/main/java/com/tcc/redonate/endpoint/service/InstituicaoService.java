@@ -31,8 +31,11 @@ public class InstituicaoService {
 
     public Instituicao findByUsuarioLogado(HttpServletRequest request){
         log.info("Buscando dados de Instituicao a partir do usuario logado");
-        Long idUsuario = Long.valueOf(""+request.getSession().getAttribute("idLogin"));
-        Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
-        return usuarioLogado.getInstituicao();
+        if(request.getSession().getAttribute("idLogin") != null) {
+            Long idUsuario = Long.valueOf("" + request.getSession().getAttribute("idLogin"));
+            Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
+            return usuarioLogado.getInstituicao();
+        }else
+            return  null;
     }
 }

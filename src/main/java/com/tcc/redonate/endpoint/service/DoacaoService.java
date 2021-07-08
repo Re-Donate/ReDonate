@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class DoacaoService {
     private final DoacaoRepository doacaoRepository;
 
-    public void create(Doacao doacao, Doador doador, Instituicao instituicao){
+    public boolean create(Doacao doacao, Doador doador, Instituicao instituicao){
         log.info("Criando nova docao");
         instituicao.getDoacoes().add(doacao);
         doador.getDoacoes().add(doacao);
@@ -23,6 +23,6 @@ public class DoacaoService {
         doacao.setDoador(doador);
         doacao.setInstituicao(instituicao);
 
-        doacaoRepository.save(doacao);
+        return doacaoRepository.save(doacao) != null;
     }
 }

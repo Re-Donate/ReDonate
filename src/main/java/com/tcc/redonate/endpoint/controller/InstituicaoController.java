@@ -14,9 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -26,67 +30,94 @@ public class InstituicaoController {
     private final UsuarioService usuarioService;
 
     @RequestMapping(value = "/instituicoes", method = RequestMethod.GET)
-    public String listarInstituicoes(Model model, HttpServletRequest request){
-        List<Instituicao> instList = instituicaoService.list();
-
+    public String listarInstituicoes(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Doador doadorLogado = doadorService.findByUsuarioLogado(request);
 
-        if(instList != null){
-            model.addAttribute("instituicoes", instList);
-        }
-        if(doadorLogado != null){
+        if(doadorLogado != null) {
             model.addAttribute("dadosDoador", doadorLogado);
+
+            Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+            if (inputFlashMap != null)
+                model.addAttribute("success", inputFlashMap.get("success"));
+
+            List<Instituicao> instList = instituicaoService.list();
+            if (instList != null)
+                model.addAttribute("instituicoes", instList);
+
+            return "listarInst";
+        }else {
+            redirectAttributes.addFlashAttribute("accessDenial", true);
+            return "redirect:/";
         }
-        return "listarInst";
     }
 
 
     @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.GET)
-    public String dadosInstituicao(HttpServletRequest request, Model model){
-
+    public String dadosInstituicao(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
         Instituicao dadosInstituicao = instituicaoService.findByUsuarioLogado(request);
 
-        if(dadosInstituicao != null)
+        if(dadosInstituicao != null) {
             model.addAttribute("dadosInst", dadosInstituicao);
 
+            Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+            if (inputFlashMap != null)
+                model.addAttribute("success", inputFlashMap.get("success"));
 
-        return "dadosInstituicao";
+            return "dadosInstituicao";
+        }else {
+            redirectAttributes.addFlashAttribute("accessDenial", true);
+            return "redirect:/";
+        }
     }
 
     @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.POST)
-    public String atualizarDadosInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request){
+    public RedirectView atualizarDadosInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        RedirectView redirectView = new RedirectView("/instituicoes/dados", false);
+
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
         List<Doacao> doacoes = instituicaoService.findOne(instituicao.getId()).getDoacoes();
 
         instituicao.setDoacoes(doacoes);
 
         usuarioService.atualizarUsuario(usuarioLogado, usuario);
-        usuarioService.saveInstituicao(usuarioLogado, instituicao);
+        boolean success = usuarioService.saveUsuarioInstituicao(usuarioLogado, instituicao);
+        redirectAttributes.addFlashAttribute("success", success);
 
-        return "redirect:/instituicoes/dados";
+        return redirectView;
     }
 
     @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.GET)
-    public String detalharInstituicao(@PathVariable("inst") int inst, Model model, HttpServletRequest request){
-        Instituicao instDetail = instituicaoService.findOne(Long.valueOf(inst));
+    public String detalharInstituicao(@PathVariable("inst") int inst, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
-        if(instDetail != null)
-            model.addAttribute("detalhes", instDetail);
-        if(instDetail != null)
+
+        if(usuarioLogado != null) {
             model.addAttribute("dadosDoador", usuarioLogado);
-        return "detalharInst";
+
+            Instituicao instDetail = instituicaoService.findOne((long) inst);
+            if (instDetail != null)
+                model.addAttribute("detalhes", instDetail);
+
+            return "detalharInst";
+        }else {
+            redirectAttributes.addFlashAttribute("accessDenial", true);
+            return "redirect:/";
+        }
     }
 
     @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.GET)
     public String cadastrarInstituicaoForm(){ return "cadastrarInstituicao"; }
 
     @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.POST)
-    public String cadastrarInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request){
+    public RedirectView cadastrarInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        RedirectView redirectView = new RedirectView("/", false);
+
         Usuario User = (Usuario) request.getSession().getAttribute("lastCreatedUser");
         usuario.setEmailUsuario(User.getEmailUsuario());
         usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        usuarioService.saveInstituicao(usuario, instituicao);
-        return "redirect:/";
+        boolean success = usuarioService.saveUsuarioInstituicao(usuario, instituicao);
+        redirectAttributes.addFlashAttribute("success", success);
+
+        return redirectView;
     }
 }

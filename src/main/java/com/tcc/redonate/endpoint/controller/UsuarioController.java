@@ -10,8 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -21,7 +25,14 @@ public class UsuarioController {
     private final DoadorService doadorService;
 
     @GetMapping
-    public String index(HttpServletRequest request){
+    public String index(HttpServletRequest request, Model model){
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if(inputFlashMap != null) {
+            model.addAttribute("success", inputFlashMap.get("success"));
+            model.addAttribute("falhaLogin", inputFlashMap.get("falhaLogin"));
+            model.addAttribute("accessDenial", inputFlashMap.get("accessDenial"));
+        }
+
         request.getSession().invalidate();
         return "index";
     }
@@ -30,29 +41,38 @@ public class UsuarioController {
     public String cadastrarForm(){ return "cadastrarUser"; }
 
     @RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-    public String cadastrarUser(Usuario usuario, HttpServletRequest request){
+    public RedirectView cadastrarUser(Usuario usuario, HttpServletRequest request){
+        RedirectView redirectView = new RedirectView("", false);
         request.getSession().setAttribute("lastCreatedUser", usuario);
 
         Boolean isDoador = request.getParameter("tipoUsuario").equals("Doador");
 
         if(isDoador)
-            return "redirect:/doadores/cadastrarDoador";
+            redirectView.setUrl("/doadores/cadastrarDoador");
         else
-            return "redirect:/instituicoes/cadastrarInstituicao";
+            redirectView.setUrl("/instituicoes/cadastrarInstituicao");
+
+        return  redirectView;
     }
 
     @RequestMapping(value = "/logar", method = RequestMethod.POST)
-    public String logarUsuario(Usuario usuario, HttpServletRequest request, Model model) {
+    public RedirectView logarUsuario(Usuario usuario, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("", false);
         Usuario testLogin = usuarioService.login(usuario);
+
         if (testLogin != null) {
             request.getSession().setAttribute("idLogin", testLogin.getId());
+
             if(doadorService.isDoador(testLogin.getId()))
-                return "redirect:/instituicoes";
+                redirectView.setUrl("/instituicoes");
             else
-                return "redirect:/instituicoes/dados";
+                redirectView.setUrl("/instituicoes/dados");
+
         } else {
-            model.addAttribute("falhaLogin", 1);
-            return "index";
+            redirectAttributes.addFlashAttribute("falhaLogin", true);
+            redirectView.setUrl("/");
         }
+
+        return redirectView;
     }
 }

@@ -30,9 +30,11 @@ public class UsuarioService {
 
     public Usuario getUsuarioLogado(HttpServletRequest request){
         log.info("Buscando dados do Usuario Logado");
-        Long idUsuario = Long.parseLong(""+request.getSession().getAttribute("idLogin"));
-        Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
-        return usuarioLogado;
+        if(request.getSession().getAttribute("idLogin") != null) {
+            Long idUsuario = Long.parseLong("" + request.getSession().getAttribute("idLogin"));
+            return usuarioRepository.getById(idUsuario);
+        }else
+            return null;
     }
 
     public Usuario login(Usuario usuario){
@@ -43,7 +45,7 @@ public class UsuarioService {
         return null;
     }
 
-    public boolean saveDoador(Usuario usuario, Doador doador){
+    public boolean saveUsuarioDoador(Usuario usuario, Doador doador){
         log.info("Salvando dados do Doador");
         usuario.setDoador(doador);
         doador.setUsuarioDoador(usuario);
@@ -52,7 +54,7 @@ public class UsuarioService {
         return newUser != null;
     }
 
-    public boolean saveInstituicao(Usuario usuario, Instituicao instituicao){
+    public boolean saveUsuarioInstituicao(Usuario usuario, Instituicao instituicao){
         log.info("Salvando dados da Instituição");
         usuario.setInstituicao(instituicao);
         instituicao.setUsuarioInstituicao(usuario);

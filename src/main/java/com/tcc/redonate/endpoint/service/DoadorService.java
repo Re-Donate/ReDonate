@@ -25,9 +25,13 @@ public class DoadorService {
 
     public Doador findByUsuarioLogado(HttpServletRequest request){
         log.info("Buscando dados de Doador a partir de usuário logado");
-        Long idUsuario = Long.parseLong(""+request.getSession().getAttribute("idLogin"));
-        Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
-        return usuarioLogado.getDoador();
+
+        if(request.getSession().getAttribute("idLogin") != null) {
+            Long idUsuario = Long.parseLong("" + request.getSession().getAttribute("idLogin"));
+            Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
+            return usuarioLogado.getDoador();
+        }else
+            return null;
     }
 
     public boolean isDoador(Long idUsuario){
