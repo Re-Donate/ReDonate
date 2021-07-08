@@ -30,27 +30,27 @@
             </header>
         </div>
         <div id="formulario">
-            <form method="POST" id="dados">
+            <form id="updateForm" method="POST">
                 <div id="campos">
                     <input type="hidden" name="id" th:value="${dadosInst.id}">
                     <div class="form-group">
                         <label>Nome da Instituição:</label><br/>
-                        <input type="text" name="nomeUsuario" th:value="${dadosInst.usuarioInstituicao.nomeUsuario}" placeholder="Nome da instituicao">
+                        <input type="text" name="nomeUsuario" id="nomeInput" th:value="${dadosInst.usuarioInstituicao.nomeUsuario}" minlength="5" placeholder="Nome da instituicao" required>
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Endereço:</label><br/>
-                        <input type="text" name="enderecoUsuario" th:value="${dadosInst.usuarioInstituicao.enderecoUsuario}" placeholder="Endereco da instituicao">
+                        <input type="text" name="enderecoUsuario" id="enderecoInput" th:value="${dadosInst.usuarioInstituicao.enderecoUsuario}" minlength="8" placeholder="Endereco da instituicao" required>
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Cidade:</label><br/>
-                        <input type="text" name="cidadeUsuario" th:value="${dadosInst.usuarioInstituicao.cidadeUsuario}" placeholder="Cidade da instituicao">
+                        <input type="text" name="cidadeUsuario" id="cidadeInput" th:value="${dadosInst.usuarioInstituicao.cidadeUsuario}" minlength="4" placeholder="Cidade da instituicao" required>
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Estado:</label><br/>
-                        <input type="text" name="estadoUsuario" th:value="${dadosInst.usuarioInstituicao.estadoUsuario}" placeholder="Estado da instituicao">
+                        <input type="text" name="estadoUsuario" id="estadoInput" th:value="${dadosInst.usuarioInstituicao.estadoUsuario}" minlength="4" placeholder="Estado da instituicao" required>
                     </div>
                     <br>
                     <div class="form-group">
@@ -62,14 +62,14 @@
                     <br>
                     <div class="form-group">
                         <label>CNPJ/CPF:</label><br/>
-                        <input type="text" name="cnpjInstituicao" th:value="${dadosInst.cnpjInstituicao}" class="identificacao" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
+                        <input type="text" name="cnpjInstituicao" id="cnpj" th:value="${dadosInst.cnpjInstituicao}" class="identificacao" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
                         ou
-                        <input type="text" name="cpfUsuario" th:value="${dadosInst.usuarioInstituicao.cpfUsuario}" class="identificacao" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999-999-999-99'">
+                        <input type="text" name="cpfUsuario" id="cpf" th:value="${dadosInst.usuarioInstituicao.cpfUsuario}" class="identificacao" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999-999-999-99'">
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Causa:</label><br/>
-                        <input type="text" name="causaInstituicao" th:value="${dadosInst.causaInstituicao}" placeholder="Causa da instituicao">
+                        <input type="text" name="causaInstituicao" id="causaInput" th:value="${dadosInst.causaInstituicao}" placeholder="Causa da instituicao" required>
                     </div>
                     <br>
                     <div id="necessidades" th:with="necessidade = ${dadosInst.necessidadesInstituicao.split(',')}">
@@ -114,7 +114,7 @@
                     </div>
                     <br/>
                     <div id="submit">
-                        <button type="submit" class="btn w-25">Enviar</button>
+                        <button type="submit" id="atualizar" class="btn w-25">Enviar</button>
                     </div>
                 </div>
             </form>
@@ -165,7 +165,39 @@
     <script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
 
     <script>
-        $(":input").inputmask();
+        $(document).ready(function() {
+            $(":input").inputmask();
+
+            $("#updateForm :input").on("input", () => {
+                const nomePreenchido = $("#nomeInput").val() != "";
+                const enderecoPreenchido = $("#enderecoInput").val() != "";
+                const cidadePreenchido = $("#cidadeInput").val() != "";
+                const estadoPreenchido = $("#estadoInput").val() != "";
+                const cnpj = $("#cnpj");
+                const cpf = $("#cpf");
+                const causaPreenchido = $("#causaInput").val() != "";
+                const necessidadePreenchida = $("#necessidades :checkbox:checked").length > 0;
+
+                if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && ((cpf.val().indexOf("_") == -1 && cpf.val().length > 0) || (cnpj.val().indexOf("_") == -1 && cnpj.val().length > 0)) && causaPreenchido && necessidadePreenchida)
+                    $("#atualizar").prop("disabled", false);
+                else
+                    $("#atualizar").prop("disabled", true);
+            });
+        });
+    </script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let sucesso = /*[[${success}]]*/ 'resultado da doação';
+        if(sucesso != null){
+            if(sucesso)
+                window.alert("Dados atualizados com sucesso!");
+            else
+                window.alert("Erro ao atualizar dados!");
+        }
+
+        /*]]>*/
     </script>
 </body>
 </html>
