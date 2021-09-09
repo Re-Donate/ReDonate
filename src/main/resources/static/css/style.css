@@ -20,6 +20,15 @@ ol, ul{
     padding: 0 !important;
 }
 
+div#content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100%;
+    width: 80%;
+    align-items: center;
+    text-align: center;
+}
+
 /* Página de Login */
 div#login{
     background-color: #2C5288;
@@ -60,12 +69,6 @@ header{
     background-color: #1D3557;
     width: 100%;
     color: cornsilk;
-}
-
-div#content{
-    width: 50%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 }
 
 div#logout{

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${dadosDoad.usuarioDoador.nomeUsuario}"> Seus dados </title>
+  <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/dadosInstituicao.css" />
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <header>
+      <div id="content" class="mx-auto w-75 pt-3">
+        <div id="logged">
+          <p> Olá, <span th:text="${dadosDoad.usuarioDoador.nomeUsuario}"> id </span> </p>
+        </div>
+        <div>
+          <p> <a href="/instituicoes"> Lista de Instituições </a> </p>
+        </div>
+        <div id="logout">
+          <a href="/"> Deslogar </a><br><br>
+        </div>
+      </div>
+      <div id="title">
+        <h2> Seus dados </h2>
+      </div>
+    </header>
+  </div>
+  <div id="formulario">
+    <form id="updateForm" method="POST">
+      <div id="campos">
+        <input type="hidden" name="id" th:value="${dadosDoad.id}">
+        <div class="form-group">
+          <label>Seu Nome:</label><br/>
+          <input type="text" name="nomeUsuario" id="nomeInput" th:value="${dadosDoad.usuarioDoador.nomeUsuario}" minlength="5" placeholder="Seu nome" required>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Endereço:</label><br/>
+          <input type="text" name="enderecoUsuario" id="enderecoInput" th:value="${dadosDoad.usuarioDoador.enderecoUsuario}" minlength="8" placeholder="Seu endereço" required>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Cidade:</label><br/>
+          <input type="text" name="cidadeUsuario" id="cidadeInput" th:value="${dadosDoad.usuarioDoador.cidadeUsuario}" minlength="4" placeholder="Sua cidade" required>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Estado:</label><br/>
+          <input type="text" name="estadoUsuario" id="estadoInput" th:value="${dadosDoad.usuarioDoador.estadoUsuario}" minlength="4" placeholder="Seu estado" required>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Contato:</label><br/>
+          <input type="text" name="telefoneUsuario" th:value="${dadosDoad.usuarioDoador.telefoneUsuario}" class="contato" placeholder="Seu telefone" data-inputmask="'mask': '(99) 9999-9999'">
+          ou
+          <input type="text" name="celularUsuario" th:value="${dadosDoad.usuarioDoador.celularUsuario}" class="contato" placeholder="Seu celular" data-inputmask="'mask': '(99) 99999-9999'">
+        </div>
+        <br>
+        <div class="form-group">
+          <label>CPF:</label><br/>
+          <input type="text" name="cpfUsuario" id="cpf" th:value="${dadosDoad.usuarioDoador.cpfUsuario}" class="identificacao" placeholder="Seu CPF" data-inputmask="'mask': '999-999-999-99'">
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Data de Nascimento</label>
+          <input id="nascimento" class="form-control" type="date" name="nascimentoDoador" th:value="${dadosDoad.nascimentoDoador}" min="1900-01-01" max="2018-12-31" required>
+        </div>
+        <br>
+        <div class="form-group">
+          <label>Sexo</label>
+          <div id="sexoInput">
+            <div>
+              <input type="radio" class="form-check-input" name="sexoDoador" value="Masculino" th:checked="${dadosDoad.sexoDoador.equals('Masculino')}" required> Masculino
+            </div>
+            <div>
+              <input type="radio" class="form-check-input" name="sexoDoador" value="Feminino" th:checked="${dadosDoad.sexoDoador.equals('Feminino')}" required> Feminino
+            </div>
+            <div>
+              <input type="radio" class="form-check-input" name="sexoDoador" value="Outro" th:checked="${dadosDoad.sexoDoador.equals('Outro')}" required> Outro
+            </div>
+          </div>
+        </div>
+        <br>
+        <div id="submit">
+          <button type="submit" id="atualizar" class="btn w-25">Enviar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="body-footer" id="footer">
+    <footer>
+      <div class="container">
+        <div class="sec about-us" align="center">
+          <h2>Sobre <span id="bolder">Nós</span></h2>
+          <p>
+            Somos uma comunidade que tem como principal característica o companheirismo. Sempre que nós vemos alguém passando por necessidades nós percebemos que temos que agir. Um por todos e todos por um!
+          </p>
+          <ul class="sci" align="center">
+            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+        <div class="sec talk-to-us" align="center">
+          <h2>Fale <span id="bolder">Conosco</span></h2>
+          <ul class="info">
+            <li>
+              <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+              <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
+            </li>
+            <li>
+              <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+              <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
+            </li>
+            <li>
+              <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+              <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <div class="copyright">
+      <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
+
+<script>
+  $(document).ready(function() {
+    $(":input").inputmask();
+
+    $("#updateForm :input").on("input", () => {
+      const nomePreenchido = $("#nomeInput").val() != "";
+      const enderecoPreenchido = $("#enderecoInput").val() != "";
+      const cidadePreenchido = $("#cidadeInput").val() != "";
+      const estadoPreenchido = $("#estadoInput").val() != "";
+      const cpf = $("#cpf");
+
+      if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && (cpf.val().indexOf("_") == -1 && cpf.val().length > 0))
+        $("#atualizar").prop("disabled", false);
+      else
+        $("#atualizar").prop("disabled", true);
+    });
+  });
+
+  // Inicializar o campo de data de nascimento
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1;
+  let yyyy = today.getFullYear();
+  if(dd<10){
+    dd='0'+dd
+  }
+  if(mm<10){
+    mm='0'+mm
+  }
+
+  today = yyyy+'-'+mm+'-'+dd;
+  let nascimento = document.getElementById("nascimento");
+  nascimento.setAttribute("max", today);
+</script>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+
+  let sucesso = /*[[${success}]]*/ 'resultado da doação';
+  if(sucesso != null){
+    if(sucesso)
+      window.alert("Dados atualizados com sucesso!");
+    else
+      window.alert("Erro ao atualizar dados!");
+  }
+
+  /*]]>*/
+</script>
+</body>
+</html>

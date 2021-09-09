@@ -19,13 +19,11 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
     public void atualizarUsuario(Usuario dadosAntigos, Usuario novosDados){
-        dadosAntigos.setNomeUsuario(novosDados.getNomeUsuario());
-        dadosAntigos.setEnderecoUsuario(novosDados.getEnderecoUsuario());
-        dadosAntigos.setCidadeUsuario(novosDados.getCidadeUsuario());
-        dadosAntigos.setEstadoUsuario(novosDados.getEstadoUsuario());
-        dadosAntigos.setTelefoneUsuario(novosDados.getTelefoneUsuario());
-        dadosAntigos.setCelularUsuario(novosDados.getCelularUsuario());
-        dadosAntigos.setCpfUsuario(novosDados.getCpfUsuario());
+        novosDados.setId(dadosAntigos.getId());
+        novosDados.setEmailUsuario(dadosAntigos.getEmailUsuario());
+        novosDados.setSenhaUsuario(dadosAntigos.getSenhaUsuario());
+        novosDados.setInstituicao(dadosAntigos.getInstituicao());
+        novosDados.setDoador(dadosAntigos.getDoador());
     }
 
     public Usuario getUsuarioLogado(HttpServletRequest request){
