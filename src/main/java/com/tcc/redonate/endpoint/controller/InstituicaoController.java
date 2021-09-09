@@ -80,7 +80,7 @@ public class InstituicaoController {
         instituicao.setDoacoes(doacoes);
 
         usuarioService.atualizarUsuario(usuarioLogado, usuario);
-        boolean success = usuarioService.saveUsuarioInstituicao(usuarioLogado, instituicao);
+        boolean success = usuarioService.saveUsuarioInstituicao(usuario, instituicao);
         redirectAttributes.addFlashAttribute("success", success);
 
         return redirectView;
