@@ -3,9 +3,11 @@ package com.tcc.redonate.endpoint.controller;
 import com.tcc.redonate.endpoint.service.DoacaoService;
 import com.tcc.redonate.endpoint.service.DoadorService;
 import com.tcc.redonate.endpoint.service.InstituicaoService;
+import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.model.Doacao;
 import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
+import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ public class DoacaoController {
     private final DoacaoService doacaoService;
     private final DoadorService doadorService;
     private final InstituicaoService instituicaoService;
+    private final UsuarioService usuarioService;
 
     @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.POST)
     public RedirectView criarDoacao(@PathVariable("inst") Long inst, Doacao doacao, HttpServletRequest request, RedirectAttributes redirectAttributes){
@@ -42,9 +45,81 @@ public class DoacaoController {
     }
 
     @RequestMapping(value = "/doacoes/dados", method = RequestMethod.GET)
-    public String carregarDadosDoacoes(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
-        Instituicao dadosInstituicao = instituicaoService.findByUsuarioLogado(request);
+    public String carregarDadosDoacoes(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+        Usuario dadosUsuario = usuarioService.getUsuarioLogado(request);
+        boolean queroDoadores = false;
 
+        if(dadosUsuario != null) {
+            List<Doacao> doacoes = new ArrayList<Doacao>();
+
+            if (dadosUsuario.getInstituicao() != null) {
+                Instituicao dadosInst = dadosUsuario.getInstituicao();
+                doacoes = dadosInst.getDoacoes();
+                queroDoadores = true;
+            } else {
+                Doador dadosDoad = dadosUsuario.getDoador();
+                doacoes = dadosDoad.getDoacoes();
+            }
+
+            if(!doacoes.isEmpty()){
+                Collections.sort(doacoes);
+
+                List<Object> outraPonta = new ArrayList<>();
+                List<String> causasDoacao = new ArrayList<>();
+                List<Float> valoresPorCausa = new ArrayList<>();
+                float valorTotal = 0;
+                float soma = doacoes.get(0).getValorDoacao();
+
+                for(int i = 0; i < doacoes.size(); i++){
+
+                    Doacao doacaoAtual = doacoes.get(i);
+                    if(i != 0) {
+                        Doacao doacaoAnterior = doacoes.get(i - 1);
+                        if(doacaoAtual.getCausaDoacao().equals(doacaoAnterior.getCausaDoacao())){
+                            soma += doacaoAtual.getValorDoacao();
+                        }else{
+                            causasDoacao.add(doacaoAnterior.getCausaDoacao());
+                            valoresPorCausa.add(soma);
+                            valorTotal += soma;
+                            soma = doacaoAtual.getValorDoacao();
+                        }
+                    }
+
+                    if(i == (doacoes.size()-1)){
+                        causasDoacao.add(doacaoAtual.getCausaDoacao());
+                        valoresPorCausa.add(soma);
+                        valorTotal += soma;
+                    }
+
+                    if(queroDoadores)
+                        outraPonta.add(doacaoAtual.getDoador());
+                    else
+                        outraPonta.add(doacaoAtual.getInstituicao());
+                }
+
+                model.addAttribute("outraPonta", outraPonta);
+                model.addAttribute("causas", causasDoacao);
+                model.addAttribute("valores", valoresPorCausa);
+                model.addAttribute("total", valorTotal);
+
+            }
+            model.addAttribute("doacoes", doacoes);
+            model.addAttribute("dadosUser", dadosUsuario);
+            model.addAttribute("queroDoadores", queroDoadores);
+
+            return "dadosDoacoes";
+
+        }else{
+
+            redirectAttributes.addFlashAttribute("accessDenial", true);
+            return "redirect:/";
+
+        }
+    }
+
+}
+
+        /*
         if(dadosInstituicao != null) {
             List<Doacao> doacoes = dadosInstituicao.getDoacoes();
             if(!doacoes.isEmpty()){
@@ -90,9 +165,6 @@ public class DoacaoController {
             model.addAttribute("dadosInst", dadosInstituicao);
 
             return "dadosDoacoes";
-        }else{
-            redirectAttributes.addFlashAttribute("accessDenial", true);
-            return "redirect:/";
         }
     }
-}
+         */
