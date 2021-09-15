@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Doações Recebidas</title>
+    <title th:if="${queroDoadores}">Doações Recebidas</title>
+    <title th:if="${!queroDoadores}">Doações Realizadas</title>
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/dadosDoacoes.css" />
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
@@ -15,17 +16,18 @@
             <header>
                 <div id="content" class="mx-auto w-75 pt-3">
                     <div id="logged">
-                        <p> Olá, <span th:text="${dadosInst.usuarioInstituicao.nomeUsuario}"> id </span> </p>
+                        <p> Olá, <span th:text="${dadosUser.nomeUsuario}"> id </span> </p>
                     </div>
                     <div>
-                        <p> <a href="/instituicoes/dados"> Seus dados </a> </p>
+                        <p> <a th:href="${queroDoadores} ? '/instituicoes/dados' : '/doadores/dados'"> Seus dados </a> </p>
+                        <p th:if="${!queroDoadores}"> <a href="/instituicoes"> Lista de instiuições </a> </p>
                     </div>
                     <div id="logout">
                         <a href="/"> Deslogar </a><br><br>
                     </div>
                 </div>
                 <div id="title">
-                    <h2 id="titleName"> Doações recebidas </h2>
+                    <h2 id="titleName" th:text="${queroDoadores} ? 'Doações Recebidas' : 'Doações Realizadas'"> Doações </h2>
                 </div>
             </header>
         </div>
@@ -34,8 +36,8 @@
                 <div id="left" class="border border-info col">
                     <div th:each="i : ${#numbers.sequence(0, (#lists.size(doacoes) - 1))}">
                         <div class="card">
-                            <div class="card-body">
-                                <h2 class="card-title" th:text="'Doação feita por: ' + ${doadores.get(i).usuarioDoador.nomeUsuario}"> nome do Doador </h2>
+                            <div  class="card-body">
+                                <h2 class="card-title" th:text="${queroDoadores} ? 'Doação feita por: ' + ${outraPonta.get(i).usuarioDoador.nomeUsuario} : 'Doação enviada para: ' + ${outraPonta.get(i).usuarioInstituicao.nomeUsuario}"> nome da outra ponta </h2>
                                 <p class="card-subtitle" th:text="'Doação realizada em: ' + ${doacoes.get(i).createdAt.toLocaleString()}" > data da Doação </p>
                                 <h3 class="card-text" th:text="'Doação para o fim de: ' + ${doacoes.get(i).causaDoacao}"> motivo da Doação </h3>
                                 <h4 class="card-text" th:text="'Doação com o valor de: R$ ' + ${doacoes.get(i).valorDoacao}"> valor da Doação </h4>
@@ -46,10 +48,10 @@
                 <div id="right" class="border border-info col">
                     <div id="conteudoDireita">
                         <div th:each="i : ${#numbers.sequence(0, (#lists.size(causas) - 1))}">
-                            <h2 th:text="'Você recebeu, ao total, R$ ' + ${valores.get(i)} + ' para o fim de: ' + ${causas.get(i)}"> causa da Doação </h2>
+                            <h2 th:text="${queroDoadores} ? 'Você recebeu, ao total, R$ ' + ${valores.get(i)} + ' para o fim de: ' + ${causas.get(i)} : 'Você doou, ao total, R$ ' + ${valores.get(i)} + ' para o fim de: ' + ${causas.get(i)}"> causa da Doação </h2>
                         </div>
                         <br/>
-                        <h1 th:text="'Ao total, você recebeu: R$ ' + ${total}"> Total recebido </h1>
+                        <h1 th:text="${queroDoadores} ? 'Ao total, você recebeu: R$ ' + ${total} : 'Ao total, você doou: R$ ' + ${total}"> Total recebido </h1>
                     </div>
                 </div>
             </div>
