@@ -1,0 +1,47 @@
+div#footer{
+    background-color: #2C5288;
+    width: 100%;
+    color: cornsilk;
+    display: flex;
+    padding-bottom:1%;
+    padding-top:1%;
+}
+
+div#footerMenu{
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+a{
+    text-decoration: none;
+    color: cornsilk;
+}
+
+div#userTable, div#institutionsTable, div#reDonateTable{
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+th{
+    font-size: 20px;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+td{
+    text-align: center;
+}
+
+/* Cores */
+/* 1D3557 - Azul escurão    */
+/* 2C5288 - Azul médio      */
+/* 457B9D - Azul claro      */
+/* E63946 - Vermelho Random */

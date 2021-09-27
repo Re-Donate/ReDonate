@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<!--<head>
     <meta charset="UTF-8">
     <title>Re:Donate</title>
     <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/index.css" />
@@ -8,15 +8,21 @@
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-</head>
+</head>-->
+<head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'index')}"></head>
 <body>
     <div id="container">
 
-        <div id="header">
+
+        <!--<div id="header">
             <div id="options" class="mx-auto">
                 <a href="#" id="title">ReDonate</a>
                 <a href="#" id="sobre">Sobre</a>
             </div>
+        </div>-->
+
+        <div th:replace="~{../static/fragments/header/header.html::headerGeral}">
+
         </div>
 
         <div id="lado"></div>
@@ -48,7 +54,8 @@
             <h4 th:if="${falhaLogin != null and falhaLogin}" id="errorMessage"> Falha ao efetuar login, tente novamente!</h4>
         </div>
 
-        <div class="body-footer" id="footer">
+        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
+            <!--
             <footer>
                 <div class="container">
                     <div class="sec about-us" align="center">
@@ -86,6 +93,7 @@
             <div class="copyright">
                 <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
             </div>
+            -->
         </div>
 
     </div>

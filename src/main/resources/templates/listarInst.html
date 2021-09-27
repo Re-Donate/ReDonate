@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<head th:replace="~{../static/fragments/head/head.html::head('Lista de Instituições', 'style')}"></head>
+<!--
 <head>
     <meta charset="UTF-8">
     <title>Lista de Instituições</title>
@@ -9,8 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
+-->
 <body>
-
+<div id="header" th:replace="~{../static/fragments/header/header.html::headerGeral}"></div>
+    <!--
     <header>
         <div id="content" class="mx-auto w-75 pt-3">
             <div id="logged">
@@ -18,7 +22,6 @@
             </div>
             <div>
                 <p> <a href="/doadores/dados"> Seus dados </a> </p>
-                <p> <a href="/doacoes/dados"> Seu histórico </a> </p>
             </div>
             <div id="logout">
                 <a href="/"> Deslogar </a><br><br>
@@ -27,7 +30,7 @@
         <div id="title">
             <h2> Instituições </h2>
         </div>
-    </header>
+    </header>-->
     <div id="instituicaoAll">
         <div th:unless="${#lists.isEmpty(instituicoes)}" class="card" id="instituicaoList">
             <dl th:each="inst : ${instituicoes}" class="instituicoes">
@@ -42,6 +45,8 @@
             </dl>
         </div>
     </div>
+    <div id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}"> </div>
+    <!--
     <div th:with="quantidade = ${#lists.size(instituicoes)}" th:style="${quantidade} >= 5 ? 'position: relative' : 'position: fixed'" class="body-footer" id="footer">
         <footer>
             <div class="container">
@@ -80,7 +85,7 @@
         <div class="copyright">
             <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
         </div>
-    </div>
+    </div>-->
 
     <script th:inline="javascript">
         /*<![CDATA[*/
