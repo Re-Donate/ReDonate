@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'detalharInst')}"></head>
+<!--
 <head>
     <meta charset="UTF-8">
     <title th:text="${detalhes.usuarioInstituicao.nomeUsuario}"> nome </title>
@@ -9,8 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 </head>
+-->
 <body>
     <div id="content">
+        <!--
         <div id="header">
             <header>
                 <div id="contentHeader" class="mx-auto w-75 pt-3">
@@ -29,6 +33,8 @@
                 </div>
             </header>
         </div>
+        -->
+        <div th:replace="~{../static/fragments/header/header.html::headerGeral}"></div>
         <div id="detalharInst">
             <div class="card w-50" style="width: 18rem;">
                 <div class="card-header text-white">
@@ -68,6 +74,8 @@
                 </div>
             </div>
         </div>
+        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
+        <!--
         <div class="body-footer" id="footer">
             <footer>
                 <div class="container">
@@ -106,7 +114,7 @@
             <div class="copyright">
                 <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
             </div>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>
