@@ -1,5 +1,7 @@
 package com.tcc.redonate.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,6 +16,10 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Doacao implements AbstractEntity, Comparable<Doacao>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

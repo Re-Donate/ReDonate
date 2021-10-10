@@ -1,6 +1,8 @@
 package com.tcc.redonate.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,6 +15,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Usuario implements AbstractEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +52,9 @@ public class Usuario implements AbstractEntity{
     @Column(nullable = false)
     private String cpfUsuario;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioInstituicao")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "usuarioInstituicao")
     private Instituicao instituicao;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioDoador")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "usuarioDoador")
     private Doador doador;
 }
