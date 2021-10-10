@@ -7,7 +7,7 @@ INSERT INTO usuario (email_usuario, senha_usuario, nome_usuario, endereco_usuari
 INSERT INTO doador (nascimento_doador, sexo_doador, id_usuario) VALUES (DATE '2001-06-26', "Masculino", 1);
 
 INSERT INTO instituicao (cnpj_instituicao, causa_instituicao, necessidades_instituicao, id_usuario) VALUES ("", "Cuidado e Adoção de animais de rua", "Produtos para Pets,Remédios,Outros fins", 2),
-                                                                                                           ("10.277.432/9108-45", "Auxílio de pessoas carentes", "Outros fins,Vestimentas,Alimentos,Outros fins", 3),
+                                                                                                           ("10.277.432/9108-45", "Auxílio de pessoas carentes", "Vestimentas,Alimentos,Outros fins", 3),
                                                                                                            ("11.284.938/7275-90", "Inclusão educacional", "Outros fins,Educação", 4),
                                                                                                            ("11.454.867/3987-89", "Serviços médicos", "Outros fins,Alimentos", 5);
 
