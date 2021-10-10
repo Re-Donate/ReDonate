@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @Service
@@ -43,6 +44,16 @@ public class UsuarioService {
         return null;
     }
 
+    public boolean isEmailUnique(Usuario usuario){
+        log.info("Verificando se o email ja existe no banco");
+        Usuario testEmail = usuarioRepository.findByEmailUsuario(usuario.getEmailUsuario());
+
+        if(testEmail != null)
+            return false;
+
+        return true;
+    }
+
     public boolean saveUsuarioDoador(Usuario usuario, Doador doador){
         log.info("Salvando dados do Doador");
         usuario.setDoador(doador);
@@ -59,5 +70,10 @@ public class UsuarioService {
 
         Usuario newUser = usuarioRepository.save(usuario);
         return newUser != null;
+    }
+
+    public List<Usuario> filtrarInstituicoes(String nome, String causa, String necessidade){
+        log.info("Procurando instituicoes com base na busca do usuario");
+        return usuarioRepository.filtrarInstituicoes(nome, causa, necessidade);
     }
 }

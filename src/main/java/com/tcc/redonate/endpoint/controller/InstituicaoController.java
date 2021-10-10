@@ -9,11 +9,10 @@ import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
@@ -51,6 +50,16 @@ public class InstituicaoController {
         }
     }
 
+    @RequestMapping(value = "/instituicoes/filtro", method = RequestMethod.GET)
+    public ResponseEntity<List<Usuario>> filtrarInstituicoes(HttpServletRequest request){
+        String nomeFiltro = request.getParameter("nome");
+        String causaFiltro = request.getParameter("causa");
+        String necessidadeFiltro = request.getParameter("necessidade");
+
+        List<Usuario> instituicoesFiltradas = usuarioService.filtrarInstituicoes(nomeFiltro, causaFiltro, necessidadeFiltro);
+
+        return ResponseEntity.ok(instituicoesFiltradas);
+    }
 
     @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.GET)
     public String dadosInstituicao(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){

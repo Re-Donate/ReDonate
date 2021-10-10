@@ -31,6 +31,7 @@ public class UsuarioController {
             model.addAttribute("success", inputFlashMap.get("success"));
             model.addAttribute("falhaLogin", inputFlashMap.get("falhaLogin"));
             model.addAttribute("accessDenial", inputFlashMap.get("accessDenial"));
+            model.addAttribute("emailNotUnique", inputFlashMap.get("emailNotUnique"));
         }
 
         request.getSession().invalidate();
@@ -41,16 +42,25 @@ public class UsuarioController {
     public String cadastrarForm(){ return "cadastrarUser"; }
 
     @RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
-    public RedirectView cadastrarUser(Usuario usuario, HttpServletRequest request){
+    public RedirectView cadastrarUser(Usuario usuario, HttpServletRequest request, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("", false);
-        request.getSession().setAttribute("lastCreatedUser", usuario);
 
-        Boolean isDoador = request.getParameter("tipoUsuario").equals("Doador");
+        if(usuarioService.isEmailUnique(usuario)) {
 
-        if(isDoador)
-            redirectView.setUrl("/doadores/cadastrarDoador");
-        else
-            redirectView.setUrl("/instituicoes/cadastrarInstituicao");
+            request.getSession().setAttribute("lastCreatedUser", usuario);
+
+            Boolean isDoador = request.getParameter("tipoUsuario").equals("Doador");
+
+            if (isDoador)
+                redirectView.setUrl("/doadores/cadastrarDoador");
+            else
+                redirectView.setUrl("/instituicoes/cadastrarInstituicao");
+
+        }else {
+
+            redirectView.setUrl("/");
+            redirectAttributes.addFlashAttribute("emailNotUnique", true);
+        }
 
         return  redirectView;
     }
