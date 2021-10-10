@@ -127,46 +127,54 @@
 
     <!-- Tratamento dos filtros da lista -->
     <script>
+        function carregarDados(objeto) {
+            objeto.nome = $("#searchNome").val();
+            objeto.causa = $("#searchCausa").val();
+            objeto.necessidade = $("#searchNecessidade").val();
+        }
+
+        function visualizarFiltro(dados, elemento){
+            saida = "";
+            for(let i = 0; i < dados.length; i++){
+                saida += "<dl class=\"instituicoes\">"
+                saida +=     "<img class=\"card-img-top\" src=\"http://localhost:8080/images/smile-regular.svg\" alt=\"Card image cap\">"
+                saida +=     "<div class=\"card-body\">"
+                saida +=         "<h5 class=\"card-title\">" + dados[i].nomeUsuario + "</h5>"
+                saida +=         "<dt>"
+                saida +=            "<span> " + dados[i].instituicao.causaInstituicao + " </span>"
+                saida +=         "</dt>"
+                saida +=         "<a href = \"/instituicao/"+ dados[i].instituicao.id +"\" class=\"btn btn-primary\">Doar!</a>"
+                saida +=     "</div>"
+                saida += "</dl>"
+            }
+
+            $("#footer").css({"position": "fixed", "bottom": 0});
+
+            elemento.html(saida);
+        }
+
+        function executarChamada(rota, objeto, elemento){
+            carregarDados(objeto);
+
+            $.getJSON(rota, objeto, function (data, status) {
+                visualizarFiltro(data, elemento);
+            });
+        }
+
         $(document).ready(function () {
+            const instituicaoBox = $("#instituicaoList");
             const jsonFiltro = {};
-            const nome = $("#searchNome");
-            const causa = $("#searchCausa");
-            const necessidade = $("#searchNecessidade");
 
             $("#searchNome").on("input", function (e) {
-
-                jsonFiltro.nome = nome.val();
-                jsonFiltro.causa = causa.val();
-                jsonFiltro.necessidade = necessidade.val();
-
-                $.getJSON("http://localhost:8080/instituicoes/filtro", jsonFiltro, function (data, status) {
-                    console.log(data);
-                });
-
+                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox);
             })
 
             $("#searchCausa").on("input", function (e) {
-
-                jsonFiltro.nome = nome.val();
-                jsonFiltro.causa = causa.val();
-                jsonFiltro.necessidade = necessidade.val();
-
-                $.getJSON("http://localhost:8080/instituicoes/filtro", jsonFiltro, function (data, status) {
-                    console.log(data);
-                });
-
+                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox);
             })
 
             $("#searchNecessidade").change(function (e) {
-
-                jsonFiltro.nome = nome.val();
-                jsonFiltro.causa = causa.val();
-                jsonFiltro.necessidade = necessidade.val();
-
-                $.getJSON("http://localhost:8080/instituicoes/filtro", jsonFiltro, function (data, status) {
-                    console.log(data);
-                });
-
+                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox);
             })
         });
     </script>
