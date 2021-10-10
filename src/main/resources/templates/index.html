@@ -103,6 +103,7 @@
 
         const sucesso = /*[[${success}]]*/ 'resultado da doação';
         const denial = /*[[${accessDenial}]]*/ 'falha de acesso';
+        const emailNU = /*[[${emailNotUnique}]]*/ 'email ja cadastrado';
 
         if (sucesso != null) {
             if (sucesso)
@@ -113,7 +114,12 @@
 
         if(denial != null){
             if(denial)
-                window.alert("Efetue login para acessar este conteúdo");
+                window.alert("Efetue login para acessar este conteúdo,");
+        }
+
+        if(emailNU != null){
+            if(emailNU)
+                window.alert("Email inserido já está vinculado à uma conta!");
         }
 
         /*]]>*/
