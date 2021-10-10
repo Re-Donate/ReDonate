@@ -14,6 +14,27 @@
 -->
 <body>
 <div id="header" th:replace="~{../static/fragments/header/header.html::headerGeral}"></div>
+
+<div id="searchGroup">
+    <!-- Nome -->
+    <label for="searchNome"> Nome da Instituição </label>
+    <input type="text" id="searchNome">
+
+    <!-- Causa -->
+    <label for="searchCausa"> Causa da Instituição </label>
+    <input type="text" id="searchCausa">
+
+    <!-- Necessidades -->
+    <select id="searchNecessidade">
+        <option value="" selected> Necessidades... </option>
+        <option value="Alimentos"> Alimentos </option>
+        <option value="Remédios"> Remédios </option>
+        <option value="Educação"> Educação </option>
+        <option value="Vestimentas"> Vestimentas </option>
+        <option value="Produtos para Pets"> Produtos para Pets </option>
+        <option value="Outros fins"> Outros fins </option>
+    </select>
+</div>
     <!--
     <header>
         <div id="content" class="mx-auto w-75 pt-3">
@@ -87,6 +108,9 @@
         </div>
     </div>-->
 
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+    <!-- Mensagens sobre o estado do sistema para o usuário -->
     <script th:inline="javascript">
         /*<![CDATA[*/
 
@@ -101,5 +125,50 @@
         /*]]>*/
     </script>
 
+    <!-- Tratamento dos filtros da lista -->
+    <script>
+        $(document).ready(function () {
+            const jsonFiltro = {};
+            const nome = $("#searchNome");
+            const causa = $("#searchCausa");
+            const necessidade = $("#searchNecessidade");
+
+            $("#searchNome").on("input", function (e) {
+
+                jsonFiltro.nome = nome.val();
+                jsonFiltro.causa = causa.val();
+                jsonFiltro.necessidade = necessidade.val();
+
+                $.getJSON("http://localhost:8080/instituicoes/filtro", jsonFiltro, function (data, status) {
+                    console.log(data);
+                });
+
+            })
+
+            $("#searchCausa").on("input", function (e) {
+
+                jsonFiltro.nome = nome.val();
+                jsonFiltro.causa = causa.val();
+                jsonFiltro.necessidade = necessidade.val();
+
+                $.getJSON("http://localhost:8080/instituicoes/filtro", jsonFiltro, function (data, status) {
+                    console.log(data);
+                });
+
+            })
+
+            $("#searchNecessidade").change(function (e) {
+
+                jsonFiltro.nome = nome.val();
+                jsonFiltro.causa = causa.val();
+                jsonFiltro.necessidade = necessidade.val();
+
+                $.getJSON("http://localhost:8080/instituicoes/filtro", jsonFiltro, function (data, status) {
+                    console.log(data);
+                });
+
+            })
+        });
+    </script>
 </body>
 </html>
