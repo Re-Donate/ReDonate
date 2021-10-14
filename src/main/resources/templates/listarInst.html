@@ -17,23 +17,30 @@
 
 <div id="searchGroup">
     <!-- Nome -->
-    <label for="searchNome"> Nome da Instituição </label>
-    <input type="text" id="searchNome">
+    <div id="nomeFiltroInst">
+        <label for="searchNome"> Nome da Instituição </label>
+        <input type="text" id="searchNome">
+    </div>
 
     <!-- Causa -->
-    <label for="searchCausa"> Causa da Instituição </label>
-    <input type="text" id="searchCausa">
+    <div id="causaFiltroInst">
+        <label for="searchCausa"> Causa da Instituição </label>
+        <input type="text" id="searchCausa">
+    </div>
 
     <!-- Necessidades -->
-    <select id="searchNecessidade">
-        <option value="" selected> Necessidades... </option>
-        <option value="Alimentos"> Alimentos </option>
-        <option value="Remédios"> Remédios </option>
-        <option value="Educação"> Educação </option>
-        <option value="Vestimentas"> Vestimentas </option>
-        <option value="Produtos para Pets"> Produtos para Pets </option>
-        <option value="Outros fins"> Outros fins </option>
-    </select>
+    <div id="categoriaFiltro">
+        <label> Necessidades: </label>
+        <select id="searchNecessidade">
+            <option value="" selected> Necessidades... </option>
+            <option value="Alimentos"> Alimentos </option>
+            <option value="Remédios"> Remédios </option>
+            <option value="Educação"> Educação </option>
+            <option value="Vestimentas"> Vestimentas </option>
+            <option value="Produtos para Pets"> Produtos para Pets </option>
+            <option value="Outros fins"> Outros fins </option>
+        </select>
+    </div>
 </div>
     <!--
     <header>

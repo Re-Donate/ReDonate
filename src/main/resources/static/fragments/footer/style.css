@@ -40,6 +40,10 @@ td{
     text-align: center;
 }
 
+th{
+    text-align: center !important;
+}
+
 /* Cores */
 /* 1D3557 - Azul escurão    */
 /* 2C5288 - Azul médio      */
