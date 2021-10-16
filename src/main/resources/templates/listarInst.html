@@ -60,17 +60,11 @@
         </div>
     </header>-->
     <div id="instituicaoAll">
-        <div th:unless="${#lists.isEmpty(instituicoes)}" class="card" id="instituicaoList">
-            <dl th:each="inst : ${instituicoes}" class="instituicoes">
-                <img class="card-img-top" src="http://localhost:8080/images/smile-regular.svg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 th:text="${inst.usuarioInstituicao.nomeUsuario}" class="card-title">Erro!</h5>
-                    <dt>
-                        <span th:text="${inst.causaInstituicao}"> causa </span>
-                    </dt>
-                    <a th:href="@{'/instituicao/' + ${inst.id}}" class="btn btn-primary">Doar!</a>
-                </div>
-            </dl>
+        <div class="card" id="instituicaoList">
+            <!-- Div na qual cards de Instituicoes sera carregado -->
+        </div>
+        <div id="paginacao">
+            <!-- Carregar indices de paginas -->
         </div>
     </div>
     <div id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}"> </div>
@@ -140,7 +134,8 @@
             objeto.necessidade = $("#searchNecessidade").val();
         }
 
-        function visualizarFiltro(dados, elemento){
+        function visualizarFiltro(dados, elementoCard, elementoPag){
+
             saida = "";
             for(let i = 0; i < dados.length; i++){
                 saida += "<dl class=\"instituicoes\">"
@@ -155,33 +150,60 @@
                 saida += "</dl>"
             }
 
+            for(let j = 0; j < (dados.length / 1); j++){
+                let indice = document.createElement("span");
+                indice.setAttribute("id", j);
+                indice.innerHTML = j+1;
+                elementoPag.append(indice);
+            }
+
             $("#footer").css({"position": "fixed", "bottom": 0});
 
-            elemento.html(saida);
+            elementoCard.html(saida);
         }
 
-        function executarChamada(rota, objeto, elemento){
+        function executarChamada(rota, objeto, elementoCard, elementoPag){
             carregarDados(objeto);
+            let retorno;
 
-            $.getJSON(rota, objeto, function (data, status) {
-                visualizarFiltro(data, elemento);
+            $.ajax({
+               method: "GET",
+               dataType: "json",
+               url: rota,
+               data: objeto,
+               async: false,
+               success: function (data, status) {
+                   visualizarFiltro(data, elementoCard, elementoPag);
+                   retorno = [...data];
+               }
             });
+
+            return retorno;
         }
 
         $(document).ready(function () {
             const instituicaoBox = $("#instituicaoList");
+            const paginacaoList = $("#paginacao");
             const jsonFiltro = {};
+            let Dados;
 
+            //Carregar todas as Instituicoes
+            Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
+
+            //Iniciando refatoração de código para implementar paginação.
+            console.log("\n\n" + Dados[0].nomeUsuario + "\n\n");
+
+            //Detectar eventos de filtro e buscar Instituicoes filtradas
             $("#searchNome").on("input", function (e) {
-                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox);
+                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
             })
 
             $("#searchCausa").on("input", function (e) {
-                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox);
+                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
             })
 
             $("#searchNecessidade").change(function (e) {
-                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox);
+                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
             })
         });
     </script>
