@@ -103,6 +103,7 @@
 
         const sucesso = /*[[${success}]]*/ 'resultado da doação';
         const denial = /*[[${accessDenial}]]*/ 'falha de acesso';
+        const Pdenial = /*[[${permissionDenial}]]*/ 'falha de acesso, sem permissão';
         const emailNU = /*[[${emailNotUnique}]]*/ 'email ja cadastrado';
 
         if (sucesso != null) {
@@ -114,7 +115,11 @@
 
         if(denial != null){
             if(denial)
-                window.alert("Efetue login para acessar este conteúdo,");
+                window.alert("Efetue login para acessar este conteúdo.");
+        }
+
+        if(Pdenial != null){
+            window.alert("A página que você tentou acessar é reservada para usuários " + Pdenial + "!");
         }
 
         if(emailNU != null){

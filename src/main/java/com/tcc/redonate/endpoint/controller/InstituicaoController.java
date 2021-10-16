@@ -30,23 +30,26 @@ public class InstituicaoController {
 
     @RequestMapping(value = "/instituicoes", method = RequestMethod.GET)
     public String listarInstituicoes(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
-        Doador doadorLogado = doadorService.findByUsuarioLogado(request);
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
 
-        if(doadorLogado != null) {
-            model.addAttribute("dadosDoador", doadorLogado);
+        if(usuarioLogado != null && usuarioLogado.getDoador() != null) {
+            model.addAttribute("dadosDoador", usuarioLogado);
 
             Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
             if (inputFlashMap != null)
                 model.addAttribute("success", inputFlashMap.get("success"));
 
-            List<Instituicao> instList = instituicaoService.list();
-            if (instList != null)
-                model.addAttribute("instituicoes", instList);
-
             return "listarInst";
         }else {
-            redirectAttributes.addFlashAttribute("accessDenial", true);
+
+            if(usuarioLogado != null) {
+                redirectAttributes.addFlashAttribute("permissionDenial", "Doadores");
+            }else {
+                redirectAttributes.addFlashAttribute("accessDenial", true);
+            }
+
             return "redirect:/";
+
         }
     }
 
@@ -99,7 +102,7 @@ public class InstituicaoController {
     public String detalharInstituicao(@PathVariable("inst") int inst, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
 
-        if(usuarioLogado != null) {
+        if(usuarioLogado != null && usuarioLogado.getDoador() != null) {
             model.addAttribute("dadosDoador", usuarioLogado);
 
             Instituicao instDetail = instituicaoService.findOne((long) inst);
@@ -108,7 +111,13 @@ public class InstituicaoController {
 
             return "detalharInst";
         }else {
-            redirectAttributes.addFlashAttribute("accessDenial", true);
+
+            if(usuarioLogado != null) {
+                redirectAttributes.addFlashAttribute("permissionDenial", "Doadores");
+            }else {
+                redirectAttributes.addFlashAttribute("accessDenial", true);
+            }
+
             return "redirect:/";
         }
     }

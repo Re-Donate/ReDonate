@@ -31,6 +31,7 @@ public class UsuarioController {
             model.addAttribute("success", inputFlashMap.get("success"));
             model.addAttribute("falhaLogin", inputFlashMap.get("falhaLogin"));
             model.addAttribute("accessDenial", inputFlashMap.get("accessDenial"));
+            model.addAttribute("permissionDenial", inputFlashMap.get("permissionDenial"));
             model.addAttribute("emailNotUnique", inputFlashMap.get("emailNotUnique"));
         }
 
