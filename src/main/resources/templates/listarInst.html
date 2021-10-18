@@ -150,14 +150,16 @@
                 saida += "</dl>"
             }
 
-            for(let j = 0; j < (dados.length / 1); j++){
+            elementoPag.html("");
+
+            for(let j = 0; j < (dados.length / 12); j++){
                 let indice = document.createElement("span");
                 indice.setAttribute("id", j);
                 indice.innerHTML = j+1;
                 elementoPag.append(indice);
             }
 
-            $("#footer").css({"position": "fixed", "bottom": 0});
+            //$("#footer").css({"position": "fixed", "bottom": 0});
 
             elementoCard.html(saida);
         }
@@ -173,7 +175,6 @@
                data: objeto,
                async: false,
                success: function (data, status) {
-                   visualizarFiltro(data, elementoCard, elementoPag);
                    retorno = [...data];
                }
             });
@@ -189,21 +190,22 @@
 
             //Carregar todas as Instituicoes
             Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
-
-            //Iniciando refatoração de código para implementar paginação.
-            console.log("\n\n" + Dados[0].nomeUsuario + "\n\n");
+            visualizarFiltro(Dados, instituicaoBox, paginacaoList);
 
             //Detectar eventos de filtro e buscar Instituicoes filtradas
             $("#searchNome").on("input", function (e) {
-                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
+                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
+                visualizarFiltro(Dados, instituicaoBox, paginacaoList);
             })
 
             $("#searchCausa").on("input", function (e) {
-                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
+                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
+                visualizarFiltro(Dados, instituicaoBox, paginacaoList);
             })
 
             $("#searchNecessidade").change(function (e) {
-                executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
+                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
+                visualizarFiltro(Dados, instituicaoBox, paginacaoList);
             })
         });
     </script>
