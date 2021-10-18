@@ -19,13 +19,13 @@
     <!-- Nome -->
     <div id="nomeFiltroInst">
         <label for="searchNome"> Nome da Instituição </label>
-        <input type="text" id="searchNome">
+        <input type="text" id="searchNome" class="pesquisa">
     </div>
 
     <!-- Causa -->
     <div id="causaFiltroInst">
         <label for="searchCausa"> Causa da Instituição </label>
-        <input type="text" id="searchCausa">
+        <input type="text" id="searchCausa" class="pesquisa">
     </div>
 
     <!-- Necessidades -->
@@ -60,10 +60,13 @@
         </div>
     </header>-->
     <div id="instituicaoAll">
+        <div id="paginacaoTop" class="paginacao">
+            <!-- Carregar indices de paginas -->
+        </div>
         <div class="card" id="instituicaoList">
             <!-- Div na qual cards de Instituicoes sera carregado -->
         </div>
-        <div id="paginacao">
+        <div id="paginacaoBottom" class="paginacao">
             <!-- Carregar indices de paginas -->
         </div>
     </div>
@@ -128,16 +131,58 @@
 
     <!-- Tratamento dos filtros da lista -->
     <script>
+
+        //Instancia o objeto de filtro com os dados dos campos
         function carregarDados(objeto) {
             objeto.nome = $("#searchNome").val();
             objeto.causa = $("#searchCausa").val();
             objeto.necessidade = $("#searchNecessidade").val();
         }
 
-        function visualizarFiltro(dados, elementoCard, elementoPag){
+        //Cria os indices das paginas possiveis de navegacao
+        function criarPaginacao(dados, elementoPag, pagina) {
+            elementoPag.html("");
+
+            if(dados.length) {
+                let voltar = document.createElement("span");
+                if (pagina == 0)
+                    voltar.setAttribute("id", 0);
+                else
+                    voltar.setAttribute("id", pagina - 1);
+
+                voltar.innerHTML = "<";
+                elementoPag.append(voltar);
+            }
+
+            let j;
+            for(j = 0; j < (dados.length / 12); j++){
+                let indice = document.createElement("span");
+                indice.setAttribute("id", j);
+                indice.innerHTML = j+1;
+                if(j == pagina)
+                    indice.setAttribute("style", "color: red;");
+                elementoPag.append(indice);
+            }
+
+            if(dados.length) {
+                let avancar = document.createElement("span");
+                if (pagina == j - 1)
+                    avancar.setAttribute("id", pagina);
+                else
+                    avancar.setAttribute("id", pagina + 1);
+
+                avancar.innerHTML = ">";
+                elementoPag.append(avancar);
+            }
+        }
+
+        //Carrega os cards das instituicoes
+        function visualizarFiltro(dados, elementoCard, pagina){
 
             saida = "";
-            for(let i = 0; i < dados.length; i++){
+            for(let i = pagina*12; i < (pagina+1)*12; i++){
+                if(!dados[i])
+                    break;
                 saida += "<dl class=\"instituicoes\">"
                 saida +=     "<img class=\"card-img-top\" src=\"http://localhost:8080/images/smile-regular.svg\" alt=\"Card image cap\">"
                 saida +=     "<div class=\"card-body\">"
@@ -150,13 +195,8 @@
                 saida += "</dl>"
             }
 
-            elementoPag.html("");
-
-            for(let j = 0; j < (dados.length / 12); j++){
-                let indice = document.createElement("span");
-                indice.setAttribute("id", j);
-                indice.innerHTML = j+1;
-                elementoPag.append(indice);
+            if(!dados.length) {
+                saida = "Não encontramos nenhuma Instituição com estas características!";
             }
 
             //$("#footer").css({"position": "fixed", "bottom": 0});
@@ -164,7 +204,8 @@
             elementoCard.html(saida);
         }
 
-        function executarChamada(rota, objeto, elementoCard, elementoPag){
+        //Executa a chamada para o backend e retorna os dados recebidos
+        function executarChamada(rota, objeto){
             carregarDados(objeto);
             let retorno;
 
@@ -182,31 +223,40 @@
             return retorno;
         }
 
+        //Executa as principais funcoes de atualizacao de dados
+        function atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom, pagina = 0) {
+            visualizarFiltro(Dados, instituicaoBox, pagina);
+            criarPaginacao(Dados, paginacaoTop, pagina);
+            criarPaginacao(Dados, paginacaoBottom, pagina);
+        }
+
         $(document).ready(function () {
             const instituicaoBox = $("#instituicaoList");
-            const paginacaoList = $("#paginacao");
+            const paginacaoTop = $("#paginacaoTop");
+            const paginacaoBottom = $("#paginacaoBottom");
             const jsonFiltro = {};
             let Dados;
 
             //Carregar todas as Instituicoes
-            Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
-            visualizarFiltro(Dados, instituicaoBox, paginacaoList);
+            Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro);
+            atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom);
 
             //Detectar eventos de filtro e buscar Instituicoes filtradas
-            $("#searchNome").on("input", function (e) {
-                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
-                visualizarFiltro(Dados, instituicaoBox, paginacaoList);
-            })
-
-            $("#searchCausa").on("input", function (e) {
-                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
-                visualizarFiltro(Dados, instituicaoBox, paginacaoList);
-            })
+            $(".pesquisa").on("input", function (e) {
+                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro);
+                atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom);
+            });
 
             $("#searchNecessidade").change(function (e) {
-                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro, instituicaoBox, paginacaoList);
-                visualizarFiltro(Dados, instituicaoBox, paginacaoList);
-            })
+                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro);
+                atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom);
+            });
+
+            //Trocar de página na lista de instituições
+            $(".paginacao").on("click", "span", function(e) {
+                window.scrollTo(0, 0);
+                atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom, this.id);
+            });
         });
     </script>
 </body>
