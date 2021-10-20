@@ -13,8 +13,6 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
@@ -22,7 +20,6 @@ import javax.persistence.*;
 public class Usuario implements AbstractEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -43,10 +40,8 @@ public class Usuario implements AbstractEntity{
     @Column(nullable = false)
     private String estadoUsuario;
 
-    @Column(nullable = true)
     private String telefoneUsuario;
 
-    @Column(nullable = true)
     private String celularUsuario;
 
     @Column(nullable = false)
