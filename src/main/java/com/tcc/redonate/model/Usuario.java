@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,7 +45,7 @@ public class Usuario implements AbstractEntity{
 
     private String celularUsuario;
 
-    @Column(nullable = false)
+    @Column(unique = true)
     private String cpfUsuario;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "usuarioInstituicao")

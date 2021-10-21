@@ -50,3 +50,7 @@ INSERT INTO instituicao (cnpj_instituicao, causa_instituicao, necessidades_insti
 INSERT INTO doacao (valor_doacao, causa_doacao, id_doador, id_instituicao) VALUES (25, "Outros fins", 1, 4),
                                                                                   (30, "Alimentos", 1, 4),
                                                                                   (15, "Educação", 2, 3);
+
+INSERT INTO chat (id_doacao) VALUES (1),
+                                    (2),
+                                    (3);

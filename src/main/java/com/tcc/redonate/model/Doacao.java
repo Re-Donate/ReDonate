@@ -42,6 +42,9 @@ public class Doacao implements AbstractEntity, Comparable<Doacao>{
     @JoinColumn(name = "id_instituicao", referencedColumnName = "id")
     private Instituicao instituicao;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "doacao")
+    private Chat chat;
+
     @Override
     public int compareTo(Doacao d){
         return this.getCausaDoacao().compareTo(d.getCausaDoacao());

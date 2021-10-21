@@ -18,14 +18,18 @@ public class Mensagem implements AbstractEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_chat", referencedColumnName = "id")
+    private Chat chat;
+
     @Column(nullable = false)
     private String texto;
 
     @Column(nullable = false)
-    private String de;
+    private Long de;
 
     @Column(nullable = false)
-    private String para;
+    private Long para;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
