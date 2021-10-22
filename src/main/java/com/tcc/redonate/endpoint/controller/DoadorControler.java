@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,10 +28,10 @@ public class DoadorControler {
     private final UsuarioService usuarioService;
     private final DoadorService doadorService;
 
-    @RequestMapping(value = "/cadastrarDoador", method = RequestMethod.GET)
+    @GetMapping(value = "/cadastrarDoador")
     public String cadastrarDoadorForm(){ return "cadastrarDoador"; }
 
-    @RequestMapping(value = "/cadastrarDoador", method = RequestMethod.POST)
+    @PostMapping(value = "/cadastrarDoador")
     public RedirectView cadastrarDoador(Usuario usuario, Doador doador, HttpServletRequest request, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/", false);
 
@@ -43,7 +45,7 @@ public class DoadorControler {
         return redirectView;
     }
 
-    @RequestMapping(value = "/dados", method = RequestMethod.GET)
+    @GetMapping(value = "/dados")
     public String dadosDoador(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
         Doador dadosDoador = doadorService.findByUsuarioLogado(request);
 
@@ -62,7 +64,7 @@ public class DoadorControler {
 
     }
 
-    @RequestMapping(value = "/dados", method = RequestMethod.POST)
+    @PostMapping(value = "/dados")
     public RedirectView atualizarDadosDoador(Usuario usuario, Doador doador, HttpServletRequest request, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/doadores/dados", false);
 

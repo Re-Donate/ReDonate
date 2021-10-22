@@ -1,10 +1,8 @@
 package com.tcc.redonate.endpoint.controller;
 
-import com.tcc.redonate.endpoint.service.DoadorService;
 import com.tcc.redonate.endpoint.service.InstituicaoService;
 import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.model.Doacao;
-import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +23,9 @@ import java.util.Map;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class InstituicaoController {
     private final InstituicaoService instituicaoService;
-    private final DoadorService doadorService;
     private final UsuarioService usuarioService;
 
-    @RequestMapping(value = "/instituicoes", method = RequestMethod.GET)
+    @GetMapping(value = "/instituicoes")
     public String listarInstituicoes(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
 
@@ -53,7 +50,7 @@ public class InstituicaoController {
         }
     }
 
-    @RequestMapping(value = "/instituicoes/filtro", method = RequestMethod.GET)
+    @GetMapping(value = "/instituicoes/filtro")
     public ResponseEntity<List<Usuario>> filtrarInstituicoes(HttpServletRequest request){
         String nomeFiltro = request.getParameter("nome");
         String causaFiltro = request.getParameter("causa");
@@ -64,7 +61,7 @@ public class InstituicaoController {
         return ResponseEntity.ok(instituicoesFiltradas);
     }
 
-    @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.GET)
+    @GetMapping(value = "/instituicoes/dados")
     public String dadosInstituicao(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
         Instituicao dadosInstituicao = instituicaoService.findByUsuarioLogado(request);
 
@@ -82,7 +79,7 @@ public class InstituicaoController {
         }
     }
 
-    @RequestMapping(value = "/instituicoes/dados", method = RequestMethod.POST)
+    @PostMapping(value = "/instituicoes/dados")
     public RedirectView atualizarDadosInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/instituicoes/dados", false);
 
@@ -98,7 +95,7 @@ public class InstituicaoController {
         return redirectView;
     }
 
-    @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.GET)
+    @GetMapping(value = "/instituicao/{inst}")
     public String detalharInstituicao(@PathVariable("inst") int inst, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
 
@@ -122,10 +119,10 @@ public class InstituicaoController {
         }
     }
 
-    @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.GET)
+    @GetMapping(value = "/instituicoes/cadastrarInstituicao")
     public String cadastrarInstituicaoForm(){ return "cadastrarInstituicao"; }
 
-    @RequestMapping(value = "/instituicoes/cadastrarInstituicao", method = RequestMethod.POST)
+    @PostMapping(value = "/instituicoes/cadastrarInstituicao")
     public RedirectView cadastrarInstituicao(Usuario usuario, Instituicao instituicao, HttpServletRequest request, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/", false);
 

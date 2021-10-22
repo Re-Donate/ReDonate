@@ -5,14 +5,6 @@ CREATE TABLE mensagem (
                         de INT NOT NULL,
                         para INT NOT NULL,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        id_chat INT NOT NULL UNIQUE,
-                        PRIMARY KEY (id)
-);
-
-DROP TABLE IF EXISTS chat;
-CREATE TABLE chat (
-                        id INT NOT NULL AUTO_INCREMENT,
-                        ativo BOOLEAN NOT NULL DEFAULT TRUE,
                         id_doacao INT NOT NULL UNIQUE,
                         PRIMARY KEY (id)
 );
@@ -25,6 +17,7 @@ CREATE TABLE doacao (
                         id_doador INT NOT NULL,
                         id_instituicao INT NOT NULL,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        ativo BOOLEAN NOT NULL DEFAULT TRUE,
                         PRIMARY KEY (id)
 );
 
@@ -72,8 +65,5 @@ ALTER TABLE doacao
     ADD CONSTRAINT `fk_id_doador` FOREIGN KEY (id_doador) REFERENCES doador (id),
     ADD CONSTRAINT `fk_id_instituicao` FOREIGN KEY (id_instituicao) REFERENCES instituicao (id);
 
-ALTER TABLE chat
-    ADD CONSTRAINT `fk_chat_doacao` FOREIGN KEY (id_doacao) REFERENCES doacao (id);
-
 ALTER TABLE mensagem
-    ADD CONSTRAINT `fk_id_chat` FOREIGN KEY (id_chat) REFERENCES chat (id);
+    ADD CONSTRAINT `fk_id_chat` FOREIGN KEY (id_doacao) REFERENCES doacao (id);

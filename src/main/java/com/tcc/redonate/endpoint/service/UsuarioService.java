@@ -19,6 +19,12 @@ import java.util.List;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
 
+    public boolean existe(Long id){
+        Usuario usuario = usuarioRepository.getById(id);
+
+        return usuario != null;
+    }
+
     public void atualizarUsuario(Usuario dadosAntigos, Usuario novosDados){
         novosDados.setId(dadosAntigos.getId());
         novosDados.setEmailUsuario(dadosAntigos.getEmailUsuario());

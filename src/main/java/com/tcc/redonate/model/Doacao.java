@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,8 +43,11 @@ public class Doacao implements AbstractEntity, Comparable<Doacao>{
     @JoinColumn(name = "id_instituicao", referencedColumnName = "id")
     private Instituicao instituicao;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "doacao")
-    private Chat chat;
+    @Column(nullable = false)
+    private boolean ativo;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "doacao", orphanRemoval = true)
+    private List<Mensagem> mensagens;
 
     @Override
     public int compareTo(Doacao d){

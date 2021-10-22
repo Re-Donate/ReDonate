@@ -1,5 +1,7 @@
 package com.tcc.redonate.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,6 +14,10 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Mensagem implements AbstractEntity{
 
     @Id
@@ -19,8 +25,8 @@ public class Mensagem implements AbstractEntity{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_chat", referencedColumnName = "id")
-    private Chat chat;
+    @JoinColumn(name = "id_doacao", referencedColumnName = "id")
+    private Doacao doacao;
 
     @Column(nullable = false)
     private String texto;

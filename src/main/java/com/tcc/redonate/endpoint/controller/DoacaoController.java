@@ -9,12 +9,11 @@ import com.tcc.redonate.model.Doador;
 import com.tcc.redonate.model.Instituicao;
 import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -32,7 +31,32 @@ public class DoacaoController {
     private final InstituicaoService instituicaoService;
     private final UsuarioService usuarioService;
 
-    @RequestMapping(value = "/instituicao/{inst}", method = RequestMethod.POST)
+    @GetMapping(value = "/doacoes/chat")
+    public String carregarChat(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
+
+        if(usuarioLogado == null){
+            redirectAttributes.addFlashAttribute("accessDenial", true);
+            return "redirect:/";
+        }
+
+        model.addAttribute("dadosUsuario", usuarioLogado);
+        List<Doacao> doacoes;
+
+        if(usuarioLogado.getDoador() != null){
+            doacoes = usuarioLogado.getDoador().getDoacoes();
+            model.addAttribute("isDoador", true);
+        }else{
+            doacoes = usuarioLogado.getInstituicao().getDoacoes();
+            model.addAttribute("isDoador", false);
+        }
+
+        model.addAttribute("doacoesExistentes", doacoes);
+
+        return "chat";
+    }
+
+    @PostMapping(value = "/instituicao/{inst}")
     public RedirectView criarDoacao(@PathVariable("inst") Long inst, Doacao doacao, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Instituicao instituicao = instituicaoService.findOne(inst);
         Doador doador = doadorService.findByUsuarioLogado(request);
@@ -44,7 +68,7 @@ public class DoacaoController {
         return redirectView;
     }
 
-    @RequestMapping(value = "/doacoes/dados", method = RequestMethod.GET)
+    @GetMapping(value = "/doacoes/dados")
     public String carregarDadosDoacoes(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
         Usuario dadosUsuario = usuarioService.getUsuarioLogado(request);
         boolean queroDoadores = false;
