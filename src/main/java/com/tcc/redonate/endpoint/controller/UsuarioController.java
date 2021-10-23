@@ -5,12 +5,10 @@ import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
@@ -86,5 +84,12 @@ public class UsuarioController {
         }
 
         return redirectView;
+    }
+
+    @GetMapping(value = "/getuser/{id}")
+    public ResponseEntity<Usuario> getUserById(@PathVariable Long id) {
+        Usuario usuario = usuarioService.getById(id);
+
+        return ResponseEntity.ok(usuario);
     }
 }

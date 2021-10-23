@@ -82,4 +82,10 @@ public class UsuarioService {
         log.info("Procurando instituicoes com base na busca do usuario");
         return usuarioRepository.filtrarInstituicoes(nome, causa, necessidade);
     }
+
+    public Usuario getById(Long id){
+        log.info("Buscando dados do usuario a partir do ID");
+
+        return usuarioRepository.getById(id);
+    }
 }

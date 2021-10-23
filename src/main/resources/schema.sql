@@ -4,8 +4,8 @@ CREATE TABLE mensagem (
                         texto VARCHAR(500) NOT NULL,
                         de INT NOT NULL,
                         para INT NOT NULL,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        id_doacao INT NOT NULL UNIQUE,
+                        created_at VARCHAR(50) NOT NULL,
+                        doacao INT NOT NULL,
                         PRIMARY KEY (id)
 );
 
@@ -66,4 +66,4 @@ ALTER TABLE doacao
     ADD CONSTRAINT `fk_id_instituicao` FOREIGN KEY (id_instituicao) REFERENCES instituicao (id);
 
 ALTER TABLE mensagem
-    ADD CONSTRAINT `fk_id_chat` FOREIGN KEY (id_doacao) REFERENCES doacao (id);
+    ADD CONSTRAINT `fk_id_chat` FOREIGN KEY (doacao) REFERENCES doacao (id);

@@ -23,38 +23,52 @@ function cacheDOM() {
 }
 
 function render(objMessage) {
-    scrollToBottom();
-    // responses
     var templateResponse = Handlebars.compile($("#message-response-template").html());
-    var contextResponse = {
-        response: objMessage.texto,
-        time: objMessage.created_at,
-        userName: objMessage.from
-    };
 
-    setTimeout(function () {
-        $chatHistoryList.append(templateResponse(contextResponse));
-        scrollToBottom();
-    }.bind(this), 1500);
+    $.ajax({
+        method: "GET",
+        dataType: "json",
+        url: url + "/getuser/" + objMessage.de,
+        async: false,
+        success: function (data, status) {
+            var contextResponse = {
+                response: objMessage.texto,
+                time: objMessage.createdAt,
+                userName: getNomeResumido(data.nomeUsuario.split(' '))
+            };
+
+            $chatHistoryList.append(templateResponse(contextResponse));
+            scrollToBottom();
+        }
+    });
 }
 
 function renderMyMessages(objMessage) {
     var template = Handlebars.compile($("#message-template").html());
-    var context = {
-        messageOutput: objMessage.texto,
-        time: objMessage.created_at,
-        toUserName: objMessage.to
-    };
 
-    $chatHistoryList.append(template(context));
-    scrollToBottom();
-    $textarea.val('');
+    $.ajax({
+        method: "GET",
+        dataType: "json",
+        url: url + "/getuser/" + objMessage.de,
+        async: false,
+        success: function (data, status) {
+            var context = {
+                messageOutput: objMessage.texto,
+                time: objMessage.createdAt,
+                toUserName: getNomeResumido(data.nomeUsuario.split(' '))
+            };
+
+            $chatHistoryList.append(template(context));
+            scrollToBottom();
+        }
+    });
 }
 
 function renderChatHistory(chatHistory) {
     $chatHistoryList.html('');
     for(let message of chatHistory) {
-        if(message.from == selectedUser){
+        console.log(`\n\n ${message.texto} \n\n`);
+        if(message.de == selectedUser){
             render(message);
         }else{
             renderMyMessages(message);
@@ -63,9 +77,8 @@ function renderChatHistory(chatHistory) {
 }
 
 function sendMessage(message) {
-    let username = $('#userName').val();
-    console.log(username)
-    sendMsg(username, message);
+    let userId = $('#userId').val();
+    sendMsg(userId, message);
     scrollToBottom();
     if (message.trim() !== '') {
         var template = Handlebars.compile($("#message-template").html());
@@ -93,7 +106,12 @@ function scrollToBottom() {
 }
 
 function getCurrentTime() {
-    return new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+    tempo = new Date();
+    return tempo.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3") + " | " + tempo.getDate() + "/" + (tempo.getMonth() + 1);
+}
+
+function getNomeResumido(nomes) {
+    return nomes[1] ? nomes[0] + ' ' + nomes[1] : nomes[0];
 }
 
 function addMessage() {
