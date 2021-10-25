@@ -67,7 +67,6 @@ function renderMyMessages(objMessage) {
 function renderChatHistory(chatHistory) {
     $chatHistoryList.html('');
     for(let message of chatHistory) {
-        console.log(`\n\n ${message.texto} \n\n`);
         if(message.de == selectedUser){
             render(message);
         }else{

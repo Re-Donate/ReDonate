@@ -1,29 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--<head>
-    <meta charset="UTF-8">
-    <title>Re:Donate</title>
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/index.css" />
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
-    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-</head>-->
 <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'index')}"></head>
 <body>
     <div id="container">
-
-
-        <!--<div id="header">
-            <div id="options" class="mx-auto">
-                <a href="#" id="title">ReDonate</a>
-                <a href="#" id="sobre">Sobre</a>
-            </div>
-        </div>-->
-
-        <div th:replace="~{../static/fragments/header/header.html::headerGeral}">
-
-        </div>
+        <div th:replace="~{../static/fragments/header/header.html::headerLogin}"></div>
 
         <div id="lado"></div>
 
@@ -55,45 +35,6 @@
         </div>
 
         <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
-            <!--
-            <footer>
-                <div class="container">
-                    <div class="sec about-us" align="center">
-                        <h2>Sobre <span id="bolder">Nós</span></h2>
-                        <p>
-                            Somos uma comunidade que tem como principal característica o companheirismo. Sempre que nós vemos alguém passando por necessidades nós percebemos que temos que agir. Um por todos e todos por um!
-                        </p>
-                        <ul class="sci" align="center">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="sec talk-to-us" align="center">
-                        <h2>Fale <span id="bolder">Conosco</span></h2>
-                        <ul class="info">
-                            <li>
-                                <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                                <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
-                            </li>
-                            <li>
-                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                                <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
-                            </li>
-                            <li>
-                                <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                                <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
-            <div class="copyright">
-                <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
-            </div>
-            -->
         </div>
 
     </div>
@@ -104,7 +45,7 @@
         const sucesso = /*[[${success}]]*/ 'resultado da doação';
         const denial = /*[[${accessDenial}]]*/ 'falha de acesso';
         const Pdenial = /*[[${permissionDenial}]]*/ 'falha de acesso, sem permissão';
-        const emailNU = /*[[${emailNotUnique}]]*/ 'email ja cadastrado';
+        const notUnique = /*[[${notUnique}]]*/ 'email ja cadastrado';
 
         if (sucesso != null) {
             if (sucesso)
@@ -122,9 +63,8 @@
             window.alert("A página que você tentou acessar é reservada para usuários " + Pdenial + "!");
         }
 
-        if(emailNU != null){
-            if(emailNU)
-                window.alert("Email inserido já está vinculado à uma conta!");
+        if(notUnique != null){
+                window.alert(`${notUnique} inserido já está vinculado à uma conta!`);
         }
 
         /*]]>*/

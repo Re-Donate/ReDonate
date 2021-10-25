@@ -39,7 +39,7 @@ button{
 div#submit{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 textarea{
@@ -92,3 +92,7 @@ a{
     color: cornsilk !important;
     text-decoration: none !important;
 }  
+
+a#voltar{
+    background-color: #2C5288 !important;
+}
