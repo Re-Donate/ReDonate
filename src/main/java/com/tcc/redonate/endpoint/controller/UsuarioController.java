@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.util.Map;
 
 @Controller
@@ -31,7 +32,7 @@ public class UsuarioController {
             model.addAttribute("falhaLogin", inputFlashMap.get("falhaLogin"));
             model.addAttribute("accessDenial", inputFlashMap.get("accessDenial"));
             model.addAttribute("permissionDenial", inputFlashMap.get("permissionDenial"));
-            model.addAttribute("emailNotUnique", inputFlashMap.get("emailNotUnique"));
+            model.addAttribute("notUnique", inputFlashMap.get("notUnique"));
         }
 
         request.getSession().invalidate();
@@ -59,7 +60,7 @@ public class UsuarioController {
         }else {
 
             redirectView.setUrl("/");
-            redirectAttributes.addFlashAttribute("emailNotUnique", true);
+            redirectAttributes.addFlashAttribute("notUnique", "Email");
         }
 
         return  redirectView;
@@ -91,5 +92,10 @@ public class UsuarioController {
         Usuario usuario = usuarioService.getById(id);
 
         return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping(value = "/validar/cpf")
+    public ResponseEntity<Boolean> validarCPF(@PathParam("cpf") String cpf) {
+        return ResponseEntity.ok(usuarioService.isCPFValid(cpf));
     }
 }

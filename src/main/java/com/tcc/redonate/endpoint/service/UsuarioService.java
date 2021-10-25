@@ -60,6 +60,16 @@ public class UsuarioService {
         return true;
     }
 
+    public boolean isCPFUnique(Usuario usuario){
+        log.info("Verificando se o CPF ja existe no banco");
+        Usuario testCPF = usuarioRepository.findByCpfUsuario(usuario.getCpfUsuario());
+
+        if(testCPF != null)
+            return false;
+
+        return true;
+    }
+
     public boolean saveUsuarioDoador(Usuario usuario, Doador doador){
         log.info("Salvando dados do Doador");
         usuario.setDoador(doador);
@@ -87,5 +97,35 @@ public class UsuarioService {
         log.info("Buscando dados do usuario a partir do ID");
 
         return usuarioRepository.getById(id);
+    }
+
+    public boolean isCPFValid(String cpf){
+        String[] digitos = cpf
+                .replace(".", "")
+                .split("-");
+
+        for(int j = 0; j < 2; j++) {
+
+            int index = 0;
+            int soma = 0;
+
+            for (int i = digitos[0].length() + 1; i > 1; i--) {
+                soma += Character.getNumericValue(digitos[0].charAt(index)) * i;
+                index++;
+            }
+            int result = (soma * 10) % 11;
+
+            if(result == 10)
+                result = 0;
+
+            if(result == Character.getNumericValue(digitos[1].charAt(j))){
+                digitos[0] += digitos[1].charAt(j);
+            }else{
+                return false;
+            }
+
+        }
+
+        return true;
     }
 }

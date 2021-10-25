@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+    Usuario findByCpfUsuario(String cpfUsuario);
+
     Usuario findByEmailUsuario(String emailUsuario);
 
     @Query("SELECT obj FROM Usuario obj WHERE obj.nomeUsuario LIKE %:nome% AND obj.instituicao.causaInstituicao LIKE %:causa% AND obj.instituicao.necessidadesInstituicao LIKE %:necessidade%")

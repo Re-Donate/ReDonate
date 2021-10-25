@@ -33,7 +33,7 @@ CREATE TABLE doador (
 DROP TABLE IF EXISTS instituicao;
 CREATE TABLE instituicao (
                          id INT NOT NULL AUTO_INCREMENT,
-                         cnpj_instituicao VARCHAR(30),
+                         cnpj_instituicao VARCHAR(30) UNIQUE,
                          causa_instituicao VARCHAR(250) NOT NULL,
                          necessidades_instituicao VARCHAR(100) NOT NULL,
                          id_usuario INT NOT NULL UNIQUE,
@@ -51,7 +51,7 @@ CREATE TABLE usuario (
                         estado_usuario VARCHAR(30) NOT NULL,
                         telefone_usuario VARCHAR(30),
                         celular_usuario VARCHAR(30),
-                        cpf_usuario VARCHAR(30),
+                        cpf_usuario VARCHAR(30) UNIQUE,
                         PRIMARY KEY (id)
 );
 

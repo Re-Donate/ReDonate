@@ -1,37 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'cadastrarDoador')}"></head>
-    <!--
-    <head>
-        <meta charset="UTF-8">
-        <title>Cadastro de usuario</title>
-        <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/cadastrarDoador.css" />
-        <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css} "/>
-        <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/font-awesome.min.css} "/>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-    </head>
-    -->
+
     <body>
         <div id="container">
-            <!--
-            <div id="header">
-                <header>
-                    <div id="contentHeader" class="mx-auto w-75 pt-3">
-                        <div id="logout">
-                            <a href="/cadastrar"> Voltar </a>
-                        </div>
-                        <div id="logged">
-                            <p> Insira seus dados para finalizar o cadastro </p><br>
-                        </div>
-                    </div>
-                    <div id="title">
-                        <h2> Cadastro! </h2>
-                    </div>
-                </header>
-            </div>
-            -->
-            <div th:replace="~{../static/fragments/header/header.html::headerGeral}"></div>
+
+            <div th:replace="~{../static/fragments/header/header.html::headerLogin}"></div>
             <div id="conteudo">
                 <form id="cadastroForm" method="POST" class="border border-info p-3">
                     <div class="form-group">
@@ -61,6 +35,7 @@
                     <div class="form-group">
                         <label for="cpfInput">CPF</label>
                         <input type="text" class="form-control" name="cpfUsuario" id="cpfInput" placeholder="Seu cpf" data-inputmask="'mask': '999.999.999-99'" required>
+                        <span style="color: red" id="cpfValidator"></span>
                     </div>
                     <div class="form-group">
                         <label for="nascimento">Data de Nascimento</label>
@@ -82,52 +57,13 @@
                     </div>
                     <br />
                     <div id="submit">
+                        <a class="btn text-white w-25" id="voltar" href="/cadastrar">Voltar</a>
                         <button type="submit" class="btn text-white w-25" id="cadastrar" disabled>Enviar</button>
                     </div>
                 </form>
             </div>
-            <!--
-            <div class="body-footer" id="footer">
-                <footer>
-                    <div class="container">
-                        <div class="sec about-us" align="center">
-                            <h2>Sobre <span id="bolder">Nós</span></h2>
-                            <p>
-                                Somos uma comunidade que tem como principal característica o companheirismo. Sempre que nós vemos alguém passando por necessidades nós percebemos que temos que agir. Um por todos e todos por um!
-                            </p>
-                            <ul class="sci" align="center">
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="sec talk-to-us" align="center">
-                            <h2>Fale <span id="bolder">Conosco</span></h2>
-                            <ul class="info">
-                                <li>
-                                    <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                                    <p><a href="mailto: reply@capratvagas.com.br">reply@redonate.com.br</a></p>
-                                </li>
-                                <li>
-                                    <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                                    <p><a href="tel: 551125658450">+55 11 2565-8450</a></p>
-                                </li>
-                                <li>
-                                    <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-                                    <span>Av. Salgado Filho, 3501 <br>Guarulhos, São Paulo, Brasil</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </footer>
-                <div class="copyright">
-                    <p>© Copyright 2021 ReDonate. Todos os direitos reservados.</p>
-                </div>
-            </div>
-            -->
-            <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
+
+            <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}"> </div>
         </div>
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -146,8 +82,26 @@
                     const estadoPreenchido = $("#estadoInput").val() != "";
                     const cpf = $("#cpfInput");
                     const sexoPreenchido = $("#sexoInput :radio:checked").length > 0;
+                    let cpfValid;
 
-                    if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && (cpf.val().indexOf("_") == -1 && cpf.val().length > 0) && sexoPreenchido)
+                    if(cpf.val().indexOf("_") == -1 && cpf.val().length > 0){
+                        $.ajax({
+                            method: "GET",
+                            dataType: "json",
+                            url: "http://localhost:8080/validar/cpf",
+                            data: {cpf: cpf.val()},
+                            async: false,
+                            success: function (data, status) {
+                                cpfValid = data;
+                                if(!cpfValid)
+                                    $("#cpfValidator").text("CPF INSERIDO É INVÁLIDO")
+                                else
+                                    $("#cpfValidator").text("")
+                            }
+                        });
+                    }
+
+                    if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && (cpf.val().indexOf("_") == -1 && cpf.val().length > 0) && cpfValid && sexoPreenchido)
                         $("#cadastrar").prop("disabled", false);
                     else
                         $("#cadastrar").prop("disabled", true);

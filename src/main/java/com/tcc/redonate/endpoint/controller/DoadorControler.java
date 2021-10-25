@@ -39,8 +39,12 @@ public class DoadorControler {
         usuario.setEmailUsuario(User.getEmailUsuario());
         usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        boolean success = usuarioService.saveUsuarioDoador(usuario, doador);
-        redirectAttributes.addFlashAttribute("success", success);
+        if(usuarioService.isCPFUnique(usuario)) {
+            boolean success = usuarioService.saveUsuarioDoador(usuario, doador);
+            redirectAttributes.addFlashAttribute("success", success);
+        }else{
+            redirectAttributes.addFlashAttribute("notUnique", "CPF");
+        }
 
         return redirectView;
     }

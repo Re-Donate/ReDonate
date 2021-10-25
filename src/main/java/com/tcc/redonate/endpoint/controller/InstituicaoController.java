@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Map;
 
@@ -130,9 +131,32 @@ public class InstituicaoController {
         usuario.setEmailUsuario(User.getEmailUsuario());
         usuario.setSenhaUsuario(User.getSenhaUsuario());
 
-        boolean success = usuarioService.saveUsuarioInstituicao(usuario, instituicao);
-        redirectAttributes.addFlashAttribute("success", success);
+        if(usuario.getCpfUsuario().isBlank()) {
+            usuario.setCpfUsuario(null);
+            if(instituicaoService.isCNPJUnique(instituicao)){
+                boolean success = usuarioService.saveUsuarioInstituicao(usuario, instituicao);
+                redirectAttributes.addFlashAttribute("success", success);
+            }else{
+                redirectAttributes.addFlashAttribute("notUnique", "CNPJ");
+            }
+        }else {
+            if (instituicao.getCnpjInstituicao().isBlank()) {
+                instituicao.setCnpjInstituicao(null);
+                if(usuarioService.isCPFUnique(usuario)){
+                    boolean success = usuarioService.saveUsuarioInstituicao(usuario, instituicao);
+                    redirectAttributes.addFlashAttribute("success", success);
+                }else{
+                    redirectAttributes.addFlashAttribute("notUnique", "CPF");
+                }
+            }
+        }
+
 
         return redirectView;
+    }
+
+    @GetMapping(value = "/validar/cnpj")
+    public ResponseEntity<Boolean> validarCNPJ(@PathParam("cnpj") String cnpj) {
+        return ResponseEntity.ok(instituicaoService.isCNPJValid(cnpj));
     }
 }
