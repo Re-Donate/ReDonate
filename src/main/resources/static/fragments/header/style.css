@@ -13,7 +13,7 @@ div#options{
     margin-left: auto;
     margin-right: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 div#optionsLogin{
@@ -32,16 +32,21 @@ div#companyName{
 }
 
 a{
-    text-decoration: none;
-    color: cornsilk;
+    text-decoration: none !important;
+    color: cornsilk !important;
 }
 
-div#frontPage, div#institutions, div#userConnectedOptions{
+div#frontPage, div#institutions, div#userConnectedOptions, div#chat{
     margin-right: auto;
     margin-left: auto;
     display: flex;
     align-items: center;
     font-size: 20px;
+}
+
+button#dropdown{
+    color:cornsilk !important;
+    font-size: 20px !important;
 }
 
 a:hover{

@@ -5,17 +5,22 @@
 }
 
 body {
-    background: #C5DDEB;
     font: 14px/20px "Lato", Arial, sans-serif;
-    padding: 40px 0;
-    color: white;
+    color: cornsilk !important;
+    background-color: #ADD8E6 !important;
+    padding-bottom: 0%;
 }
 
 .container {
-    margin: 0 auto;
-    width: 750px;
-    background: #444753;
+    width: 75%;
+    background: #2C5288;
     border-radius: 5px;
+    margin: 2% auto;
+}
+
+div#header{
+    top:0 !important;
+    position:absolute;
 }
 
 #perfil {
@@ -110,7 +115,7 @@ body {
     background: #F2F5F8;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    color: #434651;
+    color: #457B9D;
 }
 
 .chat .chat-header {
@@ -274,3 +279,9 @@ ul {
     clear: both;
     height: 0;
 }
+
+/* Cores */
+/* 1D3557 - Azul escurão    */
+/* 2C5288 - Azul médio      */
+/* 457B9D - Azul claro      */
+/* E63946 - Vermelho Random */

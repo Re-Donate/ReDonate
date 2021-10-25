@@ -2,6 +2,8 @@
     <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'chat')}"></head>
     <body>
 
+    <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosUsuario.nomeUsuario})}"></div>
+
     <div class="container clearfix">
 
         <div class="people-list" id="people-list">
@@ -64,7 +66,7 @@
         </div> <!-- end chat -->
 
     </div> <!-- end container -->
-
+    <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
     <script id="message-template" type="text/x-handlebars-template">
         <li class="clearfix">
             <div class="message-data align-right">

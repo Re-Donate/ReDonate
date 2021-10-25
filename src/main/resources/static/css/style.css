@@ -130,3 +130,11 @@ select#searchNecessidade{
 input#searchNome, input#searchCausa, select#searchNecessidade{
     border-radius: 5px;
 }
+
+div#paginacaoBottom, div#paginacaoTop{
+    text-align: center;
+}
+
+span{
+    cursor: pointer;
+}
