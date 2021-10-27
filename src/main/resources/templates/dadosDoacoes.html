@@ -3,7 +3,7 @@
 <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'dadosDoacoes')}"></head>
 <body>
     <div id="container">
-        <div th:replace="~{../static/fragments/header/header.html::headerGeral}"></div>
+        <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosUser.nomeUsuario})}"></div>
 
         <div id="doacoes" class="container">
             <div th:unless="${#lists.isEmpty(doacoes)}" id="conteudo" class="row">
