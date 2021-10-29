@@ -53,6 +53,5 @@ function selectUser(doacaoId, connectNome, connectId) {
         }
         $('#selectedUserId').html('');
         $('#selectedUserId').append('Conversando com ' + connectNome);
-        $('#selectedUserLogo').text(connectNome[0]);
     }
 }

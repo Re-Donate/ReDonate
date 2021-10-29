@@ -8,6 +8,7 @@ function init() {
     cacheDOM();
     bindEvents();
     carregarPerfil();
+    carregarContatos();
 }
 
 function bindEvents() {
@@ -94,10 +95,24 @@ function sendMessage(message) {
 }
 
 function carregarPerfil() {
-    $('.userLogo').each(function(index, element) {
-        let cor = Math.floor(Math.random() * 6);
-        $(element).css({"background-color": cores[cor]});
+    let cor = Math.floor(Math.random() * 6);
+    let logoElement = $('#userLogo');
+    let x = $('#userName')[0].outerText.length;
+
+    carregarIconStyle(logoElement, cor, x);
+}
+
+function carregarContatos() {
+    $('.contact').each(function(index, element) {
+       let cor = Math.floor(Math.random() * 6);
+       let x = element.id.length;
+
+        carregarIconStyle($(element), cor, x);
     });
+}
+
+function carregarIconStyle(elemento, cor, tamanho) {
+    elemento.css({"background-color": cores[cor], "width": `${(40 + (tamanho > 16 ? (tamanho - 16) * 2.4 : 0))}px`});
 }
 
 function scrollToBottom() {

@@ -2,22 +2,22 @@
     <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'chat')}"></head>
     <body>
 
-    <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosUsuario.nomeUsuario})}"></div>
+    <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosUsuario.nomeUsuario}, ${isDoador} ? '/doadores/dados' : '/instituicoes/dados')}"></div>
 
     <div class="container clearfix">
 
         <div class="people-list" id="people-list">
             <div id="perfil">
                 <input type="hidden" id="userId" th:value="${dadosUsuario.id}"/>
-                <i th:text="${dadosUsuario.nomeUsuario[0]}" class="userLogo"> User Icon </i>
-                <h3 th:text="${dadosUsuario.nomeUsuario}"> Usuario Logado </h3>
+                <i th:text="${dadosUsuario.nomeUsuario[0]}" id="userLogo"> User Icon </i>
+                <h3 th:text="${dadosUsuario.nomeUsuario}" id="userName"> Usuario Logado </h3>
             </div>
             <ul class="list" id="usersList">
 
                 <div th:each="doacao : ${doacoesExistentes}">
                     <div th:if="${isDoador}" th:id="'userAppender_' + ${doacao.instituicao.usuarioInstituicao.id} + '_' + ${doacao.id}" class="perfil-card" th:attr="onclick=|selectUser('${doacao.id}', '${doacao.instituicao.usuarioInstituicao.nomeUsuario}', '${doacao.instituicao.usuarioInstituicao.id}')|">
                         <div class="perfil-head">
-                            <i th:text="${doacao.instituicao.usuarioInstituicao.nomeUsuario[0]}" class="userLogo"> User Icon </i>
+                            <i th:text="${doacao.instituicao.usuarioInstituicao.nomeUsuario[0]}" class="contact" th:id="${doacao.instituicao.usuarioInstituicao.nomeUsuario}"> User Icon </i>
                             <h5 th:text="${doacao.instituicao.usuarioInstituicao.nomeUsuario}"> Usuario Logado </h5>
                         </div>
                         <p th:text="'Doação feita para ' + ${doacao.causaDoacao}"> Causa da doação </p>
@@ -25,7 +25,7 @@
 
                     <div th:unless="${isDoador}" th:id="'userAppender_' + ${doacao.doador.usuarioDoador.id} + '_' + ${doacao.id}" class="perfil-card" th:attr="onclick=|selectUser('${doacao.id}', '${doacao.doador.usuarioDoador.nomeUsuario}', '${doacao.doador.usuarioDoador.id}')|">
                         <div class="perfil-head">
-                            <i th:text="${doacao.doador.usuarioDoador.nomeUsuario[0]}" class="userLogo"> User Icon </i>
+                            <i th:text="${doacao.doador.usuarioDoador.nomeUsuario[0]}" class="contact" th:id="${doacao.doador.usuarioDoador.nomeUsuario}"> User Icon </i>
                             <h5 th:text="${doacao.doador.usuarioDoador.nomeUsuario}"> Usuario Logado </h5>
                         </div>
                         <p th:text="'Doação feita para ' + ${doacao.causaDoacao}"> Causa da doação </p>
@@ -37,7 +37,6 @@
 
         <div class="chat">
             <div class="chat-header clearfix">
-                <i id="selectedUserLogo" class="userLogo"></i>
 
                 <div class="chat-about">
                     <div class="chat-with" id="selectedUserId"></div>

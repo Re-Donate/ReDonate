@@ -2,7 +2,7 @@
 <html lang="en">
 <head th:replace="~{../static/fragments/head/head.html::head('Lista de Instituições', 'style')}"></head>
 <body>
-<div id="header" th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosDoador.nomeUsuario})}"></div>
+<div id="header" th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosDoador.nomeUsuario}, '/doadores/dados')}"></div>
 
 <div id="searchGroup">
     <!-- Nome -->

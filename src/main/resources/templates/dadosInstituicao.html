@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'dadosInstituicao')}"></head>
+<head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'dadosUsuario')}"></head>
 <body>
     <div id="container">
-        <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosInst.usuarioInstituicao.nomeUsuario})}"></div>
+        <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosInst.usuarioInstituicao.nomeUsuario}, '/instituicoes/dados')}"></div>
         <div id="formulario">
             <form id="updateForm" method="POST">
                 <div id="campos">
@@ -94,12 +94,13 @@
                 </div>
             </form>
         </div>
-        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
+        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}"></div>
 
     </div>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<!--    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>-->
+<!--    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>-->
+<!--    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
     <script th:src="@{/webjars/inputmask/dist/jquery.inputmask.min.js}"></script>
 
     <script>

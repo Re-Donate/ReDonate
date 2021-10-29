@@ -25,7 +25,7 @@
 
 </head>
 <body>
-    <div id="header" th:fragment="headerGeral(nome)">
+    <div id="header" th:fragment="headerGeral(nome, rotaPerfil)">
 
         <div id="options">
 
@@ -33,7 +33,7 @@
                 <p><b>R</b>e<b>D</b>onate</p>
             </div>
 
-            <div id="institutions">
+            <div th:if="${rotaPerfil} == '/doadores/dados'" id="institutions">
                 <a href="/instituicoes">Instituições</a>
             </div>
 
@@ -51,7 +51,7 @@
                       Nome
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Perfil</a>
+                      <a class="dropdown-item" th:href="${rotaPerfil}">Perfil</a>
                       <a class="dropdown-item" href="/">Desconectar</a>
                     </div>
                   </div>

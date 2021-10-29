@@ -3,7 +3,7 @@
 <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'detalharInst')}"></head>
 <body>
     <div id="content">
-        <div th:replace="~{../static/fragments/header/header.html::headerGeral}"></div>
+        <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosDoador.nomeUsuario}, '/doadores/dados')}"></div>
         <div id="detalharInst">
             <div class="card w-50" style="width: 18rem;">
                 <div class="card-header text-white">
