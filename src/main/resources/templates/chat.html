@@ -60,23 +60,23 @@
 
                 <button id="sendBtn">Send</button>
 
-            </div> <!-- end chat-message -->
+            <div class="message other-message float-right">
+                {{messageOutput}}
+            </div>
+        </li>
+    </script>
+    </div> <!-- end chat-message -->
 
-        </div> <!-- end chat -->
+    </div> <!-- end chat -->
 
     </div> <!-- end container -->
-    <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}"> </div>
+    <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer(${isDoador} ? '/doadores/dados' : '/instituicoes/dados'))}"> </div>
     <script id="message-template" type="text/x-handlebars-template">
         <li class="clearfix">
             <div class="message-data align-right">
                 <span class="message-data-time">{{time}}</span> &nbsp; &nbsp;
                 <span class="message-data-name">You</span> <i class="fa fa-circle me"></i>
             </div>
-            <div class="message other-message float-right">
-                {{messageOutput}}
-            </div>
-        </li>
-    </script>
 
     <script id="message-response-template" type="text/x-handlebars-template">
         <li>

@@ -5,32 +5,21 @@
 <div id="header" th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosDoador.nomeUsuario}, '/doadores/dados')}"></div>
 
 <div id="searchGroup">
-    <!-- Nome -->
-    <div id="nomeFiltroInst">
-        <label for="searchNome"> Nome da Instituição </label>
-        <input type="text" id="searchNome" class="pesquisa">
-    </div>
-
-    <!-- Causa -->
-    <div id="causaFiltroInst">
-        <label for="searchCausa"> Causa da Instituição </label>
-        <input type="text" id="searchCausa" class="pesquisa">
-    </div>
-
-    <!-- Necessidades -->
-    <div id="categoriaFiltro">
-        <label> Necessidades: </label>
-        <select id="searchNecessidade">
-            <option value="" selected> Necessidades... </option>
-            <option value="Alimentos"> Alimentos </option>
-            <option value="Remédios"> Remédios </option>
-            <option value="Educação"> Educação </option>
-            <option value="Vestimentas"> Vestimentas </option>
-            <option value="Produtos para Pets"> Produtos para Pets </option>
-            <option value="Outros fins"> Outros fins </option>
-        </select>
+    <div class="row">
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Vestimentas"><i class="fas fa-tshirt img-check"><input type="checkbox" name="chk1" id="necessidade1" value="Vestimentas"  class="checkbox" autocomplete="off"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Produtos para Pets"><i class="fas fa-paw img-check"><input type="checkbox" name="chk1" id="necessidade2" value="Produtos para Pets" class="checkbox" autocomplete="off"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Remédios"><i class="fas fa-pills img-check"><input type="checkbox" name="chk1" id="necessidade3" value="Remédios" class="checkbox" autocomplete="off"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Alimentos"><i class="fas fa-drumstick-bite"><input type="checkbox" name="chk1" id="necessidade4" value="Alimentos" class="checkbox" autocomplete="off"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Educação"><i class="fas fa-book img-check"><input type="checkbox" name="chk1" id="necessidade5" value="Educação"  class="checkbox" autocomplete="off"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Outros fins"><i class="fas fa-hand-holding-usd img-check"><input type="checkbox" name="chk1" id="necessidade6" value="Outros fins" class="checkbox" autocomplete="off"></i></label></div>
     </div>
 </div>
+
+<form method="get">
+
+</form>
+
+
     <div id="instituicaoAll">
         <div id="paginacaoTop" class="paginacao">
             <!-- Carregar indices de paginas -->
@@ -42,7 +31,7 @@
             <!-- Carregar indices de paginas -->
         </div>
     </div>
-    <div id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}"> </div>
+    <div id="footer" th:replace="~{../static/fragments/footer/footer.html::footer('/doadores/dados')}"> </div>
 
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 
@@ -127,11 +116,14 @@
                 saida += "</dl>"
             }
 
+            $("#footer").css({"position": "static", "bottom": 0});
+
             if(!dados.length) {
-                saida = "Não encontramos nenhuma Instituição com estas características!";
+                saida = "<p id='lista-vazia'>Não encontramos nenhuma Instituição com estas características!</p>";
+                $("#footer").css({"position": "fixed", "bottom": 0});
             }
 
-            //$("#footer").css({"position": "fixed", "bottom": 0});
+
 
             elementoCard.html(saida);
         }

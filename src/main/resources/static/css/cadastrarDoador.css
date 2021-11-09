@@ -67,4 +67,9 @@ div#contentHeader{
 a{
     color: cornsilk !important;
     text-decoration: none !important;
-}  
+}
+
+#footer{
+    position: fixed;
+    bottom: 0;
+}

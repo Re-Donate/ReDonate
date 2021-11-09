@@ -35,7 +35,7 @@
               <h2> Você ainda não recebeu nenhuma doação </h2>
           </div>
         </div>
-        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
+        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer(${queroDoadores} ? '/instituicoes/dados' : '/doadores/dados'))}">
 
     </div>
 </body>

@@ -12,45 +12,51 @@
 
     </head>
     <body>
-        <div id="footer" th:fragment="footer">
+        <div id="footer" th:fragment="footer(rotaPerfil)">
 
             <div id="footerMenu">
 
                 <div id="userTable">
                     <table id="userOptions">
                         <tr>
-                            <th>Suas configurações</td>
+                            <th>Suas configurações</th>
                         </tr>
                         <tr>
-                            <td>Dados pessoais</td>
+                            <td><a th:href="${rotaPerfil}">Perfil</a></td>
                         </tr>
                         <tr>
-                            <td>Conversas abertas</td>
+                            <td><a href="localhost:8080/doacoes/chat">Conversas abertas</a></td>
                         </tr>
                         <tr>
-                            <td>Histórico de doações</td>
+                            <td><a href="localhost:8080/doacoes/dados">Histórico de doações</a></td>
                         </tr>
                     </table>
                 </div>
 
-                <div id="institutionsTable">
-
-                    <table id="institutionsOptions">
+                <div id="reDonateTable">
+                    <table id="reDonateOptions">
                         <tr>
-                            <th>Instituições</td>
+                            <th>Sobre nós</td>
                         </tr>
                         <tr>
-                            <td>Listar todas</td>
+                            <td>ReDonate</td>
                         </tr>
                         <tr>
-                            <td>Instituições em alta</td>
+                            <td>contato@redonate.com.br</td>
                         </tr>
                         <tr>
-                            <td>Abrir solicitação</td>
+                            <td>Nos conheça</td>
                         </tr>
                     </table>
-
                 </div>
+
+            </div>
+
+        </div>
+
+        <div id="footer" th:fragment="footerLogin">
+
+            <div id="footerMenuGeral">
 
                 <div id="reDonateTable">
                     <table id="reDonateOptions">

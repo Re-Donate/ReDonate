@@ -3,7 +3,6 @@
 <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'detalharInst')}"></head>
 <body>
     <div id="content">
-        <div th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosDoador.nomeUsuario}, '/doadores/dados')}"></div>
         <div id="detalharInst">
             <div class="card w-50" style="width: 18rem;">
                 <div class="card-header text-white">
@@ -43,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer}">
+        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer('/doadores/dados')}">
     </div>
 </body>
 </html>
