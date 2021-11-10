@@ -6,19 +6,14 @@
 
 <div id="searchGroup">
     <div class="row">
-        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Vestimentas"><i class="fas fa-tshirt img-check"><input type="checkbox" name="chk1" id="necessidade1" value="Vestimentas"  class="checkbox" autocomplete="off"></i></label></div>
-        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Produtos para Pets"><i class="fas fa-paw img-check"><input type="checkbox" name="chk1" id="necessidade2" value="Produtos para Pets" class="checkbox" autocomplete="off"></i></label></div>
-        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Remédios"><i class="fas fa-pills img-check"><input type="checkbox" name="chk1" id="necessidade3" value="Remédios" class="checkbox" autocomplete="off"></i></label></div>
-        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Alimentos"><i class="fas fa-drumstick-bite"><input type="checkbox" name="chk1" id="necessidade4" value="Alimentos" class="checkbox" autocomplete="off"></i></label></div>
-        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Educação"><i class="fas fa-book img-check"><input type="checkbox" name="chk1" id="necessidade5" value="Educação"  class="checkbox" autocomplete="off"></i></label></div>
-        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Outros fins"><i class="fas fa-hand-holding-usd img-check"><input type="checkbox" name="chk1" id="necessidade6" value="Outros fins" class="checkbox" autocomplete="off"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Vestimentas"><i class="fas fa-tshirt img-check"><input type="checkbox" name="chk1" id="necessidade1" value="Vestimentas"  class="checkbox"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Produtos para Pets"><i class="fas fa-paw img-check"><input type="checkbox" name="chk2" id="necessidade2" value="Produtos para Pets" class="checkbox"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Remédios"><i class="fas fa-pills img-check"><input type="checkbox" name="chk3" id="necessidade3" value="Remédios" class="checkbox"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Alimentos"><i class="fas fa-drumstick-bite"><input type="checkbox" name="chk4" id="necessidade4" value="Alimentos" class="checkbox"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Educação"><i class="fas fa-book img-check"><input type="checkbox" name="chk5" id="necessidade5" value="Educação"  class="checkbox"></i></label></div>
+        <div class="col divsFiltro"><label class="btn btn-primary" style="width: 100%" title="Outros fins"><i class="fas fa-hand-holding-usd img-check"><input type="checkbox" name="chk6" id="necessidade6" value="Outros fins" class="checkbox"></i></label></div>
     </div>
 </div>
-
-<form method="get">
-
-</form>
-
 
     <div id="instituicaoAll">
         <div id="paginacaoTop" class="paginacao">
@@ -31,6 +26,7 @@
             <!-- Carregar indices de paginas -->
         </div>
     </div>
+
     <div id="footer" th:replace="~{../static/fragments/footer/footer.html::footer('/doadores/dados')}"> </div>
 
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -55,9 +51,15 @@
 
         //Instancia o objeto de filtro com os dados dos campos
         function carregarDados(objeto) {
-            objeto.nome = $("#searchNome").val();
-            objeto.causa = $("#searchCausa").val();
-            objeto.necessidade = $("#searchNecessidade").val();
+            for(let i = 1; i < 7; i++){
+                let index = `necessidade${i}`;
+                let elemento = $(`#${index}`);
+
+                if(elemento.prop("checked"))
+                    objeto[index] = elemento.val();
+                else
+                    delete objeto[index];
+            }
         }
 
         //Cria os indices das paginas possiveis de navegacao
@@ -131,6 +133,9 @@
         //Executa a chamada para o backend e retorna os dados recebidos
         function executarChamada(rota, objeto){
             carregarDados(objeto);
+            if(jQuery.isEmptyObject(objeto))
+                objeto.necessidade1 = "";
+
             let retorno;
 
             $.ajax({
@@ -166,12 +171,13 @@
             atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom);
 
             //Detectar eventos de filtro e buscar Instituicoes filtradas
-            $(".pesquisa").on("input", function (e) {
-                Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro);
-                atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom);
-            });
+            $(".checkbox").change(function () {
+                if($(this).prop("checked")){
+                    $(this).parent().parent().css({"background-color": "#0b5ed7", "border-color": "#0b5ed7"});
+                }else{
+                    $(this).parent().parent().css({"background-color": "#0d6efd", "border-color": "#0d6efd"});
+                }
 
-            $("#searchNecessidade").change(function (e) {
                 Dados = executarChamada("http://localhost:8080/instituicoes/filtro", jsonFiltro);
                 atualizarPagina(Dados, instituicaoBox, paginacaoTop, paginacaoBottom);
             });

@@ -2,6 +2,7 @@
 <html lang="en">
 <head th:replace="~{../static/fragments/head/head.html::head('Re:Donate', 'detalharInst')}"></head>
 <body>
+    <div id="header" th:replace="~{../static/fragments/header/header.html::headerGeral(${dadosDoador.nomeUsuario}, '/doadores/dados')}"></div>
     <div id="content">
         <div id="detalharInst">
             <div class="card w-50" style="width: 18rem;">

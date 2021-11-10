@@ -35,8 +35,21 @@
               <h2> Você ainda não recebeu nenhuma doação </h2>
           </div>
         </div>
-        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer(${queroDoadores} ? '/instituicoes/dados' : '/doadores/dados'))}">
+
+        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer(${isDoador} ? '/doadores/dados' : '/instituicoes/dados')}"> </div>
 
     </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let doacoesList = /*[[${doacoes}]]*/ "";
+
+        if(doacoesList.length < 3)
+            $("#footer").css({"position": "fixed", "bottom": 0});
+        else
+            $("#footer").css({"position": "static", "bottom": 0});
+        /*]]>*/
+    </script>
 </body>
 </html>
