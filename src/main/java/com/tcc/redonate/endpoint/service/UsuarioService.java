@@ -1,8 +1,8 @@
 package com.tcc.redonate.endpoint.service;
 
-import com.tcc.redonate.model.Doador;
-import com.tcc.redonate.model.Instituicao;
-import com.tcc.redonate.model.Usuario;
+import com.tcc.redonate.entity.Doador;
+import com.tcc.redonate.entity.Instituicao;
+import com.tcc.redonate.entity.Usuario;
 import com.tcc.redonate.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,9 +88,9 @@ public class UsuarioService {
         return newUser != null;
     }
 
-    public List<Usuario> filtrarInstituicoes(String nome, String causa, String necessidade){
+    public List<Usuario> filtrarInstituicoes(String necessidade1, String necessidade2, String necessidade3, String necessidade4, String necessidade5, String necessidade6){
         log.info("Procurando instituicoes com base na busca do usuario");
-        return usuarioRepository.filtrarInstituicoes(nome, causa, necessidade);
+        return usuarioRepository.filtrarInstituicoes(necessidade1, necessidade2, necessidade3, necessidade4, necessidade5, necessidade6);
     }
 
     public Usuario getById(Long id){

@@ -1,7 +1,7 @@
 package com.tcc.redonate.endpoint.service;
 
-import com.tcc.redonate.model.Instituicao;
-import com.tcc.redonate.model.Usuario;
+import com.tcc.redonate.entity.Instituicao;
+import com.tcc.redonate.entity.Usuario;
 import com.tcc.redonate.repository.InstituicaoRepository;
 import com.tcc.redonate.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;

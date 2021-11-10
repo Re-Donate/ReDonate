@@ -2,7 +2,7 @@ package com.tcc.redonate.endpoint.controller;
 
 import com.tcc.redonate.endpoint.service.DoadorService;
 import com.tcc.redonate.endpoint.service.UsuarioService;
-import com.tcc.redonate.model.Usuario;
+import com.tcc.redonate.entity.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,13 @@
-package com.tcc.redonate.model;
+package com.tcc.redonate.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,24 +20,22 @@ import javax.persistence.*;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
-public class Mensagem implements AbstractEntity{
-
+public class Doador implements AbstractEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Long doacao;
+    private String nascimentoDoador;
 
     @Column(nullable = false)
-    private String texto;
+    private String sexoDoador;
 
-    @Column(nullable = false)
-    private Long de;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
+    private Usuario usuarioDoador;
 
-    @Column(nullable = false)
-    private Long para;
-
-    @Column(nullable = false)
-    private String createdAt;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "doador", orphanRemoval = true)
+    @JsonIgnore
+    private List<Doacao> doacoes;
 }

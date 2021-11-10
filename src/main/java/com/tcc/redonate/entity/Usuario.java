@@ -1,4 +1,4 @@
-package com.tcc.redonate.model;
+package com.tcc.redonate.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;

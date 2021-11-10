@@ -2,9 +2,9 @@ package com.tcc.redonate.endpoint.controller;
 
 import com.tcc.redonate.endpoint.service.InstituicaoService;
 import com.tcc.redonate.endpoint.service.UsuarioService;
-import com.tcc.redonate.model.Doacao;
-import com.tcc.redonate.model.Instituicao;
-import com.tcc.redonate.model.Usuario;
+import com.tcc.redonate.entity.Doacao;
+import com.tcc.redonate.entity.Instituicao;
+import com.tcc.redonate.entity.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,11 +53,14 @@ public class InstituicaoController {
 
     @GetMapping(value = "/instituicoes/filtro")
     public ResponseEntity<List<Usuario>> filtrarInstituicoes(HttpServletRequest request){
-        String nomeFiltro = request.getParameter("nome");
-        String causaFiltro = request.getParameter("causa");
-        String necessidadeFiltro = request.getParameter("necessidade");
+        String necessidade1 = request.getParameter("necessidade1");
+        String necessidade2 = request.getParameter("necessidade2");
+        String necessidade3 = request.getParameter("necessidade3");
+        String necessidade4 = request.getParameter("necessidade4");
+        String necessidade5 = request.getParameter("necessidade5");
+        String necessidade6 = request.getParameter("necessidade6");
 
-        List<Usuario> instituicoesFiltradas = usuarioService.filtrarInstituicoes(nomeFiltro, causaFiltro, necessidadeFiltro);
+        List<Usuario> instituicoesFiltradas = usuarioService.filtrarInstituicoes(necessidade1, necessidade2, necessidade3, necessidade4, necessidade5, necessidade6);
 
         return ResponseEntity.ok(instituicoesFiltradas);
     }

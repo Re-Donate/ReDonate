@@ -1,9 +1,8 @@
 package com.tcc.redonate.endpoint.controller;
 
-import com.tcc.redonate.endpoint.service.DoacaoService;
 import com.tcc.redonate.endpoint.service.MensagemService;
 import com.tcc.redonate.endpoint.service.UsuarioService;
-import com.tcc.redonate.model.Mensagem;
+import com.tcc.redonate.entity.Mensagem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.tcc.redonate.endpoint.service;
 
-import com.tcc.redonate.model.Mensagem;
+import com.tcc.redonate.entity.Mensagem;
 import com.tcc.redonate.repository.MensagemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
