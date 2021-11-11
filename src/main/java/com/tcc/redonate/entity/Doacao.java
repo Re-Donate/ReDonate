@@ -49,6 +49,9 @@ public class Doacao implements AbstractEntity, Comparable<Doacao>{
     @Column(nullable = false)
     private boolean ativo;
 
+    @Column(nullable = false)
+    private boolean visivel;
+
     @Override
     public int compareTo(Doacao d){
         return this.getCausaDoacao().compareTo(d.getCausaDoacao());

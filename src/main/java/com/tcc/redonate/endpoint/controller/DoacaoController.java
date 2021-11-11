@@ -7,6 +7,7 @@ import com.tcc.redonate.endpoint.service.UsuarioService;
 import com.tcc.redonate.entity.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,10 +41,10 @@ public class DoacaoController {
         List<Doacao> doacoes;
 
         if(usuarioLogado.getDoador() != null){
-            doacoes = usuarioLogado.getDoador().getDoacoes();
+            doacoes = doacaoService.buscarDoacoesAtivas(usuarioLogado.getDoador());
             model.addAttribute("isDoador", true);
         }else{
-            doacoes = usuarioLogado.getInstituicao().getDoacoes();
+            doacoes = doacaoService.buscarDoacoesVisiveis(usuarioLogado.getInstituicao());
             model.addAttribute("isDoador", false);
         }
 
@@ -64,6 +65,18 @@ public class DoacaoController {
         return redirectView;
     }
 
+    @PatchMapping(value = "/doacao/desativar/{id}")
+    public ResponseEntity<String> desativarChat(@PathVariable Long id){
+        doacaoService.desativarChat(id);
+        return ResponseEntity.ok("Chat desativado com sucesso!");
+    }
+
+    @PatchMapping(value = "/doacao/apagar/{id}")
+    public ResponseEntity<String> apagarChat(@PathVariable Long id) {
+        doacaoService.apagarChat(id);
+        return ResponseEntity.ok("Chat apagado com sucesso!");
+    }
+
     @GetMapping(value = "/doacoes/dados")
     public String carregarDadosDoacoes(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
         Usuario dadosUsuario = usuarioService.getUsuarioLogado(request);
@@ -73,12 +86,10 @@ public class DoacaoController {
             List<Doacao> doacoes = new ArrayList<Doacao>();
 
             if (dadosUsuario.getInstituicao() != null) {
-                Instituicao dadosInst = dadosUsuario.getInstituicao();
-                doacoes = dadosInst.getDoacoes();
+                doacoes = dadosUsuario.getInstituicao().getDoacoes();
                 queroDoadores = true;
             } else {
-                Doador dadosDoad = dadosUsuario.getDoador();
-                doacoes = dadosDoad.getDoacoes();
+                doacoes = dadosUsuario.getDoador().getDoacoes();
             }
 
             if(!doacoes.isEmpty()){
@@ -87,35 +98,9 @@ public class DoacaoController {
                 List<Object> outraPonta = new ArrayList<>();
                 List<String> causasDoacao = new ArrayList<>();
                 List<Float> valoresPorCausa = new ArrayList<>();
-                float valorTotal = 0;
                 float soma = doacoes.get(0).getValorDoacao();
 
-                for(int i = 0; i < doacoes.size(); i++){
-
-                    Doacao doacaoAtual = doacoes.get(i);
-                    if(i != 0) {
-                        Doacao doacaoAnterior = doacoes.get(i - 1);
-                        if(doacaoAtual.getCausaDoacao().equals(doacaoAnterior.getCausaDoacao())){
-                            soma += doacaoAtual.getValorDoacao();
-                        }else{
-                            causasDoacao.add(doacaoAnterior.getCausaDoacao());
-                            valoresPorCausa.add(soma);
-                            valorTotal += soma;
-                            soma = doacaoAtual.getValorDoacao();
-                        }
-                    }
-
-                    if(i == (doacoes.size()-1)){
-                        causasDoacao.add(doacaoAtual.getCausaDoacao());
-                        valoresPorCausa.add(soma);
-                        valorTotal += soma;
-                    }
-
-                    if(queroDoadores)
-                        outraPonta.add(doacaoAtual.getDoador());
-                    else
-                        outraPonta.add(doacaoAtual.getInstituicao());
-                }
+                float valorTotal = doacaoService.carregarDadosDoacao(doacoes, soma, causasDoacao, valoresPorCausa, queroDoadores, outraPonta);
 
                 model.addAttribute("outraPonta", outraPonta);
                 model.addAttribute("causas", causasDoacao);

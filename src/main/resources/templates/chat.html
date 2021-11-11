@@ -14,21 +14,31 @@
             </div>
             <ul class="list" id="usersList">
 
-                <div th:each="doacao : ${doacoesExistentes}">
-                    <div th:if="${isDoador}" th:id="'userAppender_' + ${doacao.instituicao.usuarioInstituicao.id} + '_' + ${doacao.id}" class="perfil-card" th:attr="onclick=|selectUser('${doacao.id}', '${doacao.instituicao.usuarioInstituicao.nomeUsuario}', '${doacao.instituicao.usuarioInstituicao.id}')|">
-                        <div class="perfil-head">
-                            <i th:text="${doacao.instituicao.usuarioInstituicao.nomeUsuario[0]}" class="contact" th:id="${doacao.instituicao.usuarioInstituicao.nomeUsuario}"> User Icon </i>
-                            <h5 th:text="${doacao.instituicao.usuarioInstituicao.nomeUsuario}"> Usuario Logado </h5>
-                        </div>
-                        <p th:text="'Doação feita para ' + ${doacao.causaDoacao}"> Causa da doação </p>
-                    </div>
+                <div th:if="${isDoador}">
+                    <div th:each="doacao : ${doacoesExistentes}">
 
-                    <div th:unless="${isDoador}" th:id="'userAppender_' + ${doacao.doador.usuarioDoador.id} + '_' + ${doacao.id}" class="perfil-card" th:attr="onclick=|selectUser('${doacao.id}', '${doacao.doador.usuarioDoador.nomeUsuario}', '${doacao.doador.usuarioDoador.id}')|">
-                        <div class="perfil-head">
-                            <i th:text="${doacao.doador.usuarioDoador.nomeUsuario[0]}" class="contact" th:id="${doacao.doador.usuarioDoador.nomeUsuario}"> User Icon </i>
-                            <h5 th:text="${doacao.doador.usuarioDoador.nomeUsuario}"> Usuario Logado </h5>
+                        <div th:id="'userAppender_' + ${doacao.instituicao.usuarioInstituicao.id} + '_' + ${doacao.id}" class="perfil-card" th:attr="onclick=|selectUser('${doacao.id}', '${doacao.instituicao.usuarioInstituicao.nomeUsuario}', '${doacao.instituicao.usuarioInstituicao.id}', '${doacao.ativo}', 1)|">
+                            <div class="perfil-head">
+                                <i th:text="${doacao.instituicao.usuarioInstituicao.nomeUsuario[0]}" class="contact" th:id="${doacao.instituicao.usuarioInstituicao.nomeUsuario}"> User Icon </i>
+                                <h5 th:text="${doacao.instituicao.usuarioInstituicao.nomeUsuario}"> Usuario Logado </h5>
+                            </div>
+                            <p th:text="'Doação feita para ' + ${doacao.causaDoacao}"> Causa da doação </p>
                         </div>
-                        <p th:text="'Doação feita para ' + ${doacao.causaDoacao}"> Causa da doação </p>
+
+                    </div>
+                </div>
+
+                <div th:unless="${isDoador}">
+                    <div th:each="doacao : ${doacoesExistentes}">
+
+                        <div th:id="'userAppender_' + ${doacao.doador.usuarioDoador.id} + '_' + ${doacao.id}" class="perfil-card" th:attr="onclick=|selectUser('${doacao.id}', '${doacao.doador.usuarioDoador.nomeUsuario}', '${doacao.doador.usuarioDoador.id}', '${doacao.ativo}', 0)|">
+                            <div class="perfil-head">
+                                <i th:text="${doacao.doador.usuarioDoador.nomeUsuario[0]}" class="contact" th:id="${doacao.doador.usuarioDoador.nomeUsuario}"> User Icon </i>
+                                <h5 th:text="${doacao.doador.usuarioDoador.nomeUsuario}"> Usuario Logado </h5>
+                            </div>
+                            <p th:text="'Doação feita para ' + ${doacao.causaDoacao}"> Causa da doação </p>
+                        </div>
+
                     </div>
                 </div>
 
@@ -42,7 +52,11 @@
                     <div class="chat-with" id="selectedUserId"></div>
                     <div class="chat-num-messages"></div>
                 </div>
-                <i class="fa fa-star"></i>
+
+                <div id="finalizar-chat">
+                    <button id="desativar-chat" style="display: none" onclick="handleChatDeactivation(this.value)"> Finalizar chat </button>
+                    <button id="apagar-chat" style="display: none" onclick="handleChatDelete(this.value)"> Finalizar chat </button>
+                </div>
             </div> <!-- end chat-header -->
 
             <div class="chat-history">
@@ -52,12 +66,12 @@
             </div> <!-- end chat-history -->
 
             <div class="chat-message clearfix">
-                <textarea id="message-to-send" name="message-to-send" placeholder="Type your message" rows="3"></textarea>
+                <textarea id="message-to-send" name="message-to-send" placeholder="Escreva sua mensagem" rows="3"></textarea>
 
                 <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
                 <i class="fa fa-file-image-o"></i>
 
-                <button id="sendBtn">Send</button>
+                <button id="sendBtn">Enviar</button>
 
             </div> <!-- end chat-message -->
 
