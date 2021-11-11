@@ -18,6 +18,7 @@ CREATE TABLE doacao (
                         id_instituicao INT NOT NULL,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         ativo BOOLEAN NOT NULL DEFAULT TRUE,
+                        visivel BOOLEAN NOT NULL DEFAULT TRUE,
                         PRIMARY KEY (id)
 );
 
