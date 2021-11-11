@@ -55,6 +55,8 @@ public class DoacaoController {
 
     @PostMapping(value = "/instituicao/{inst}")
     public RedirectView criarDoacao(@PathVariable("inst") Long inst, Doacao doacao, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        doacao.setAtivo(true);
+        doacao.setVisivel(true);
         Instituicao instituicao = instituicaoService.findOne(inst);
         Doador doador = doadorService.findByUsuarioLogado(request);
 
