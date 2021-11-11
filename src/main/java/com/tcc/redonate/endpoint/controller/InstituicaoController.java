@@ -67,10 +67,10 @@ public class InstituicaoController {
 
     @GetMapping(value = "/instituicoes/dados")
     public String dadosInstituicao(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
-        Instituicao dadosInstituicao = instituicaoService.findByUsuarioLogado(request);
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
 
-        if(dadosInstituicao != null) {
-            model.addAttribute("dadosInst", dadosInstituicao);
+        if(usuarioLogado != null && usuarioLogado.getInstituicao() != null) {
+            model.addAttribute("dadosInst", usuarioLogado.getInstituicao());
 
             Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
             if (inputFlashMap != null)
@@ -78,7 +78,13 @@ public class InstituicaoController {
 
             return "dadosInstituicao";
         }else {
-            redirectAttributes.addFlashAttribute("accessDenial", true);
+
+            if(usuarioLogado != null){
+                redirectAttributes.addFlashAttribute("permissionDenial", "Instituições");
+            }else {
+                redirectAttributes.addFlashAttribute("accessDenial", true);
+            }
+
             return "redirect:/";
         }
     }

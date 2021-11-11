@@ -50,10 +50,10 @@ public class DoadorControler {
 
     @GetMapping(value = "/dados")
     public String dadosDoador(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
-        Doador dadosDoador = doadorService.findByUsuarioLogado(request);
+        Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
 
-        if(dadosDoador != null){
-            model.addAttribute("dadosDoad", dadosDoador);
+        if(usuarioLogado != null && usuarioLogado.getDoador() != null){
+            model.addAttribute("dadosDoad", usuarioLogado.getDoador());
 
             Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
             if (inputFlashMap != null)
@@ -61,7 +61,13 @@ public class DoadorControler {
 
             return "dadosDoador";
         }else{
-            redirectAttributes.addFlashAttribute("accessDenial", true);
+
+            if(usuarioLogado != null){
+                redirectAttributes.addFlashAttribute("permissionDenial", "Doadores");
+            }else{
+                redirectAttributes.addFlashAttribute("accessDenial", true);
+            }
+
             return "redirect:/";
         }
 
