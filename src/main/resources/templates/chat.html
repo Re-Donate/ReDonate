@@ -53,10 +53,10 @@
                     <div class="chat-num-messages"></div>
                 </div>
 
-                <div id="finalizar-chat">
-                    <button id="desativar-chat" style="display: none" onclick="handleChatDeactivation(this.value)"> Finalizar chat </button>
-                    <button id="apagar-chat" style="display: none" onclick="handleChatDelete(this.value)"> Finalizar chat </button>
-                </div>
+<!--                <div id="finalizar-chat">-->
+<!--                    <button id="desativar-chat" style="display: none" onclick="handleChatDeactivation(this.value)"> Finalizar chat </button>-->
+<!--                    <button id="apagar-chat" style="display: none" onclick="handleChatDelete(this.value)"> Finalizar chat </button>-->
+<!--                </div>-->
             </div> <!-- end chat-header -->
 
             <div class="chat-history">
@@ -69,9 +69,15 @@
                 <textarea id="message-to-send" name="message-to-send" placeholder="Escreva sua mensagem" rows="3"></textarea>
 
                 <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
-                <i class="fa fa-file-image-o"></i>
 
-                <button id="sendBtn">Enviar</button>
+                <div id="options-message">
+                    <div id="finalizar-chat">
+                        <button id="desativar-chat" style="display: none" onclick="handleChatDeactivation(this.value)"> Finalizar chat </button>
+                        <button id="apagar-chat" style="display: none" onclick="handleChatDelete(this.value)"> Finalizar chat </button>
+                    </div>
+
+                    <button id="sendBtn">Enviar</button>
+                </div>
 
             </div> <!-- end chat-message -->
 

@@ -276,6 +276,24 @@ ul {
     height: 0;
 }
 
+#options-message{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#desativar-chat{
+    float: left;
+}
+
+#finalizar-chat{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#clearfix{
+    height: 838px;
+}
+
 /* Cores */
 /* 1D3557 - Azul escurão    */
 /* 2C5288 - Azul médio      */
