@@ -45,7 +45,7 @@
 
         let doacoesList = /*[[${doacoes}]]*/ "";
 
-        if(doacoesList.length <= 3)
+        if(doacoesList.length < 3)
             $("#footer").css({"position": "fixed", "bottom": 0});
         else
             $("#footer").css({"position": "static", "bottom": 0});
