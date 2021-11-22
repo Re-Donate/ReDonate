@@ -69,6 +69,7 @@ function selectUser(doacaoId, connectNome, connectId, ativo, isDoador) {
             let element = document.getElementById("newMessage_" + connectId + "_" + doacaoId);
             element.parentNode.removeChild(element);
         }
+        $('.chat-message.clearfix').css({"visibility": "visible"});
         $('#selectedUserId').html('');
         $('#selectedUserId').append('Conversando com ' + connectNome);
     }

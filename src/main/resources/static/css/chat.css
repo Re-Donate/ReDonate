@@ -207,6 +207,10 @@ ul {
     padding: 30px;
 }
 
+.chat-message.clearfix {
+    visibility: hidden;
+}
+
 .chat .chat-message textarea {
     width: 100%;
     border: none;
