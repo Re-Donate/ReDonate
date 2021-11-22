@@ -24,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DoacaoController {
     private final DoacaoService doacaoService;
-    private final DoadorService doadorService;
     private final InstituicaoService instituicaoService;
     private final UsuarioService usuarioService;
 
@@ -58,7 +57,7 @@ public class DoacaoController {
         doacao.setAtivo(true);
         doacao.setVisivel(true);
         Instituicao instituicao = instituicaoService.findOne(inst);
-        Doador doador = doadorService.findByUsuarioLogado(request);
+        Doador doador = usuarioService.getUsuarioLogado(request).getDoador();
 
         RedirectView redirectView = new RedirectView("/instituicoes", false);
         boolean success = doacaoService.create(doacao, doador, instituicao);
@@ -82,14 +81,14 @@ public class DoacaoController {
     @GetMapping(value = "/doacoes/dados")
     public String carregarDadosDoacoes(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
         Usuario dadosUsuario = usuarioService.getUsuarioLogado(request);
-        boolean queroDoadores = false;
+        boolean isInstituicao = false;
 
         if(dadosUsuario != null) {
             List<Doacao> doacoes = new ArrayList<Doacao>();
 
             if (dadosUsuario.getInstituicao() != null) {
                 doacoes = dadosUsuario.getInstituicao().getDoacoes();
-                queroDoadores = true;
+                isInstituicao = true;
             } else {
                 doacoes = dadosUsuario.getDoador().getDoacoes();
             }
@@ -102,7 +101,7 @@ public class DoacaoController {
                 List<Float> valoresPorCausa = new ArrayList<>();
                 float soma = doacoes.get(0).getValorDoacao();
 
-                float valorTotal = doacaoService.carregarDadosDoacao(doacoes, soma, causasDoacao, valoresPorCausa, queroDoadores, outraPonta);
+                float valorTotal = doacaoService.carregarDadosDoacao(doacoes, soma, causasDoacao, valoresPorCausa, isInstituicao, outraPonta);
 
                 model.addAttribute("outraPonta", outraPonta);
                 model.addAttribute("causas", causasDoacao);
@@ -112,7 +111,7 @@ public class DoacaoController {
             }
             model.addAttribute("doacoes", doacoes);
             model.addAttribute("dadosUser", dadosUsuario);
-            model.addAttribute("queroDoadores", queroDoadores);
+            model.addAttribute("isInstituicao", isInstituicao);
 
             return "dadosDoacoes";
 
