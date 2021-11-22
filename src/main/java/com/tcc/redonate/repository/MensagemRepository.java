@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface MensagemRepository extends JpaRepository<Mensagem, Long> {
 
-    //Buscando mensagens de uma doacao especifica
     List<Mensagem> findByDoacao(Long doacao);
 }

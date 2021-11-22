@@ -1,15 +1,12 @@
 package com.tcc.redonate.endpoint.service;
 
 import com.tcc.redonate.entity.Instituicao;
-import com.tcc.redonate.entity.Usuario;
 import com.tcc.redonate.repository.InstituicaoRepository;
-import com.tcc.redonate.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -17,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class InstituicaoService {
     private final InstituicaoRepository instituicaoRepository;
-    private final UsuarioRepository usuarioRepository;
 
     public List<Instituicao> list(){
         log.info("Listando todas as Instituicoes");
@@ -29,6 +25,11 @@ public class InstituicaoService {
         return instituicaoRepository.getById(id);
     }
 
+    /*
+     * Compara CNPJ da instituição enviado com os CNPJs já existentes
+     * Params: Instância de um usuário
+     * Returns: True caso não seja encontrado nenhum CNPJ igual ao enviado, False caso seja encontrado uma instituição com este CNPJ
+     * */
     public boolean isCNPJUnique(Instituicao instituicao){
         log.info("Verificando se o CNPJ ja existe no banco");
         Instituicao testCNPJ = instituicaoRepository.findByCnpjInstituicao(instituicao.getCnpjInstituicao());
@@ -39,16 +40,11 @@ public class InstituicaoService {
         return true;
     }
 
-    public Instituicao findByUsuarioLogado(HttpServletRequest request){
-        log.info("Buscando dados de Instituicao a partir do usuario logado");
-        if(request.getSession().getAttribute("idLogin") != null) {
-            Long idUsuario = Long.valueOf("" + request.getSession().getAttribute("idLogin"));
-            Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
-            return usuarioLogado.getInstituicao();
-        }else
-            return  null;
-    }
-
+    /*
+     * Valida o CNPJ inserido pelo usuário
+     * Params: String contendo um CNPJ
+     * Returns: True, caso o CNPJ seja válido, False, caso não seja
+     * */
     public boolean isCNPJValid(String cnpj) {
         String[] digitos = cnpj
                 .replace(".", "")

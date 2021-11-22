@@ -23,17 +23,11 @@ public class DoadorService {
         return doadorRepository.getById(id);
     }
 
-    public Doador findByUsuarioLogado(HttpServletRequest request){
-        log.info("Buscando dados de Doador a partir de usuário logado");
-
-        if(request.getSession().getAttribute("idLogin") != null) {
-            Long idUsuario = Long.parseLong("" + request.getSession().getAttribute("idLogin"));
-            Usuario usuarioLogado = usuarioRepository.getById(idUsuario);
-            return usuarioLogado.getDoador();
-        }else
-            return null;
-    }
-
+    /*
+     * Testa o tipo de um usuário (Doador ou instituição)
+     * Params: Long contendo o ID de um usuário
+     * Returns: True caso o usuário seja do tipo Doador, False caso seja do tipo Instituição
+     * */
     public boolean isDoador(Long idUsuario){
         log.info("Checando se o usuário que logou é um doador");
         Usuario usuarioLogado = usuarioRepository.getById(idUsuario);

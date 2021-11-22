@@ -52,6 +52,11 @@ public class Doacao implements AbstractEntity, Comparable<Doacao>{
     @Column(nullable = false)
     private boolean visivel;
 
+    /*
+     * Ordenar uma lista de doações por suas causas
+     * Params: Instância de uma doação
+     * Returns: 0 para objetos iguais, um inteiro negativo quando este objeto é menor do que o comparado e um inteiro positivo quando este objeto é maior
+     * */
     @Override
     public int compareTo(Doacao d){
         return this.getCausaDoacao().compareTo(d.getCausaDoacao());

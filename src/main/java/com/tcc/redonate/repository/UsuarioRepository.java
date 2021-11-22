@@ -8,8 +8,18 @@ import java.util.List;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+    /*
+     * Buscar usuário por CPF
+     * Params: String contendo um CPF
+     * Returns: Instância do usuário encontrado
+     * */
     Usuario findByCpfUsuario(String cpfUsuario);
 
+    /*
+     * Buscar usuário por email
+     * Params: String contendo um email
+     * Returns: Instância do usuário encontrado
+     * */
     Usuario findByEmailUsuario(String emailUsuario);
 
     @Query("SELECT obj FROM Usuario obj WHERE " +
