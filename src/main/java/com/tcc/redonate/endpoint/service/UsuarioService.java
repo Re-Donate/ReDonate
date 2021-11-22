@@ -29,6 +29,7 @@ public class UsuarioService {
         novosDados.setId(dadosAntigos.getId());
         novosDados.setEmailUsuario(dadosAntigos.getEmailUsuario());
         novosDados.setSenhaUsuario(dadosAntigos.getSenhaUsuario());
+        novosDados.setCpfUsuario(dadosAntigos.getCpfUsuario());
         novosDados.setInstituicao(dadosAntigos.getInstituicao());
         novosDados.setDoador(dadosAntigos.getDoador());
     }

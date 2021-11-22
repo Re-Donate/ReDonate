@@ -94,9 +94,10 @@ public class InstituicaoController {
         RedirectView redirectView = new RedirectView("/instituicoes/dados", false);
 
         Usuario usuarioLogado = usuarioService.getUsuarioLogado(request);
-        List<Doacao> doacoes = instituicaoService.findOne(instituicao.getId()).getDoacoes();
+        Instituicao dadosAntigos = instituicaoService.findOne(instituicao.getId());
 
-        instituicao.setDoacoes(doacoes);
+        instituicao.setDoacoes(dadosAntigos.getDoacoes());
+        instituicao.setCnpjInstituicao(dadosAntigos.getCnpjInstituicao());
 
         usuarioService.atualizarUsuario(usuarioLogado, usuario);
         boolean success = usuarioService.saveUsuarioInstituicao(usuario, instituicao);

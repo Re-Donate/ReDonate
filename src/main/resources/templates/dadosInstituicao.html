@@ -36,13 +36,6 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        <label>CNPJ/CPF:</label><br/>
-                        <input type="text" name="cnpjInstituicao" id="cnpj" th:value="${dadosInst.cnpjInstituicao}" class="identificacao" placeholder="CNPJ da instituicao" data-inputmask="'mask': '99.999.999/9999-99'">
-                        ou
-                        <input type="text" name="cpfUsuario" id="cpf" th:value="${dadosInst.usuarioInstituicao.cpfUsuario}" class="identificacao" placeholder="CPF do representante da instituicao" data-inputmask="'mask': '999-999-999-99'">
-                    </div>
-                    <br>
-                    <div class="form-group">
                         <label>Causa:</label><br/>
                         <input type="text" name="causaInstituicao" id="causaInput" th:value="${dadosInst.causaInstituicao}" placeholder="Causa da instituicao" required>
                     </div>
@@ -112,12 +105,10 @@
                 const enderecoPreenchido = $("#enderecoInput").val() != "";
                 const cidadePreenchido = $("#cidadeInput").val() != "";
                 const estadoPreenchido = $("#estadoInput").val() != "";
-                const cnpj = $("#cnpj");
-                const cpf = $("#cpf");
                 const causaPreenchido = $("#causaInput").val() != "";
                 const necessidadePreenchida = $("#necessidades :checkbox:checked").length > 0;
 
-                if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && ((cpf.val().indexOf("_") == -1 && cpf.val().length > 0) || (cnpj.val().indexOf("_") == -1 && cnpj.val().length > 0)) && causaPreenchido && necessidadePreenchida)
+                if(nomePreenchido && enderecoPreenchido && cidadePreenchido && estadoPreenchido && causaPreenchido && necessidadePreenchida)
                     $("#atualizar").prop("disabled", false);
                 else
                     $("#atualizar").prop("disabled", true);
