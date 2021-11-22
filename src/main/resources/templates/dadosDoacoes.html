@@ -31,12 +31,12 @@
                 </div>
             </div>
 
-          <div th:if="${#lists.isEmpty(doacoes)}">
-              <h2> Você ainda não recebeu nenhuma doação </h2>
+          <div th:if="${#lists.isEmpty(doacoes)}" style="margin: 40px auto; text-align: center">
+              <h2 th:text="${queroDoadores} ? 'Você ainda não recebeu nenhuma doação' : 'Você ainda não efetuou nenhuma doação'">  </h2>
           </div>
         </div>
 
-        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer(${isDoador} ? '/doadores/dados' : '/instituicoes/dados')}"> </div>
+        <div class="body-footer" id="footer" th:replace="~{../static/fragments/footer/footer.html::footer(${queroDoadores} ? '/instituicoes/dados' : '/doadores/dados')}"> </div>
 
     </div>
 
